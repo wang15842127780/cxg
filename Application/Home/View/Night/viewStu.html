@@ -1,0 +1,57 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<h1 class="tt_h1">查看学生信息</h1>
+<div id="cond">
+	<form action="index.php?m=Home&c=Night&a=index&id=3.46" method="post">
+		班级：<select name="croom" id="sclass"  style='width:60px;padding-left:5px;'>
+			<option value="0">全部</option>
+			<foreach item='clist' key='k' name='clist'>
+				<option value="{$clist.id}" <if condition="$clist.id eq $croom">selected</if> >{$clist.name}</option>
+			</foreach>
+		</select>
+		&nbsp;
+		开始时间：<input class="sang_Calender" type="text" name="stime" value="{$Think.post.stime}" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		结束时间：<input class="sang_Calender" type="text" name="etime" value="{$Think.post.etime}" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		类型：<select name="ctype" id="ctype">
+			<option value="0" <if condition="$Think.post.ctype eq 0">selected</if> >全部</option>
+			<option value="1" <if condition="$Think.post.ctype eq 1">selected</if> >正常</option>
+			<option value="2" <if condition="$Think.post.ctype eq 2">selected</if> >异常</option>
+		</select>
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<br>
+<if condition="$attend eq ''">
+	<p style="color:red;font-size:20px;">暂无统计数据</p>
+<else />
+<table id="table">
+	<tr class="tb_tr_th">
+		<th>ID</th>
+		<th>姓名</th>
+		<th>班级</th>
+		<th>课时</th>
+		<th>日期</th>
+		<th>类型</th>
+	</tr>
+	<foreach item="lists" name="attend">
+		<tr class="tb_tr_td">
+			<td>{$lists.id}</td>
+			<td>{$lists.name_text}</td>
+			<td>{$lists.class_text}</td>
+			<td>{$lists.time_text}</td>
+			<td>{$lists.date_text}</td>
+			<td>{$lists.type_text}</td>
+		</tr>
+	</foreach>
+	<tr>
+		<td colspan="5">{$page_info}</td>
+	</tr>
+</table>
+</if>
+<script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
+<script type="text/javascript">
+
+</script>
+
+</block>

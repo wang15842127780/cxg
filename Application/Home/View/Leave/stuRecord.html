@@ -1,0 +1,239 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	#home{
+		overflow:hidden !important;
+	}
+	.p{
+		width:100%;
+		margin-top:30px;
+		font-size:18px;
+	}
+	.left{
+		display:inline-block;
+		width:50%;
+		text-align:right;
+		padding-right:5px;
+	}
+	.right{
+		display: inline-block;
+		text-align: center;
+	}
+	.lp{
+		text-align:left;
+		font-size:16px;
+		border:1px solid #ccc;
+		border-top:0;
+		padding: 8px 0;
+	}
+</style>
+<br>
+<h1 class="tt_h1">学生请假记录</h1>
+<div id="cond">
+	<form onsubmit="return false;">
+		姓名：<input type="text" name="uname" id="uname" style="width:60px;">
+		&nbsp;
+		<if condition="$userType eq 1">
+			<span style="">
+				年组：<select name="year" id="year">
+					<option value="0">全部</option>
+					<foreach item="lists" name='yearList'>
+						<option value="{$lists.id}">{$lists.name}</option>
+					</foreach>
+				</select>
+			</span>
+		</if>
+		开始时间：<input class="sang_Calender" type="text" name="stime" value="{$Think.post.stime}" placeholder="请选择" id="stime" readonly style="width:130px;">&nbsp;
+		结束时间：<input class="sang_Calender" type="text" name="etime" value="{$Think.post.etime}" placeholder="请选择" id="etime" readonly style="width:130px;">&nbsp;
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<button id="add-btn" style="background:orange;width:75px;height:25px;border-radius:5px;display:block;margin-top:5px;margin-left:50px;">+请假申请</button>
+<br>
+<div style="height:480px;overflow:auto;">
+	<table id="table" style="display:none;">
+		<tr class="tb_tr_th">
+			<th>ID</th>
+			<th>姓名</th>
+			<th>班级</th>
+			<th>原因</th>
+			<th>班主任</th>
+			<th style="min-width:280px;">请假时间</th>
+			<th>创建人</th>
+			<th>状态</th>
+			<th>详细信息</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" style="position:absolute;left:0;top:0;right:0;bottom:0;background:#fff;opacity:0.7;display:none;">
+	
+</div>
+<div id="detail_box" style="position:absolute;left:0;top:0;right:0;bottom:0;text-align:center;display:none;">
+	<div style="width:450px;background:#acf6ff;display:inline-block;margin-top:100px;border:1px solid #aaa;border-radius:10px;">
+		<p class="p">查看详情</p>
+		<p class="lp" style="border-top:1px solid #ccc;"><span class="left">姓名：&nbsp;</span>&nbsp;<span class="right" id="name"></span></p>
+		<p class="lp"><span class="left">班级：&nbsp;</span>&nbsp;<span class="right" id="class"></span></p>
+		<p class="lp"><span class="left">原因：&nbsp;</span>&nbsp;<span class="right" id="reason"></span></p>
+		<p class="lp"><span class="left">班主任：&nbsp;</span>&nbsp;<span class="right" id="leader"></span></p>
+		<!-- <p class="lp"><span class="left">开始时间：&nbsp;</span>&nbsp;<span class="right" id="begin_date"></span></p>
+		<p class="lp"><span class="left">结束时间：&nbsp;</span>&nbsp;<span class="right" id="end_date"></span></p> -->
+		<p class="lp"><span class="left">&nbsp;<br>请假时间：&nbsp;<br>&nbsp;</span>&nbsp;<span class="right" id="leave_date"></span></p>
+		<p class="lp"><span class="left">请假意见：&nbsp;</span>&nbsp;<span class="right" id="director_note"></span></p>
+		<p class="lp"><span class="left">创建人：&nbsp;</span>&nbsp;<span class="right" id="createby"></span></p>
+		<p class="lp"><span class="left">状态：&nbsp;</span>&nbsp;<span class="right" id="statuss"></span></p>
+		<p class="p" style="margin-bottom:10px;"><button class="cancel-btn">返回</button></p>
+	</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
+<script type="text/javascript">
+	var userType = {$userType};
+	if(userType == 3)
+	{
+		alert('您没有这项目权限');
+		history.go(-1);
+	}
+	window.getList = function(data={})
+	{
+		var url = 'index.php?m=Home&c=Leave&a=stuRecord';
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").show();
+			var list = res.content;
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'student_text';
+			field[2] = 'class_text';
+			field[3] = 'reason';
+			field[4] = 'leader';
+			field[5] = 'leave_date';
+			field[6] = 'createby';
+			field[7] = 'status_text';
+			field[8] = 'detail_text';
+			listPage(list,1,30,field);
+		}
+		else
+		{
+			$("#table").hide();
+			tips(res.content,2);
+		}
+	}
+	$("#add-btn").click(function()
+	{
+		window.location.href = 'index.php?m=Home&c=Leave&a=index&id=64.69';
+	})
+
+	$("#submit").click(function()
+	{
+		var uname = $("#uname").val();
+		var year = $("#year").val();
+		var stime = $("#stime").val();
+		var etime = $("#etime").val();
+		var status = $("#status").val();
+		var cond = {uname:uname,stime:stime,etime:etime,status:status,year:year};
+		getList(cond);
+	})
+
+	$(".commit").live("click",function()
+	{
+		var _this = $(this).parents("td");
+		var id = $(this).parents("tr").find("td:eq(0)").html();
+		var td = $(this).parents("tr").find("td");
+		var len = td.length;
+		var pos = parseInt(len)-1;
+		var url = 'index.php?m=Home&c=Leave&a=commitLeave';
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			_this.html('已提交');
+			_this.parents("tr").find("td:eq(9)").html('无');
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".edit-btn").live("click",function()
+	{
+		var id = $(this).parents("tr").find("td:eq(0)").html();
+		window.location.href = "index.php?m=Home&c=Leave&a=index&lid="+id+"&id=64.72";
+	})
+
+	$(".del-btn").live("click",function()
+	{
+		var id = $(this).parents("tr").find("td:eq(0)").html();
+		var _this = $(this);
+		var url = "index.php?m=Home&c=Leave&a=delStu";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			_this.parents("tr").remove();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".detail").live("click",function()
+	{
+		var id = $(this).parents("tr").find('td:eq(0)').html();
+		var url = "index.php?m=Home&c=Leave&a=getLeaveById";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		var _p = $(this).parents("tr");
+		if(res.status == 'success')
+		{
+			var info = res.content;
+			$("#shell").show();
+			$("#detail_box").show();
+			var name = _p.find('td:eq(1)').html();
+			var clas = _p.find('td:eq(2)').html();
+			$("#name").html(name);
+			$("#class").html(clas);
+			$("#reason").html(info.reason);
+			$("#leader").html(info.leader);
+			// $("#begin_date").html(info.begin_date);
+			// $("#end_date").html(info.end_date);
+			$("#leave_date").html(info.leave_date);
+			$("#director_note").html(info.director_note);
+			// $("#leader_note").html(info.leader_note);
+			$("#createby").html(info.createby);
+			// $("#auditby").html(info.auditby);
+			$("#statuss").html(info.status_text);
+			$(".right").each(function()
+			{
+				var _this = $(this);
+				if($.trim(_this.html()) == '')
+				{
+					_this.html('暂无数据！');
+				}
+			})
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$("#detail_box").click(function()
+	{
+		$("#shell").hide();
+		$("#detail_box").hide();
+	})
+	$(".cancel-btn").click(function()
+	{
+		$("#shell").hide();
+		$("#detail_box").hide();
+	})
+
+	setTimeout("getList();",500);
+</script>
+
+</block>

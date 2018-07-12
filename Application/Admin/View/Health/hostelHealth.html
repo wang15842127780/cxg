@@ -1,0 +1,328 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<h1 class="tt_h1">位置：宿舍管理>宿舍卫生管理</h1>
+<style type="text/css">
+	#show_box{
+		position:absolute;
+		height:280px;
+		width:300px;
+		text-align:center;
+		background:#fff;
+		left:450px;
+		top:160px;
+		border-radius:10px;
+	}
+	.tb_tr_th th{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.tb_tr_td td{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.detail_table,.hostel_detail,.hostel_table{
+		border-collapse: collapse;
+	}
+	.detail_table th,.detail_table td,.hostel_detail th,.hostel_detail td,.hostel_table th,.hostel_table td{
+		border:1px solid #ccc;
+		width: 200px;
+		text-align: center;
+		height: 30px;
+		font-size: 10pt;
+		border-collapse: collapse;
+		background: #fff;
+	}
+	#receive_all{
+		float:right;
+		margin-right:150px;
+		margin-top:4px;
+		padding:2px;
+		border-radius:5px;
+		background:orange;
+		color:#fff;
+	}
+	.p{
+		width:100%;
+		margin-top:30px;
+		font-size:18px;
+	}
+	.left{
+		display:inline-block;
+		width:50%;
+		text-align:right;
+		padding-right:5px;
+	}
+	.right{
+		display:inline-block;
+		text-align: center;
+	}
+	.lp{
+		text-align:left;
+		font-size:16px;
+		padding:8px 0;
+		border: 1px solid #ccc;
+		border-top:0;
+	}
+	.item{
+		width:25px;
+		height: 25px;
+		background-repeat: no-repeat;
+		background-position: 2px;
+		margin-top: 5px;
+		display: inline-block;
+		background-image: url("__PUBLIC__/iconfont/item.png");
+		background-size: 21px 21px;
+		background-color:#fff;
+		cursor:pointer;
+	}
+	.item_selected{
+		width:25px;
+		height: 25px;
+		background-repeat: no-repeat;
+		background-position: 2px;
+		margin-top: 5px;
+		display: inline-block;
+		background-image: url("__PUBLIC__/iconfont/item_selected.png");
+		background-size: 21px 21px;
+		background-color:#fff;
+		cursor:pointer;
+	}
+	.classify{
+		width:25px;
+		height: 25px;
+		background-repeat: no-repeat;
+		background-position: 2px;
+		margin-top: 5px;
+		display: inline-block;
+		background-image: url("__PUBLIC__/iconfont/classify.png");
+		background-size: 21px 21px;
+		background-color:#fff;
+		cursor:pointer;
+	}
+	.classify_selected{
+		width:25px;
+		height: 25px;
+		background-repeat: no-repeat;
+		background-position: 2px;
+		margin-top: 5px;
+		display: inline-block;
+		background-image: url("__PUBLIC__/iconfont/classify_selected.png");
+		background-size: 21px 21px;
+		background-color:#fff;
+		cursor:pointer;
+	}
+	/*扣分项目管理按钮*/
+	#item{
+		position:absolute;
+		right:20px;
+		background:#0eace0;
+		border-radius: 3px;
+		height:25px;
+		margin-top:3px;
+		color:#fff;
+		padding:1px;
+	}
+</style>
+<div id="cond" style="background:#eee;">
+	<div class="item_selected" title="按学生信息查看"></div>
+	<div class="classify" style="margin-left:20px;" title="按寝室信息查看"></div>
+	<button id="item">管理扣分项目</button>
+</div>
+<br>
+<div style="position:absolute;left:0;top:111px;right:0;bottom:0;overflow:auto;" class="new_table">
+	<table id="table" class="new_table" style="display:none;margin-left:20px;margin-top:0;margin-bottom:10px;">
+		<tr class="tb_tr_th">
+			<th>ID</th>
+			<th>姓名</th>
+			<th>班级</th>
+			<th>宿舍</th>
+			<th>分数</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div style="position:absolute;left:20px;top:130px;right:0;bottom:0;overflow:auto;display:none;border-radius:8px;" class="detail_table">
+	<table id="detail_table" class="detail_table" style="display:none;margin-left:10px;margin-top:15px;margin-bottom:10px;">
+		<tr class="tb_tr_th">
+			<th>姓名</th>
+			<th>班级</th>
+			<th>日期</th>
+			<th>扣分详情</th>
+		</tr>
+	</table>
+</div>
+<div style="position:absolute;left:0;top:111px;right:0;bottom:0;overflow:auto;display:none;" class="hostel_table">
+	<table id="hostel_table" class="hostel_table" style="display:none;margin-left:20px;margin-top:20px;margin-bottom:10px;">
+		<tr class="tb_tr_th">
+			<th>宿舍</th>
+			<th>评分</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div style="position:absolute;left:20px;top:130px;right:0;bottom:0;overflow:auto;display:none;border-radius:8px;" class="hostel_detail">
+	<table id="hostel_detail" class="hostel_detail" style="display:none;margin-left:10px;margin-top:15px;margin-bottom:10px;">
+		<tr class="tb_tr_th">
+			<th>ID</th>
+			<th>姓名</th>
+			<th>班级</th>
+			<th>宿舍</th>
+			<th>分数</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+	
+</div>
+<div id="shell_img" class="zshow">
+        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35">
+        <p>加载中...</p>
+</div>
+<input type="hidden" id="hid">
+<script type="text/javascript" src="__PUBLIC__/js/admindate.js"></script>
+<script type="text/javascript">
+	window.getStudentsByPointsDesc = function()
+	{
+		var url = "index.php?m=Admin&c=Health&a=getStudentsByPointsDesc";
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			if(res.leader != 1)
+			{
+				$("#receive_all").hide();
+			}
+			$("#table").show();
+			$(".zshow").hide();
+			var list = res.content;
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'name';
+			field[2] = 'class_text';
+			field[3] = 'hostel_text';
+			field[4] = 'points';
+			field[5] = 'act_text';
+			listPage(list,1,30,field);
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+		}
+	}
+	$(".detail").live("click",function()
+	{
+		var sid = $(this).attr("sign");
+		var url = "index.php?m=Admin&c=Health&a=getDetailByStudentId";
+		var data = {sid:sid,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			var list = res.content;
+			var str = "";
+			for(var i in list)
+			{
+				str += "<tr class='details'><td>"+list[i].student_name+"</td><td>"+list[i].class_text+"</td><td>"+list[i].points_date+"</td><td>"+list[i].points_details+"</td></tr>";
+			}
+			str += "<tr class='details' style='height:40px;'><td colspan='4'><button id='return' style='width:60px;height:28px;background:orange;color:#fff;'>返回</button></td></tr>"
+			$(".details").remove();
+			$("#detail_table").append(str);
+			$(".new_table").hide();
+			$(".detail_table").show();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	//按寝室分数查看
+	window.getHostelByGradeAsc = function()
+	{
+		var url = "index.php?m=Admin&c=Health&a=getHostelByGradeAsc";
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		// console.info(res);
+		if(res.status == 'success')
+		{
+			$(".hostel_detail_table").remove();
+			var str = '';
+			var lists = res.content;
+			for(var i in lists)
+			{
+				str += "<tr class='hostel_detail_table'><td>"+lists[i].hostel+"</td><td>"+lists[i].grade+"</td><td>"+lists[i].act_text+"</td></tr>";
+			}
+			$("#hostel_table").append(str);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	}
+	$(".hostel_details").live("click",function()
+	{
+		var id = $(this).attr("sign");
+		var url = 'index.php?m=Admin&c=Health&a=getDetailByHostelId';
+		var data = {hid:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			var lists = res.content;
+			var str = '';
+			for(var i in lists)
+			{
+				str += "<tr class='hostel_details_table'><td>"+lists[i].id+"</td><td>"+lists[i].name+"</td><td>"+lists[i].class_text+"</td><td>"+lists[i].hostel_text+"</td><td>"+lists[i].points+"</td></tr>";
+			}
+			str += "<tr class='hostel_details_table' style='height:40px;'><td colspan='5'><button id='return1' style='width:60px;height:28px;background:orange;color:#fff;'>返回</button></td></tr>"
+			$(".hostel_details_table").remove();
+			$("#hostel_detail").append(str);
+			$(".hostel_detail").show();
+			$(".hostel_table").hide();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$("#return").live("click",function()
+	{
+		$(".new_table").show();
+		$(".detail_table").hide();
+	})
+	$("#return1").live("click",function()
+	{
+		$(".hostel_detail").hide();
+		$(".hostel_table").show();
+	})
+
+	$(".item").live("click",function()
+	{
+		$(this).attr("class","item_selected");
+		$(".classify_selected").attr("class","classify");
+		$(".new_table").show();
+		$(".detail_table").hide();
+		$(".hostel_detail").hide();
+		$(".hostel_table").hide();
+		getStudentsByPointsDesc();
+	})
+	$(".classify").live("click",function()
+	{
+		$(this).attr("class","classify_selected");
+		$(".new_table").hide();
+		$(".detail_table").hide();
+		$(".hostel_detail").hide();
+		$(".hostel_table").show();
+		$(".item_selected").attr("class","item");
+		getHostelByGradeAsc();
+	})
+	$("#item").click(function()
+	{
+		window.location.href = "?m=Admin&c=Health&a=index&id=7.74";
+	})
+
+	setTimeout("getStudentsByPointsDesc();",500);
+</script>
+</block>

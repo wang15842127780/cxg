@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>用户登录</title>
+	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
+	<style type="text/css">
+		.p{
+			width:100%;
+			text-align:center;
+		}
+		#submit{
+			background:#50b2f9;
+			width:46%;
+			height:48px;
+			font-size:22px;
+			margin-left:27%;
+			margin-top:70px;
+			border:0;
+			border-radius:24px;
+			color:white;
+		}
+		#name{
+			width:73%;
+			height:39px;
+			border:2px solid #add1ff;
+			margin-top:17px;
+			border-radius:30px;
+			padding-left:20px;
+			color:#fff;
+			background-color:transparent;
+		}
+		#pass{
+			width:73%;
+			height:39px;
+			border:2px solid #add1ff;
+			margin-top:17px;
+			border-radius:30px;
+			padding-left:20px;
+			color:#fff;
+			background-color:transparent;
+		}
+		input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+			color:#fff;
+　　	}
+	</style>
+</head>
+<body style="background:url('/cxg/Public/images/lantian.jpg');background-repeat:no-repeat;background-size:100%;">
+	<h1 style="height:100px;line-height:100px;text-align:center;color:white;font-size:40px;margin-top:120px;">Welcome</h1>
+	<p class="p">
+		<input type="text" placeHolder="请输入用户名" id="name">
+	</p>
+	<p class="p">
+		<input type="password" placeHolder="请输入密码" id="pass">
+	</p>
+	<button id="submit">
+		登录
+	</button>
+</body>
+</html>
+<script>
+	window.getCookie = function(name)
+	{
+		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+		if(arr=document.cookie.match(reg))
+			return unescape(arr[2]);
+		else
+			return null;
+	}
+	var user = getCookie("user");
+	if(user != null)
+	{
+		// window.location.href = '/cxg/wap/';
+	}
+
+	$("#submit").click(function()
+	{
+		var name = $("#name").val();
+		if($.trim(name) == '')
+		{
+			alert('用户名不能为空！');
+			return;
+		}
+		var pass = $("#pass").val();
+		if($.trim(pass) == '')
+		{
+			alert('密码不能为空！');
+			return;
+		}
+		var url = "/cxg/index.php?m=Home&c=Log&a=wapLog";
+		var data = {name:name,pass:pass,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			window.location.href = '/cxg/wap';
+		}
+		else
+		{
+			alert(res.content);
+		}
+	})
+</script>

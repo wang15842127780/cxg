@@ -1,0 +1,281 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	.new_table th{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.tb_tr_td td{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+	.add_left{
+		display:inline-block;
+		width: 25%;
+		text-align: right;
+	}
+	.add_right{
+		display: inline-block;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：宿舍管理>查看宿舍</h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	楼号：<input type="text" id="sbuild">&nbsp;&nbsp;
+	房间号：<input type="text" id="sno">&nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加宿舍信息</button></p>
+<br>
+<div id="con_div">
+	<table id="table" class="new_table">
+		<tr style="display:none;">
+			<th>ID</th>
+			<th>楼号</th>
+			<th>楼层</th>
+			<th>房间号</th>
+			<th>性别</th>
+			<th>房间类型</th>
+			<th>可住人数</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="__PUBLIC__/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
+</div>
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
+	<br>
+		<p>添 加 宿 舍</p>
+		<br>
+		<input type="hidden" id="hid">
+		<p class="add_left">楼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</p><p class="add_right"><input type="text" name="build" id="build"></p><br>
+		<p class="add_left">楼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;层：</p><p class="add_right"><input type="text" name="floor" id="floor"></p><br>
+		<p class="add_left">房&nbsp;间&nbsp;号：</p><p class="add_right"><input type="text" name="no" id="no"></p><br>
+		<p class="add_left">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</p><p class="add_right"><select name="sex" id="sex" style="margin-top:10px;width:104px;"></select></p><br>
+		<p class="add_left">房间类型：</p><p class="add_right"><select name="htype" id="htype" style="margin-top:10px;width:104px;"></select></p><br><br>
+		<p>		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class="cancel-btn">取消</button><br><br></p>
+		
+	</form>
+</div>
+
+<script type="text/javascript">
+	window.getList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getHostelList";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").find('tr').show();
+			$(".zshow").hide();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'build';
+			field[2] = 'floor';
+			field[3] = 'no';
+			field[4] = 'sex_text';
+			field[5] = 'name';
+			field[6] = 'contain';
+			var lists = res.content;
+			if(res.leader == 1)
+			{
+				listPage(lists,1,15,field,true);
+			}
+			else
+			{
+				field[7] = 'act_text';
+				$(".add-btn").hide();
+				listPage(lists,1,15,field);
+			}
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
+		}
+	}
+
+	$(".search").click(function()
+	{
+		var build = $("#sbuild").val();
+		var no = $("#sno").val();
+		var cond = {build:build,no:no};
+		getList(cond);
+	})
+
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+		var sex_str = "<option value='0'>女</option><option value='1'>男</option><option value='2'>无</option>";
+		$("#sex").html(sex_str);
+		var htype_str = '';
+		var htype_list = {$typeList};
+		console.info(htype_list);
+		for(var i in htype_list)
+		{
+			htype_str += '<option value="'+htype_list[i].id+'">'+htype_list[i].name+'</option>';
+		}
+		$("#htype").html(htype_str);
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var id = $("#hid").val();
+		var build = $("#build").val();
+		if($.trim(build) == '')
+		{
+			tips('楼号不能为空！',2);
+			return;
+		}
+		var floor = $("#floor").val();
+		if($.trim(floor) == '')
+		{
+			tips('楼层号不能为空！',2);
+			return;
+		}
+		var no = $("#no").val();
+		if($.trim(no) == '')
+		{
+			tips('房间号不能为空！',2);
+			return;
+		}
+		var sex = $("#sex").val();
+		var htype = $("#htype").val();
+		if($.trim(htype) == '')
+		{
+			tips('房间类型不能为空，请先设置房间类型!',2);
+			return;
+		}
+		if($.trim(id) == '')
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=addHostel';
+			var data = {build:build,floor:floor,no:no,sex:sex,htype:htype,typ:'json'};
+		}
+		else
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=editHostel';
+			var data = {id:id,build:build,floor:floor,no:no,sex:sex,htype:htype,typ:'json'};
+		}
+			
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		$("#shell").hide();
+		$("#add_form").hide();
+		$("#hid").val('');
+		$("#build").val("");
+		$("#floor").val("");
+		$("#no").val("");
+	})
+
+	$(".edit-btn").live("click",function()
+	{
+		var id = $(this).attr('sign');
+		var url = "index.php?m=Admin&c=Setting&a=getHostelById";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#hid").val(id);
+			$("#shell").show();
+			$("#add_form").show();
+			var info = res.content;
+			$("#build").val(info.build);
+			$("#floor").val(info.floor);
+			$("#no").val(info.no);
+			if(info.sex == 1)
+			{
+				var sex_str = "<option value='0'>女</option><option value='1' selected>男</option><option value='2'>无</option>";
+			}
+			else if(info.sex == 2)
+			{
+				var sex_str = "<option value='0'>女</option><option value='1'>男</option><option value='2' selected>无</option>";
+			}
+			else
+			{
+				var sex_str = "<option value='0' selected>女</option><option value='1'>男</option><option value='2'>无</option>";
+			}
+			$("#sex").html(sex_str);
+			var htype_str = '';
+			var htype = {$typeList};
+			for(var i in htype)
+			{
+				if(htype[i].id == info.type)
+				{
+					htype_str += "<option value='"+htype[i].id+"' selected>"+htype[i].name+"</option>";
+				}
+				else
+				{
+					htype_str += "<option value='"+htype[i].id+"'>"+htype[i].name+"</option>";
+				}
+				
+			}
+			$("#htype").html(htype_str);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+
+	})
+
+	$(".del-btn").live("click",function()
+	{
+		var msg = "您真的确定要删除吗？\n\n请确认！";
+		if(confirm(msg)==true)
+		{
+			var _this = $(this);
+			var id = $(this).attr("sign");
+			var url = "index.php?m=Admin&c=Setting&a=delHostel";
+			var data = {id:id,typ:'json'};
+			var res = ajax(url,data);
+			if(res.status == 'success')
+			{
+				tips(res.content,1);
+				_this.parents('tr').remove();
+			}
+			else
+			{
+				tips(res.content,2);
+			}
+		}
+	})
+	setTimeout("getList();",500);
+</script>
+</block>

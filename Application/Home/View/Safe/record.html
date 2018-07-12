@@ -1,0 +1,68 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<h1 class="tt_h1">查看报警记录</h1>
+<input type="hidden" id="cid">
+<form style="display:none;" action="index.php?m=Home&c=Safe&a=index&id=6.42" method="post" id="form">
+	<input type="text" id="page" name="page">
+</form>
+<br>
+<if condition="$warning eq ''">
+<p style="color:red;">暂无报警信息</p>
+<else />
+<table id="table">
+	<tr class="tb_tr_th">
+		<th>ID</th>
+		<th>报警ID</th>
+		<th>姓名</th>
+		<th>班级</th>
+		<th>相机名</th>
+		<th>时间</th>
+		<th>已读</th>
+	</tr>
+	<foreach item="list" name="warning">
+		<tr class="warning tb_tr_td" sign="{$list.id}">
+			<td>{$list.id}</td>
+			<td>{$list.alarm_id}</td>
+			<td>{$list.stu_name}</td>
+			<td>{$list.stu_class}</td>
+			<td>{$list.camera_name}</td>
+			<td>{$list.time}</td>
+			<td class='last_child'>{$list.read_text}</td>
+		</tr>
+	</foreach>
+	<if condition="$page neq ''">
+		<tr>
+			<td colspan="7">
+				{$page}
+			</td>
+		</tr>
+	</if>
+</table>
+</if>
+<script type="text/javascript">
+	$(".warning").click(function()
+	{
+		var id = $(this).attr('sign');
+		var url = "index.php?m=Home&c=Safe&a=read";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		var _this = $(this).find(".last_child");
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			_this.html('已读');
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	$(".page").click(function()
+	{
+		var page = $(this).html();
+		$("#page").val(page);
+		$("#form").submit();
+	})
+</script>
+</block>

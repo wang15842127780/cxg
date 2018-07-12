@@ -1,0 +1,86 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<style type="text/css">
+	.select{
+		display:none;
+	}
+	.count{
+		display:none;
+	}
+	#title{
+		text-align:left;
+		padding-left:200px;
+		color:orange;
+		font-size:15px;
+	}
+	#ccc{
+		width:335px;
+	}
+</style>
+<h1 class="tt_h1">查看教师信息</h1>
+<div id="cond">
+	<form onsubmit="return false;">
+		教师姓名：<input type="text" id="sname" style="width:60px;">
+		开始时间：<input class="sang_Calender" type="text" name="stime" value="" placeholder="请选择" readonly="" style="width:130px;">
+		结束时间：<input class="sang_Calender" type="text" name="etime" value="" placeholder="请选择" readonly="" style="width:130px;">
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<br>
+<p id="title"></p>
+<table id="table" style='display:none;'>
+	<tr class="tb_tr_th">
+		<th class="count" id="ccc">时间</th>
+		<th class="select">日期</th>
+		<th class="select">姓名</th>
+		<th class="count">姓名</th>
+		<th class="count">签到次数</th>
+		<th class="select">时间</th>
+	</tr>
+</table>
+<script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
+<script type="text/javascript">
+	$("#submit").click(function()
+	{
+		var tname = $("#sname").val();
+		var stime = $("input[name='stime']").val();
+		var etime = $("input[name='etime']").val();
+		var url = "index.php?m=Home&c=Mess&a=getTeacherRecord";
+		var data = {tname:tname,stime:stime,etime:etime,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			if(res.act == 'count')
+			{
+				$("#table").show();
+				$(".select").hide();
+				$(".count").show();
+				var field = Array();
+				field[0] = 'time';
+				field[1] = 'name';
+				field[2] = 'count';
+				listPage(res.content,1,30,field);
+				$("#title").html(res.state);
+			}
+			else
+			{
+				$("#table").show();
+				$(".select").show();
+				$(".count").hide();
+				var field = Array();
+				field[0] = 'date';
+				field[1] = 'name';
+				field[2] = 'datetime';
+				listPage(res.content,1,30,field);
+				$("#title").html(res.state);
+			}
+		}
+		else
+		{
+			tips(res.content,2);
+			$("#table").hide();
+		}
+	})
+</script>
+</block>

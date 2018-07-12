@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>校园管理系统</title>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/admin.css" type="text/css">
+	<style type="text/css">
+		.hide{
+			display:none;
+		}
+		.color{
+			background:#434343 !important;
+		}
+		.tmenu{
+			margin-left:20px;
+			font-size:9pt;
+			text-align:center;
+			display:inline-block;
+			color:#fff;
+			text-decoration:none;
+		}
+		.user b{
+			display:inline-block;
+			width:60px;
+			height:18px;
+			background:#CB0303;
+			text-align:center;
+			font-weight:normal;
+			color:#fff;
+			font-size:14px;
+			margin-right:13px;
+			/*margin-top:7px;*/
+			line-height:18px;
+			cursor:pointer;
+			font-size:9pt;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="body">
+		<!-- 顶部图片 -->
+		<!-- <img src="./images/top3.jpg" style="height:75px;width:1280px;" /> -->
+		<div id="top" style="background-image:url(__PUBLIC__/images/top.png);background-size:100% 60px;height:60px;">
+			<a href="/cxg/index.php?m=Admin" style="margin-left:20px;margin-top:10px;display:inline-block;">
+				<img src="__PUBLIC__/iconfont/logo.jpg" alt="系统首页" height="40">
+			</a>
+			<a href="/cxg/index.php?m=Admin" class="tmenu">
+				<img src="__PUBLIC__/iconfont/home.png" alt="系统首页" height="25">
+				<p>工作台首页</p>
+			</a>
+			<a href="/cxg/index.php?m=Admin" class="tmenu">
+				<img src="__PUBLIC__/iconfont/student.png" alt="学生信息" height="25">
+				<p>学生信息</p>
+			</a>
+			<a href="/cxg/index.php?m=Admin&c=Leave&a=index&id=60.62" class="tmenu">
+				<img src="__PUBLIC__/iconfont/leave.png" alt="请假管理" height="25">
+				<p>请假管理</p>
+			</a>
+			<span class="user" style='display:inline-block;height:20px;margin-right:30px;margin-top:10px;background:#b8ceda;padding:7px;color:#b8ceda;background:rgb(0,52,113) repeat-x;border-radius:30px;'>&nbsp;&nbsp;&nbsp;&nbsp;用户名：【{$Think.cookie.user}】&nbsp;&nbsp;&nbsp;&nbsp;<b>修改密码</b>&nbsp;&nbsp;&nbsp;&nbsp;<b id="logout">退出</b></span>
+		</div>
+		<!-- 主菜单 -->
+		<div id="main_menu">
+			<ul>
+				<li>主菜单</li>
+				<foreach item="list" name="main_menu">
+					<li><a href="javascript:void(0);" title="{$list.id}" class="maina">{$list.menu_name}</a></li>
+				</foreach>
+			</ul>
+		</div>
+		<!-- 主页内容  -->
+		<div id="home">
+			<if condition="$path eq ''">
+			<h1>欢迎使用智能管理系统</h1>
+			<else/>
+			<iframe src="__ROOT__/Application/Home/View/Index/{$path}" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
+			</if>
+		</div>
+
+		<!-- 子菜单 -->
+		<div id="sub_menu" style="display:none;">
+			<foreach item='lists' name="menu">
+				<ul class="menu{$lists.id} sub" style="display:none;">
+					<foreach item="sub" name="lists.sub_menu">
+						<li>
+							<a href="javascript:void(0);" class="mina">{$sub.menu_name}&nbsp;<l class="i">></l></a>
+							<foreach item='min' name='sub.sub_menu'>
+							<p class='min_menu hide' style="font-size:15px;height:30px;line-height:30px;"><a href="javascript:void(0);" class="fun fun{$min.id}" title="{$lists.id}.{$min.id}">{$min.menu_name}</a></p>
+							</foreach>
+						</li>
+					</foreach>
+				</ul>
+			</foreach>
+		</div>
+		
+		<!-- 底部图片 -->
+		<img src="__PUBLIC__/images/footer1.jpg" style="height:35px;width:100%;margin-top:-4px;">
+	</div>
+
+</body>
+</html>
+<script type="text/javascript">
+	$("#logout").click(function()
+	{
+		window.location.href = "/cxg/index.php?m=Admin&c=Log&a=logout";
+	})
+	$(".maina").click(function()
+	{
+		var id = $(this).attr("title");
+		$(".sub").hide();
+		$(".menu"+id).show();
+		$("#sub_menu").show();
+	})
+	$(".mina").click(function()
+	{
+		$(".i").html(">");
+		$(".min_menu").addClass("hide");
+		$(".min_menu").parent().removeClass("color");
+		$(this).find(".i").html("v");
+		$(this).siblings("p").removeClass("hide");
+		$(this).siblings("p").parent().addClass("color");
+	})
+	
+	function getCookie(cookieName)
+	{
+		var strCookie = document.cookie;
+		var arrCookie = strCookie.split("; ");
+		console.info(arrCookie);
+		for(var i=0;i<arrCookie.length;i++)
+		{
+			var arr = arrCookie[i].split("=");
+			if(cookieName == arr[0])
+			{
+				return arr[1];
+			}
+		}
+		return "";
+	}
+	var utype = getCookie('type');
+	if(utype != 1)
+	{
+		$(".fun21").parents("li").siblings().remove();
+		$(".fun22").parent().remove();
+	}
+
+	$(".fun").click(function()
+	{
+		var type = $(this).attr("title");
+		window.location.href = "/cxg/index.php?m=Admin&c=Index&a=index&act="+type;
+	})
+
+	$(".edit").click(function()
+	{
+		$(".edit").remove();
+	})
+
+</script>

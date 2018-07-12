@@ -1,0 +1,171 @@
+﻿*{
+	margin:0;
+	padding:0;
+}
+
+/*手机端按钮样式*/
+.confirm-btn{
+	height:25px;
+	width:70px;
+	font-size:12px;
+	color:white;
+	border-radius:5px;
+	background:#22ac38;
+	border:0;
+}
+.cancel-btn{
+	height:25px;
+	width:70px;
+	font-size:12px;
+	border-radius:5px;
+	color:white;
+	background:#c11414;
+	border:0;
+}
+
+/*遮罩层*/
+#shell{
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	z-index:555px;
+	background:#ccc;
+	opacity:0.7;
+}
+#shell_img{
+	position:absolute;
+	left:0;
+	right:0;
+	text-align:center;
+    top:450px;
+}
+#shell_img p{
+	font-size:16px;
+	color:#444;
+}
+
+
+/*-------------------iconfont样式---------------------*/
+/*班级图标*/
+.class_logo{
+	background:url(../../Public/iconfont/class_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*原因图标*/
+.reason_logo{
+	background:url(../../Public/iconfont/reason_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*班主任图标*/
+.director_logo{
+	background:url(../../Public/iconfont/director_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*开始时间图标*/
+.stime_logo{
+	background:url(../../Public/iconfont/stime_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*结束时间图标*/
+.etime_logo{
+	background:url(../../Public/iconfont/etime_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*创建人图标*/
+.create_logo{
+	background:url(../../Public/iconfont/create_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*班主任意见图标*/
+.director_note_logo{
+	background:url(../../Public/iconfont/director_note_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*年级主任意见图标*/
+.leader_note_logo{
+	background:url(../../Public/iconfont/leader_note_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*审批人图标*/
+.audity_logo{
+	background:url(../../Public/iconfont/audity_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*状态图标*/
+.status_logo{
+	background:url(../../Public/iconfont/status_logo.png);
+	width:20px;
+	height:20px;
+	background-size:19px 19px;
+	margin-left:12px;
+	margin-top:7px;
+	position:absolute;
+}
+/*正确图标*/
+.right_logo{
+	background:url(../../Public/iconfont/right_logo.png);
+	width:14px;
+	height:14px;
+	background-size:14px 14px;
+	margin-left:-4px;
+	margin-top:2px;
+	position:absolute;
+}
+/*错误图标*/
+.wrong_logo{
+	background:url(../../Public/iconfont/wrong_logo.png);
+	width:14px;
+	height:14px;
+	background-size:14px 14px;
+	margin-left:-4px;
+	margin-top:2px;
+	position:absolute;
+}
+

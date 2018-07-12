@@ -1,0 +1,59 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<h1 class="tt_h1">查看学生信息</h1>
+<div id="cond">
+	<form action="index.php?m=Home&c=Hostel&a=index&id=2.50" method="post">
+		班级：<select name="croom" id="sclass"  style='width:60px;padding-left:5px;'>
+			<option value="0">全部</option>
+			<foreach item='clist' key='k' name='clist'>
+				<option value="{$clist.id}" <if condition="$clist.id eq $croom">selected</if> >{$clist.name}</option>
+			</foreach>
+		</select>
+		&nbsp;
+		姓名：<input type="text" name="cname" style="width:50px;" value="{$Think.post.cname}">
+		开始时间：<input class="sang_Calender" type="text" name="stime" value="{$Think.post.stime}" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		结束时间：<input class="sang_Calender" type="text" name="etime" value="{$Think.post.etime}" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<br>
+<if condition="$hostel eq ''">
+	<p style="color:red;font-size:20px;">暂无统计数据</p>
+<else />
+<table id="table">
+	<tr class="tb_tr_th">
+		<th>ID</th>
+		<th>姓名</th>
+		<th>班级</th>
+		<th>时间</th>
+		<th>类型</th>
+	</tr>
+	<foreach item="lists" name="hostel">
+		<tr class="tb_tr_td">
+			<td>{$lists.id}</td>
+			<td>{$lists.stu_name}</td>
+			<td>{$lists.stu_class}</td>
+			<td>{$lists.time}</td>
+			<td>{$lists.type_text}</td>
+		</tr>
+	</foreach>
+	<if condition="$dlist neq ''">
+		<foreach item="list" name="dlist">
+			<tr class="tb_tr_td">
+				<td>{$list.id}</td>
+				<td>{$list.stu_name}</td>
+				<td>{$list.stu_class}</td>
+				<td>{$list.time}</td>
+				<td>{$list.type_text}</td>
+			</tr>
+		</foreach>
+	</if>
+</table>
+</if>
+<script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
+<script type="text/javascript">
+
+</script>
+
+</block>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>校园管理系统</title>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/livequery.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/fun.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css" type="text/css">
+	<style type="text/css">
+		.hide{
+			display:none;
+		}
+		.color{
+			background:#434343 !important;
+		}
+	</style>
+</head>
+<body>
+	<div id="body">
+		<!-- 顶部图片 -->
+		<!-- <img src="./images/top3.jpg" style="height:75px;width:1280px;" /> -->
+		<div id="top" style="background-image:url(__PUBLIC__/images/dbyc.jpg);background-size:100% 75px;">
+<span style='display:inline-block;margin-right:15%;'>用户名：{$Think.cookie.user}&nbsp;<a href='/cxg/index.php?m=Home&c=Index&a=editPass'>[修改密码]</a>&nbsp;<a href="javascript:void(0);" id="logout">[退出]</a></span>
+		</div>
+		<input type="hidden" id="htype" value="{$typ}">
+		<!-- 主菜单 -->
+		<div id="main_menu">
+			<ul>
+				<li>主菜单</li>
+				<foreach item="list" name="main_menu">
+					<li><a href="javascript:void(0);" title="{$list.id}" class="maina">{$list.menu_name}</a></li>
+				</foreach>
+			</ul>
+		</div>
+		<!-- 主页内容  -->
+		<div id="home" style='overflow:auto;'>
+			<block name="menu"></block>
+		</div>
+
+		<!-- 子菜单 -->
+		<div id="sub_menu">
+			<foreach item='lists' name="menu">
+				<ul class="menu{$lists.id} sub" style="display:none;">
+					<foreach item="sub" name="lists.sub_menu">
+						<li>
+							<a href="javascript:void(0);" class="mina mina{$lists.id}">{$sub.menu_name}&nbsp;<l class="i">></l></a>
+							<foreach item='min' name='sub.sub_menu'>
+							<p class='min_menu hide' style="font-size:15px;height:30px;line-height:30px;"><a href="javascript:void(0);" title="{$min.id}" sign="{$lists.id}.{$min.id}" class="fun fun{$min.id}" >{$min.menu_name}</a></p>
+							</foreach>
+						</li>
+					</foreach>
+				</ul>
+			</foreach>
+		</div>
+		
+		<!-- 底部图片 -->
+		<img src="__PUBLIC__/images/footer1.jpg" style="height:35px;width:100%;margin-top:-4px;">
+	</div>
+	
+</body>
+</html>
+<script type="text/javascript">
+	$("#logout").click(function()
+	{
+		window.location.href = "/cxg/index.php?m=Home&c=Log&a=logout";
+	})
+	$(".maina").click(function()
+	{
+		var id = $(this).attr("title");
+		$(".sub").hide();
+		$(".menu"+id).show();
+	})
+	$(".mina").click(function()
+	{
+		$(".i").html(">");
+		$(".min_menu").addClass("hide");
+		$(".min_menu").parent().removeClass("color");
+		$(this).find(".i").html("v");
+		$(this).siblings("p").removeClass("hide");
+		$(this).siblings("p").parent().addClass("color");
+	})
+	
+	function getCookie(cookieName)
+	{
+		var strCookie = document.cookie;
+		var arrCookie = strCookie.split("; ");
+		for(var i=0;i<arrCookie.length;i++)
+		{
+			var arr = arrCookie[i].split("=");
+			if(cookieName == arr[0])
+			{
+				return arr[1];
+			}
+		}
+		return "";
+	}
+	var utype = getCookie('type');
+	if(utype != 1)
+	{
+		$(".fun21").parents("li").siblings().remove();
+		$(".fun22").parent().remove();
+	}
+
+	var type = $("#htype").val();
+	console.info(type);
+	var aa = type.split(".")[0];
+	var bb = type.split(".")[1];
+	if(Number(bb) == 68)
+	{
+		bb = 66;
+	}
+	if(Number(bb) == 69)
+	{
+		bb = 67;
+	}
+	if(Number(bb) == 72)
+	{
+		bb = 67;
+	}
+	$(".menu"+aa).show();
+	$(".fun"+bb).parent().removeClass('hide');
+	$(".fun"+bb).parents("li").addClass('color');
+	$(".fun"+bb).parent().siblings("p").removeClass('hide');
+	$(".fun"+bb).parent().siblings("a").find(".i").html("v");
+
+	var test = window.location.href;
+	var pos = test.indexOf("id=");
+	var le = test.substr(0,pos);
+	// alert(le);
+	$('.fun').click(function()
+	{
+		var ii = $(this).attr('title');
+		var iii = $(this).attr('sign');
+		window.location.href = 'index.php?m=Home&c=Index&a=index&'+"act="+iii;
+	})
+
+</script>

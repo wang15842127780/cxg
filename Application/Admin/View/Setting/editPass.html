@@ -1,0 +1,93 @@
+<extend name="index" />
+<block name="menu">
+
+<form action="" onsubmit="return false;" style="width:100%;text-align:center;">
+<span class="old_pass">
+	<br>
+	<h1 class="tt_h1">位置：修改密码>请输入原密码</h1>
+	<br><br>
+	<p style="font-size:20px;color:#1fbf60;">
+		旧密码：<input type="password" id="old_pass" style="height:25px;">
+	</p>
+	<br><br><br>
+	<button id="next" style="color:rgba(36, 36, 36, 0.76);height:35px;width:90px;">下一步</button>
+</span>	
+<span class="new_pass" style="display:none;">
+	<br>
+	<h1 class="tt_h1">位置：修改密码>请输入新密码</h1>
+	<br><br>
+	<p style="font-size:20px;color:#1fbf60;">
+		新&nbsp;密&nbsp;码：<input type="password" id="new_pass" style="height:25px;">
+	</p>
+	<br><br>
+	<p style="font-size:20px;color:#1fbf60;">
+		确认密码：<input type="password" id="re_pass" style="height:25px;">
+	</p>
+	<br><br><br>
+	<button id="complete" style="color:rgba(36, 36, 36, 0.76);height:35px;width:90px;">完成</button>
+</span>
+</form>
+<script type="text/javascript">
+
+	$("#next").click(function()
+	{
+		var old_pass = $("#old_pass").val();
+		if($.trim(old_pass) == "")
+		{
+			tips("原密码不能为空！",2);
+			return;
+		}
+		var url = "index.php?m=Admin&c=Setting&a=checkPass";
+		var data = {old:old_pass,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$('.old_pass').hide();
+			$(".new_pass").show();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$("#complete").click(function()
+	{
+		var new_pass = $("#new_pass").val();
+		if($.trim(new_pass) == "")
+		{
+			tips('新密码不能为空！',2);
+			return;
+		}
+		if(new_pass.length<6 || new_pass.length>16)
+		{
+			tips('密码长度为6-16位！',2);
+			return;
+		}
+		if(Number(new_pass)==new_pass && new_pass.length<9)
+		{
+			tips('纯数字密码长度不能低于9位！',2);
+			return;
+		}
+		var re_pass = $("#re_pass").val();
+		if(new_pass != re_pass)
+		{
+			tips('两次密码输入不一致！',2);
+			return;
+		}
+		var url = 'index.php?m=Admin&c=Setting&a=editPass';
+		var data = {new_pass:new_pass,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout('window.location.reload();',1500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+</script>
+</block>

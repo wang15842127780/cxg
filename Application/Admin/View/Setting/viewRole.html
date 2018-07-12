@@ -1,0 +1,187 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	.new_table th{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.tb_tr_td td{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：身份管理>角色管理</h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	角色名称：<input type="text" id="srole">&nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加角色信息</button></p>
+<br>
+<div id="con_div">
+	<table id="table" class="new_table">
+		<tr style="display:none;">
+			<th>ID</th>
+			<th>角色名称</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="__PUBLIC__/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
+</div>
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
+	<br>
+		<p>添 加 角 色</p>
+		<br>
+		<input type="hidden" id="hid">
+		角色名称：<input type="text" name="role" id="role"><br><br>
+		<br><br>
+		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button><br><br>
+	</form>
+</div>
+
+<script type="text/javascript">
+	window.getList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getRoleList";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").find('tr').show();
+			$(".zshow").hide();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'role_name';
+			var lists = res.content;
+			if(res.leader == 1)
+			{
+				listPage(lists,1,15,field,true);
+			}
+			else
+			{
+				field[2] = 'act_text';
+				$(".add-btn").hide();
+				listPage(lists,1,15,field);
+			}
+			
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
+		}
+	}
+
+	$(".search").click(function()
+	{
+		var srole = $("#srole").val();
+		var cond = {name:srole};
+		getList(cond);
+	})
+
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var id = $("#hid").val();
+		var role = $("#role").val();
+		if($.trim(role) == "")
+		{
+			tips('角色名称不能为空！',2);
+			return;
+		}
+		if($.trim(id) == '')
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=addRole';
+			var data = {name:role,typ:'json'};
+		}
+		else
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=editRole';
+			var data = {id:id,name:role,typ:'json'};
+		}
+			
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		$("#shell").hide();
+		$("#add_form").hide();
+		$("#hid").val('');
+		$("#role").val("");
+	})
+
+	$(".edit-btn").live("click",function()
+	{
+		var role = $(this).parent().prev().html();
+		$("#role").val(role);
+		$("#shell").show();
+		$("#add_form").show();
+		var id = $(this).attr('sign');
+		$("#hid").val(id);
+	})
+
+	$(".del-btn").live("click",function()
+	{
+		var msg = "您真的确定要删除吗？\n\n请确认！";
+		if(confirm(msg)==true)
+		{
+			var _this = $(this);
+			var id = $(this).attr("sign");
+			var url = "index.php?m=Admin&c=Setting&a=delRole";
+			var data = {id:id,typ:'json'};
+			var res = ajax(url,data);
+			if(res.status == 'success')
+			{
+				tips(res.content,1);
+				_this.parents('tr').remove();
+			}
+			else
+			{
+				tips(res.content,2);
+			}
+		}
+	})
+	setTimeout("getList();",500);
+</script>
+</block>

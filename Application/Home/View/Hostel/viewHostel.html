@@ -1,0 +1,178 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	/*table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}*/
+	/*td{
+		min-width:140px;
+		height:45px;
+		font-size:18px;
+		border:1px solid black;
+		line-height:45px;
+	}*/
+	/*.del-btn{
+		width:30px;
+		height:100%;
+		float:right;
+		cursor:pointer;
+		border-left:1px solid #aaa;
+		background:#00ff66;
+	}*/
+	/*#cond{
+		padding-left:50px;
+		background:#ccc;
+		width:100%;
+		text-align:left;
+		height:35px;
+		line-height:35px;
+	}*/
+</style>
+<br>
+<h1 class="tt_h1">查看宿舍</h1>
+<div id="cond">
+	<form id="form" method='post'>
+		楼号：<select name="build" id=""  style='width:50px;padding-left:5px;'>
+			<foreach item='hostel' key='k' name='hostel'>
+				<option value="{$k}" <if condition="$k eq $bb">selected</if> >{$k}</option>
+			</foreach>
+		</select>
+		<input type="hidden" name="hostel_id" id="hid">
+		<input type="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<br>
+<table id="table">
+	{$state}
+	<if condition="$hlist.l1 neq ''">
+		<tr id="l1">
+			<td class="tb_tr_tt">一楼</td>
+			<foreach item='list' from='' name="hlist.l1">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span class='del-btn'>
+						<if condition="$list.count neq ''">{$list.count}<else />0</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$hlist.l2 neq ''">
+		<tr id="l2">
+			<td class="tb_tr_tt">二楼</td>
+			<foreach item='list' from='' name="hlist.l2">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span class='del-btn'>
+						<if condition="$list.count neq ''">{$list.count}<else />0</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$hlist.l3 neq ''">
+		<tr id="l3">
+			<td class="tb_tr_tt">三楼</td>
+			<foreach item='list' from='' name="hlist.l3">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span class='del-btn'>
+						<if condition="$list.count neq ''">{$list.count}<else />0</if>
+					</span>
+				</td>
+
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$hlist.l4 neq ''">
+		<tr id="l4">
+			<td class="tb_tr_tt">四楼</td>
+			<foreach item='list' from='' name="hlist.l4">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span class='del-btn'>
+						<if condition="$list.count neq ''">{$list.count}<else />0</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$hlist.l5 neq ''">
+		<tr id="l5">
+			<td class="tb_tr_tt">五楼</td>
+			<foreach item='list' from='' name="hlist.l5">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span class='del-btn'>
+						<if condition="$list.count neq ''">{$list.count}<else />0</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$hlist.l6 neq ''">
+		<tr id="l6">
+			<td class="tb_tr_tt">六楼</td>
+			<foreach item='list' from='' name="hlist.l6">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span class='del-btn'>
+						<if condition="$list.count neq ''">{$list.count}<else />0</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$hlist.l7 neq ''">
+		<tr id="l7">
+			<td class="tb_tr_tt">七楼</td>
+			<foreach item='list' from='' name="hlist.l7">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span class='del-btn'>
+						<if condition="$list.count neq ''">{$list.count}<else />0</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$hlist.l8 neq ''">
+		<tr id="l8">
+			<td class="tb_tr_tt">八楼</td>
+			<foreach item='list' from='' name="hlist.l8">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span class='del-btn'>
+						<if condition="$list.count neq ''">{$list.count}<else />0</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$hlist.other neq ''">
+		<tr id="l1">
+			<td class="tb_tr_tt">其它</td>
+			<foreach item='list' from='' name="hlist.other">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span class='del-btn'>
+						<if condition="$list.count neq ''">{$list.count}<else />0</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+</table>
+
+<script type="text/javascript">
+	$(".del-btn").click(function()
+	{
+		var hid = $(this).parent().attr("title");
+		$("#form").attr("action","index.php?m=Home&c=Hostel&a=index&id=2.50");
+		$("#hid").val(hid);
+		$("#form").submit();
+	})
+</script>
+</block>

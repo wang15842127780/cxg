@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>目录</title>
+	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
+	<link rel="stylesheet" href="/cxg/Public/css/wap.css" type="text/css" />
+	<style type="text/css">
+		#submit{
+			background:#f34541;
+			width:60%;
+			height:60px;
+			font-size:35px;
+			margin-left:20%;
+			margin-top:200px;
+		}
+		.content{
+			border-bottom:1px solid #bfbfbf;
+			height:39px;
+			margin-top:13px;
+		}
+		.img{
+			position:absolute;
+			margin-left:13px;
+			margin-top:1px;
+			width:36px;
+		}
+		.first{
+			float:left;
+			margin-left:60px;
+			margin-top:13px;
+			font-size:17px;
+		}
+		.second{
+			float:right;
+			margin-top:13px;
+			font-size:17px;
+			margin-right:5px;
+
+		}
+		.number{
+			color:orange;
+			font-size:20px;
+		}
+	</style>
+</head>
+<body style="background:#397ace;">
+	<h1 style="text-align:center;font-size:30px;top:20px;position:absolute;width:100%;color:#fff;">目&nbsp;&nbsp;&nbsp;录</h1>
+	<div style="position:absolute;top:70px;left:0;right:0;bottom:0;overflow-x:hidden;overflow:auto;background:#fff;">
+		<div class="content" sign="/cxg/wap/Leave/leave_record.html">
+			<img class='img' src="/cxg/Public/iconfont/leave_logo.png">
+			<div class="first">
+				学生请假信息
+			</div>
+			<div class="second">
+				<span class="number" id="leave">-</span>条消息待处理
+			</div>
+		</div>
+	</div>
+<div id="shell">
+	
+</div>
+<div id="shell_img">
+	<img src="/cxg/Public/iconfont/loading.gif" width="100px">
+	<p>加载中...</p>
+</div>
+</body>
+</html>
+<script>
+
+	window.getCookie = function(name)
+	{
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+		return unescape(arr[2]);
+	else
+		return null;
+	}
+	window.getInfo = function()
+	{
+		var url = '/cxg/index.php?m=Home&c=Wap&a=getInfo';
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#shell").hide();
+			$("#shell_img").hide();
+			var info = res.content;
+			$("#leave").html(info.leave);
+		}
+		else
+		{
+			$("#shell").hide();
+			$("#shell_img").hide();
+		}
+	}
+	var user = getCookie("user");
+	if(user == null)
+	{
+		window.location.href = "/cxg/wap/login.html";
+	}
+	else
+	{
+		setTimeout("getInfo();",500);
+	}
+
+	$(".content").click(function()
+	{
+		var url = $(this).attr('sign');
+		window.location.href = url;
+	})
+
+	
+</script>

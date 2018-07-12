@@ -1,0 +1,167 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	td{
+		/*min-width:140px;
+		height:45px;
+		font-size:18px;
+		border:1px solid black;
+		line-height:45px;*/
+	}
+	.del-btn{
+		/*width:30px;
+		height:100%;
+		float:right;*/
+		/*background:black;*/
+		/*color:white;*/
+		display:none;
+		/*cursor:pointer;*/
+		/*border-left:1px solid black;*/
+	}
+	.edit-btn{
+		/*width:30px;
+		height:100%;
+		float:right;*/
+		background:#fff !important;
+		/*color:white;*/
+		/*display:none;*/
+		/*cursor:pointer;
+		border-left:1px solid black;*/
+	}
+</style>
+<br>
+<h1 class="tt_h1">查看出勤信息</h1>
+<br>
+<form action="index.php?m=Home&c=Night&a=index&id=3.46" method="post" id="form" style="display:none;">
+	<input type="text" name="croom" id="croom">
+	<input type="text" name="ctype" value="2">
+	<input type="text" name="ctime" id="ctime">
+</form>
+<table id="record">
+	<if condition="$class.l1 neq ''">
+		<tr id="l1">
+			<td class="tb_tr_tt">一年级</td>
+			<foreach item='list' from='' name="class.l1">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span <if condition="$list.count eq ''">class="del-btn"<else />class="edit-btn"</if>>
+						<if condition="$list.count eq ''">0<else />{$list.count}</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$class.l2 neq ''">
+		<tr id="l2">
+			<td class="tb_tr_tt">二年级</td>
+			<foreach item='list' from='' name="class.l2">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span <if condition="$list.count eq ''">class="del-btn"<else />class="edit-btn"</if>>
+						<if condition="$list.count eq ''">0<else />{$list.count}</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$class.l3 neq ''">
+		<tr id="l3">
+			<td class="tb_tr_tt">三年级</td>
+			<foreach item='list' from='' name="class.l3">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span <if condition="$list.count eq ''">class="del-btn"<else />class="edit-btn"</if>>
+						<if condition="$list.count eq ''">0<else />{$list.count}</if>
+					</span>
+				</td>
+
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$class.l4 neq ''">
+		<tr id="l4">
+			<td class="tb_tr_tt">四年级</td>
+			<foreach item='list' from='' name="class.l4">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span <if condition="$list.count eq ''">class="del-btn"<else />class="edit-btn"</if>>
+						<if condition="$list.count eq ''">0<else />{$list.count}</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+	<if condition="$class.other neq ''">
+		<tr id="l1">
+			<td class="tb_tr_tt">其它</td>
+			<foreach item='list' from='' name="class.other">
+				<td title="{$list.id}" class='croom'>
+					{$list.name}
+					<span <if condition="$list.count eq ''">class="del-btn"<else />class="edit-btn"</if>>
+						<if condition="$list.count eq ''">0<else />{$list.count}</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</if>
+</table>
+<table id="detail" style="display:none;">
+	<tr class="tb_tr_th">
+		<th>日期</th>
+		<th>星期</th>
+		<th>课时</th>
+		<th>总计</th>
+		<th>出席</th>
+		<th>缺席</th>
+		<th>操作</th>
+	</tr>
+</table>
+<script type="text/javascript">
+	$(".edit-btn").click(function()
+	{
+		var croom = $(this).parent().attr("title");
+		// // alert(croom);
+		// $("#croom").val(croom);
+		// $("#form").submit();
+		var data = {croom:croom,typ:'json'};
+		var url = "index.php?m=Home&c=Night&a=getNightRecord";
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			var list = res.content;
+			$(".detail").remove();
+			var str = String();
+			for(var i in list)
+			{
+				str += "<tr class='detail tb_tr_td'>"
+				+ "<td>" + list[i].date + "</td>"
+				+ "<td>" + list[i].week_text + "</td>"
+				+ "<td>" + list[i].time_text + "</td>"
+				+ "<td>" + list[i].total + "</td>"
+				+ "<td>" + list[i].attend + "</td>"
+				+ "<td>" + list[i].absent + "</td>"
+				+ "<td><a href='javascript:void(0);' class='vdetail' sign='"+list[i].time+"'>查看详情</a></td></tr>";
+			}
+			$("#record").hide();
+			$("#detail").show();
+			$("#detail").append(str);
+			$(".vdetail").click(function()
+			{
+				var ctime = $(this).attr('sign');
+				$("#croom").val(croom);
+				$("#ctime").val(ctime);
+				$("#form").submit();
+			})
+		}
+		else
+		{
+			alert(res.content);
+		}
+	})
+</script>
+</block>

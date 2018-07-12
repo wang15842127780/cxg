@@ -1,0 +1,59 @@
+
+<h1 class="tt_h1">人员信息</h1>
+
+<hr>
+<br>
+<div id="show_div">
+	<div>
+		<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3897637242,756264182&fm=27&gp=0.jpg" style="max-width:285px;max-height:380px;float:left;margin-top:2px;margin-left:300px;">
+	</div>
+
+	<div>
+		<input type="hidden" id="sid" value="3">
+		<p style="font-size:30px;margin-top:30px;">姓名：<input type="text" style="width:80px;height:26px;border:none;vertical-align:middle;font-size:26px;" readonly="true" value="阿伦"></p>
+		<p style="font-size:30px;margin-top:30px;">余额：<input type="text" style="width:80px;height:26px;border:none;vertical-align:middle;font-size:26px;" readonly="true" value="183.00"></p>
+		<p style="font-size:30px;margin-top:30px;">消费：<input type="text" style="width:80px;height:26px;vertical-align:middle;font-size:26px;border:none;" value="15.00"></p>
+	</div>
+</div>
+	
+
+
+<script type="text/javascript">
+	window.getInfo = function()
+	{
+		var url = "index.php?m=Home&c=Mess&a=getInfo";
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		console.info(res);
+	}
+	$(".cancel-btn").click(function()
+	{
+		$("#sid").val("");
+		$("#show_div").hide();
+		getInfo();
+	})
+	$(".confirm-btn").click(function()
+	{
+		var stu_id = $("#sid").val();
+		var url = "index.php?m=Home&c=Mess&a=recharge";
+		var num = $("#recharge").val();
+		if(num=='' || Number(num)!=num || Number(num)<=0)
+		{
+			alert('请输入正确的金额！');
+			return;
+		}
+		var data = {sid:stu_id,num:num,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			$("#recharge").val("");
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	// setTimeout("$('.cancel-btn').click();",2000);
+			
+</script>

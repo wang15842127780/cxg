@@ -1,0 +1,706 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	.new_table th{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.tb_tr_td td{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+	.file{
+		position:absolute;
+		display:inline-block;
+		border:1px solid #99D3F5;
+		border-radius:4px;
+		padding:4px 12px;
+		overflow:hidden;
+		color:#1E88C7;
+		text-decoration:none;
+		text-indent:0;
+		line-height:20px;
+	}
+	#form1{
+		width:650px;
+		background:#fff;
+		height:200px;
+		margin-top:190px;
+		padding-top:50px;
+		font-size:17px;
+		display:inline-block;
+	}
+	.contain select{
+		width:70px;
+	}
+	.confirm-btn1{
+		width:50px;
+		height:25px;
+		background:#449d44;
+		border-color:#398439;
+		color:#fff;
+	}
+	.cancel-btn1{
+		width:50px;
+		height:25px;
+		border-color:#eea236;
+		background:#f0ad4e;
+		color:#fff;
+	}
+	.add_left{
+		display: inline-block;
+		width: 15%;
+		text-align: right;
+	}
+	.add_right{
+		display: inline-block;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：学生管理>查看学生信息<p style="text-align:right;display:inline-block;width:50%;float:right;"><button class="import-btn" onclick="window.open('/cxg/Public/function/import.php')"><i class="import-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;导入学生信息</button><button class="export-btn" onclick="window.open('/cxg/Public/function/export.php');"><i class="export-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;导出学生信息</button></p></h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	姓名：<input type="text" id="sname">&nbsp;&nbsp;
+	班级：<select name="sclass" id="sclass">
+		<foreach item='lists' name="classList">
+			<option value="{$lists.id}">{$lists.name}</option>
+		</foreach>
+	</select>&nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加学生信息</button></p>
+<br>
+<div id="con_div" style="left:30px;">
+	<table id="table" class="new_table" style="overflow-x:auto;">
+		<tr style="display:none;">
+			<th>ID</th>
+			<th>姓名</th>
+			<th>身份证号</th>
+			<th>性别</th>
+			<th>班级</th>
+			<th style="min-width:134px;">宿舍</th>
+			<th>联系人</th>
+			<th>联系人电话</th>
+			<th>备注</th>
+			<th style="min-width:130px;">操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="__PUBLIC__/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
+</div>
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:600px;background:#fff;margin-top:50px;">
+	<br>
+		<p>添 加 学 生 信 息</p>
+		<br>
+		<input type="hidden" id="hid">
+		<p class="add_left">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</p><p class="add_right"><input type="text" name="name" id="name"></p><br>
+		<!-- <p class="add_left">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</p><p class="add_right"><input type="text" name="number" id="number"></p><br> -->
+		<p class="add_left">身&nbsp;&nbsp;份&nbsp;&nbsp;证：</p><p class="add_right"><input type="text" name="iden" id="iden"></p><br>
+		<p class="add_left">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</p><p class="add_right"><input type="radio" name="sex" value="0" class="sex" id="nv" style="width:15px;">&nbsp;女  &nbsp;&nbsp;&nbsp;<input type="radio" name="sex" value="1" class="sex" style="width:15px;" id="nan" checked="checked">&nbsp;男&nbsp;&nbsp;&nbsp;</p><br>
+		<p class="add_left">班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</p><p class="add_right"><select name="class" id="class" style="width:104px;margin-top:6px;"></select></p><br>
+		<p class="add_left">联&nbsp;系&nbsp;人：</p><p class="add_right"><input type="text" name="contact" id="contact"></p><br>
+		<p class="add_left">电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</p><p class="add_right"><input type="text" name='phone' id='phone'></p><br>
+		<p class="add_left">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</p><p class="add_right"><input type="text" name="note" id="note"></p ><br><br>
+		<img src="" width="200" height="280" bbc_type="store_banner" alt="暂无图片">
+		<br>
+		<a href="javascript:void(0);" class='file'>上传图片
+			<input type="file" id="file" name='file' style="position:absolute;font-size:100px;right:0;top:-10px;opacity:0;width:74px;" bbc_type="change_store_banner">
+		</a>
+		<br><br>
+		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button><br><br>
+	</form>
+</div>
+
+<div id="ruzhu_form" style="position:absolute;left:0;top:0;right:0;z-index:9999;text-align:center;display:none;">
+	<form id="form1" onsubmit="return false;"><br>
+		<p>办 理 学 生 入 住</p>
+		<br>
+		<br>
+		<input type="hidden" id="rid">
+		<span class="contain">
+			楼号：<select name="build" id="build"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+		</span>
+		<span class="contain">
+			楼层：<select name="floor" id="floor"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+		</span>
+		<span class="contain">
+			宿舍号：<select name="hostel" id="hostel"></select>
+		</span>
+		<span class="contain" id='number_span' style='display:none;'>
+			床号：<select name="numbers" id="numbers" style="width:120px;"></select>
+		</span>
+		<br><br><br>
+		<button class="confirm-btn1">确定</button>
+		<button class="cancel-btn1">取消</button>
+	</form>
+</div>
+
+<script type="text/javascript">
+	window.getList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getStudentList";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").find('tr').show();
+			$(".zshow").hide();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'name';
+			field[2] = 'iden'
+			field[3] = 'sex_text';
+			field[4] = 'class_text';
+			field[5] = 'hostel';
+			field[6] = 'contact';
+			field[7] = 'contact_phone';
+			field[8] = 'note';
+			var lists = res.content;
+			if(res.leader == 1)
+			{
+				listPage(lists,1,15,field,true);
+			}
+			else
+			{
+				field[8] = 'act_text';
+				$(".add-btn").hide();
+				listPage(lists,1,15,field);
+			}
+			
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
+		}
+	}
+	window.getBuildInfo = function()
+	{
+		var url = 'index.php?m=Admin&c=Setting&a=getBuildInfo';
+		var data = {typ:'json'};
+		var res3 = ajax(url,data);
+		return res3;
+	}
+	window.getFloorByBuild = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getFloorByBuild";
+		data.typ = 'json';
+		var res1 = ajax(url,data);
+		return res1;
+	}
+	window.getNoByFloor = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getNoByFloor";
+		data.typ = 'json';
+		var res2 = ajax(url,data);
+		return res2;
+	}
+	window.getInfoByNo = function(data={})
+	{
+		var url = 'index.php?m=Admin&c=Setting&a=getInfoByNo';
+		data.typ = 'json';
+		var res4 = ajax(url,data);
+		return res4;
+	}
+
+	$('input[bbc_type="change_store_banner"]').change(function(){
+	    console.info(22);
+        console.info($(this));
+        console.info($(this)[0]);
+		var src = getFullPath($(this)[0]);
+        console.info(src);
+		$('img[bbc_type="store_banner"]').attr('src', src);
+		change1 = 1;
+	});
+	function getFullPath(obj)
+	{
+	    if(obj)
+	    {
+	        //ie
+	        if (window.navigator.userAgent.indexOf("MSIE")>=1)
+	        {
+	            obj.select();
+	            if(window.navigator.userAgent.indexOf("MSIE") == 25){
+	                obj.blur();
+	            }
+	            return document.selection.createRange().text;
+	        }
+	        //firefox
+	        else if(window.navigator.userAgent.indexOf("Firefox")>=1)
+	        {
+	            if(obj.files)
+	            {
+	                //return obj.files.item(0).getAsDataURL();
+	                return window.URL.createObjectURL(obj.files.item(0));
+	            }
+	            return obj.value;
+	        }else if(window.navigator.userAgent.indexOf("Chrome")>=1){
+	            if(obj.files)
+	            {
+	                return window.URL.createObjectURL(obj.files[0]);
+	            }
+
+	        }
+	        return obj.value;
+	    }
+	}
+	function doUpload(formid) {  
+	     var formData = new FormData($( "#"+formid )[0]);
+	     $.ajax({  
+	          url: "__PUBLIC__/function/upload.php",  
+	          type: 'POST',  
+	          data: formData,
+	          async: false,  
+	          cache: false,  
+	          contentType: false,  
+	          processData: false,  
+	          dataType:'json',
+	          success: function (returndata) {  
+	              // alert(returndata);  
+	              re = returndata;
+	          },  
+	          error: function (returndata) {  
+	              // alert(returndata); 
+	              re = returndata;
+	          }  
+	     });
+	     return re;
+	}
+
+
+	$(".search").click(function()
+	{
+		var sname = $("#sname").val();
+		var sclass = $("#sclass").val();
+		var cond = {sname:sname,sclass:sclass};
+		getList(cond);
+	})
+
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+		var stuClass = {$classLists};
+		var str = '';
+		for(var i in stuClass)
+		{
+			str += '<option value="'+stuClass[i].id+'">'+stuClass[i].name+'</option>';
+		}
+		$("#class").html(str);
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var sex = $(".sex:checked").val();
+		var id = $("#hid").val();
+		var name = $('#name').val();
+		if($.trim(name) == '')
+		{
+			tips('学生姓名不能为空！',2);
+			return;
+		}
+		var stu_class = $("#class").val();
+		if($.trim(stu_class) == '')
+		{
+			tips('请先设置班级！',2);
+			return;
+		}
+		var contact = $("#contact").val();
+		if($.trim(contact) == '')
+		{
+			tips('联系人不能为空！',2);
+			return;
+		}
+		var phone = $("#phone").val();
+		if($.trim(phone) == '')
+		{
+			tips('电话不能为空！',2);
+			return;
+		}
+		var note = $("#note").val();
+		if($.trim(note) == '')
+		{
+			tips('备注不能为空！',2);
+			return;
+		}
+		// var number = $("#number").val();
+		// if($.trim(number) == ""){
+		// 	tips('学号不能为空！',2);
+		// 	return;
+		// }
+		var iden = $("#iden").val();
+		if($.trim(iden) == '')
+		{
+			tips("身份证号不能为空！",2);
+			return;
+		}
+
+		//图片上传
+		if(typeof(change1) != 'undefined')
+		{
+			var res = doUpload('form');
+			if(res.status == 'success')
+			{
+				var photo = res.file_name;
+				if($.trim(id) == '')
+				{
+					var url = 'index.php?m=Admin&c=Setting&a=addStudent';
+					var data = {name:name,class:stu_class,sex:sex,contact:contact,iden:iden,phone:phone,note:note,photo:photo,typ:'json'};
+				}
+				else
+				{
+					var url = 'index.php?m=Admin&c=Setting&a=editStudent';
+					var data = {id:id,name:name,class:stu_class,sex:sex,contact:contact,iden:iden,phone:phone,photo,note:note,typ:'json'};
+				}
+				var res = ajax(url,data);
+				if(res.status == 'success')
+				{
+					tips(res.content,1);
+					setTimeout("window.location.reload();",500);
+				}
+				else
+				{
+					tips(res.content,2);
+				}
+			}
+			else
+			{
+				alert(res.content);
+			}
+		}
+		else
+		{
+			if($.trim(id) == '')
+			{
+				var url = 'index.php?m=Admin&c=Setting&a=addStudent';
+				var data = {name:name,class:stu_class,sex:sex,contact:contact,iden:iden,phone:phone,note:note,typ:'json'};
+			}
+			else
+			{
+				var url = 'index.php?m=Admin&c=Setting&a=editStudent';
+				var data = {id:id,name:name,class:stu_class,sex:sex,iden:iden,contact:contact,phone:phone,note:note,typ:'json'};
+			}
+			var res = ajax(url,data);
+			if(res.status == 'success')
+			{
+				tips(res.content,1);
+				setTimeout("window.location.reload();",500);
+			}
+			else
+			{
+				tips(res.content,2);
+			}
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		$("#shell").hide();
+		$("#add_form").hide();
+		$("#hid").val('');
+		$("#name").val("");
+		$("#number").val("");
+		$("#iden").val("");
+		$("#contact").val("");
+		$("#phone").val("");
+		$("#note").val("");
+		$('img[bbc_type="store_banner"]').attr('src', "");
+	})
+
+	$(".edit-btn").live("click",function()
+	{
+		var id = $(this).attr('sign');
+		var url = "index.php?m=Admin&c=Setting&a=getStudentById";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#hid").val(id);
+			$("#shell").show();
+			$("#add_form").show();
+			var info = res.content;
+			$("#name").val(info.name);
+			$("#contact").val(info.contact);
+			$("#phone").val(info.contact_phone);
+			$("#note").val(info.note);
+			$("#number").val(info.number);
+			$("#iden").val(info.iden);
+			$("img[bbc_type='store_banner']").attr('src',info.photo);
+			if(info.sex == 1)
+			{
+				$("#nv").attr("checked",false);
+				$("#nan").attr("checked",true);
+			}
+			else
+			{
+				$("#nv").attr("checked",true);
+				$("#nan").attr("checked",false);
+			}
+			var classList = {$classLists};
+			var str = "";
+			for(var i in classList)
+			{
+				if(classList[i].id == res.content.class_id)
+				{
+					str += "<option value='"+classList[i].id+"' selected>"+classList[i].name+"</option>";
+				}
+				else
+				{
+					str += "<option value='"+classList[i].id+"'>"+classList[i].name+"</option>";
+				}
+					
+			}
+			$("#class").html(str);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+
+	})
+
+	$(".del-btn").live("click",function()
+	{
+		var msg = "您真的确定要删除吗？\n\n请确认！";
+		if(confirm(msg)==true)
+		{
+			var _this = $(this);
+			var id = $(this).attr("sign");
+			var url = "index.php?m=Admin&c=Setting&a=delStudent";
+			var data = {id:id,typ:'json'};
+			var res = ajax(url,data);
+			if(res.status == 'success')
+			{
+				tips(res.content,1);
+				_this.parents('tr').remove();
+			}
+			else
+			{
+				tips(res.content,2);
+			}
+		}
+	})
+
+	//入住信息
+	$(".ruzhu").live("click",function()
+	{
+		var _this = $(this);
+		var res3 = getBuildInfo();
+		if(res3.status == 'success')
+		{
+			var res1 = getFloorByBuild();
+			if(res1.status == 'success')
+			{
+				var res2 = getNoByFloor();
+				if(res2.status == 'success')
+				{
+					$("#shell").show();
+					$("#ruzhu_form").show();
+					var id = _this.attr('sign');
+					$("#rid").val(id);
+					var l1 = res3.content;
+					var l2 = res1.content;
+					var l3 = res2.content;
+					var str1 = "";
+					var str2 = "";
+					var str3 = "";
+					for(var i in l1)
+					{
+						str1 += "<option value='"+l1[i]+"'>"+l1[i]+"</option>";
+					}
+					$("#build").html(str1);
+					for(var j in l2)
+					{
+						str2 += "<option value='"+l2[j]+"'>"+l2[j]+"</option>";
+					}
+					$("#floor").html(str2);
+					for(var k in l3)
+					{
+						str3 += "<option value='"+l3[k].id+"'>"+l3[k].no+"</option>";
+					}
+					$("#hostel").html(str3);
+
+					var vv = $("#hostel").val();
+					var res4 = getInfoByNo({hid:vv});
+					if(res4.status == 'success')
+					{
+						var str4 = "";
+						$("#number_span").show();
+						if(res4.content == '此房间不能入住！')
+						{
+							str4 += '<option value="">'+res4.content+'</option>';
+						}
+						else
+						{
+							var l4 = res4.content;
+							for(var l in l4)
+							{
+								str4 += "<option value='"+l+"'>"+l3[l]+"</option>";
+							}
+						}
+						console.info(str4);
+						$("#numbers").html(str4);
+					}
+					else
+					{
+						tips(res.content,2);
+					}
+				}
+				else
+				{
+					tips(res2.content,2);
+				}
+			}
+			else
+			{
+				tips(res1.content,2);
+			}
+		}
+		else
+		{
+			tips(res3.content,2);
+		}
+	})
+
+	$("#build").live("change",function()
+	{
+		$("#floor").html("");
+		$("#hostel").html("");
+		$("#number_span").hide();
+		var build = $("#build").val();
+		var cond = {build:build,typ:'json'};
+		var url = "index.php?m=Admin&c=Setting&a=getFloorByBuild1";
+		var res1 = ajax(url,cond);
+		if(res1.status == 'success')
+		{
+			var l2 = res1.content;
+			var str2 = '';
+			for(var j in l2)
+			{
+				str2 += "<option value='"+l2[j]+"'>"+l2[j]+"</option>";
+			}
+			$("#floor").html(str2);
+		}
+		else
+		{
+			tips(res1.content,2);
+		}
+	})
+	$("#floor").live("change",function()
+	{
+		$("#hostel").html("");
+		$("#number_span").hide();
+		var build = $("#build").val();
+		var floor = $("#floor").val();
+		var cond = {build:build,floor:floor};
+		var res2 = getNoByFloor(cond);
+		if(res2.status == 'success')
+		{
+			var str3 = "";
+			var l3 = res2.content;
+			for(var k in l3)
+			{
+				str3 += "<option value='"+l3[k].id+"'>"+l3[k].no+"</option>";
+			}
+			$("#hostel").html(str3);
+			$("#hostel").change();
+		}
+		else
+		{
+			tips(res2.content,2);
+		}
+	})
+	$("#hostel").live("change",function()
+	{
+		$("#number_span").show();
+		$("#numbers").html("");
+		var hid = $(this).val();
+		var res4 = getInfoByNo({hid:hid});
+		if(res4.status == 'success')
+		{
+			var str4 = "";
+			if(res4.content == '此房间不能入住！')
+			{
+				str4 += "<option value=''>"+res4.content+"</option>";
+			}
+			else
+			{
+				var l4 = res4.content;
+				for(var i in l4)
+				{
+					if(l4[i].indexOf("已住")>0)
+					{
+						str4 += "<option value="+i+" disabled>"+l4[i]+"</option>";
+					}
+					else
+					{
+						str4 += "<option value="+i+">"+l4[i]+"</option>";
+					}
+					
+				}
+			}
+			$("#numbers").html(str4);
+		}
+		else
+		{
+			tips(res4.content,2);
+		}
+	})
+
+	$(".confirm-btn1").live("click",function()
+	{
+		var id = $("#rid").val();
+		var bid = $("#hostel").val();
+		var bno = $("#numbers").val();
+		if($.trim(bno) == "")
+		{
+			tips("此房间不能入住！",2);
+			return;
+		}
+		var url = "index.php?m=Admin&c=Setting&a=stuRuzhu";
+		var data = {id:id,bid:bid,bno:bno,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn1").live("click",function()
+	{
+		$("#shell").hide();
+		$("#ruzhu_form").hide();
+		$("#rid").val("");
+	})
+	setTimeout("getList();",500);
+</script>
+</block>

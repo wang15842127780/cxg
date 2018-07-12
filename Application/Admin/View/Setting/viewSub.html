@@ -1,0 +1,141 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+	.edit-btn{
+		display:none;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：学科管理>查看学科</h1>
+<p style="text-align:right;display:inline-block;width:100%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加学科</button></p>
+<br>
+<div id="con_div">
+	<table id="table" class="new_table">
+		<tr style="display:none;">
+			<th>ID</th>
+			<th>名称</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="__PUBLIC__/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
+</div>
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
+	<br>
+		<p>添 加 学 科</p>
+		<br>
+		学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;科：<input type="text" name="name" id="name"><br><br>
+		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button><br><br>
+	</form>
+</div>
+
+<script type="text/javascript">
+	window.getList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getSubjectList";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").find('tr').show();
+			$(".zshow").hide();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'name';
+			var lists = res.content;
+			if(res.leader == 1)
+			{
+				listPage(lists,1,15,field,true);
+			}
+			else
+			{
+				field[2] = 'act_text';
+				$(".add-btn").hide();
+				listPage(lists,1,15,field);
+			}
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
+		}
+	}
+
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var name = $("#name").val();
+		var url = "index.php?m=Admin&c=Setting&a=addSubject";
+		var data = {name:name,typ:'json'};
+			
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		$("#shell").hide();
+		$("#add_form").hide();
+	})
+
+
+	$(".del-btn").live("click",function()
+	{
+		var msg = "您真的确定要删除吗？\n\n请确认！";
+		if(confirm(msg)==true)
+		{
+			var _this = $(this);
+			var id = $(this).attr("sign");
+			var url = "index.php?m=Admin&c=Setting&a=delSubject";
+			var data = {id:id,typ:'json'};
+			var res = ajax(url,data);
+			if(res.status == 'success')
+			{
+				tips(res.content,1);
+				_this.parents('tr').remove();
+			}
+			else
+			{
+				tips(res.content,2);
+			}
+		}
+	})
+	setTimeout("getList();",500);
+</script>
+</block>

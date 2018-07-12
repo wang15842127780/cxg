@@ -1,0 +1,54 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<h1 class="tt_h1">位置：课表管理>今日课程</h1>
+<div id="cond">
+	<form method="post" id="form">
+		星期：<select name="week" id="week"  style='width:75px;padding-left:5px;'>
+			<option value="1" <if condition="$Think.post.week eq 1">selected</if> >星期一</option>
+			<option value="2" <if condition="$Think.post.week eq 2">selected</if> >星期二</option>
+			<option value="3" <if condition="$Think.post.week eq 3">selected</if> >星期三</option>
+			<option value="4" <if condition="$Think.post.week eq 4">selected</if> >星期四</option>
+			<option value="5" <if condition="$Think.post.week eq 5">selected</if> >星期五</option>
+			<option value="6" <if condition="$Think.post.week eq 6">selected</if> >星期六</option>
+			<option value="7" <if condition="$Think.post.week eq 7">selected</if> >星期日</option>
+		</select>
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<br>
+<table id="table">
+	<tr class="tb_tr_th">
+		<th>教室</th>
+		<foreach item="list" name="clist">
+			<th>
+				{$list.name}
+			</th>
+		</foreach>
+	</tr>
+	<for start="1" end="9" name="i">
+		<tr class="tb_tr_td">
+			<td>第{$i}节</td>
+			<foreach item="lists" key="k" name="clist">
+				<td class="syllabus">
+					{$syllabus.$k.$i.subject_text}/{$syllabus.$k.$i.teacher_text}
+				</td>
+			</foreach>
+		</tr>
+	</for>
+</table>
+<script type="text/javascript">
+	$(function()
+	{
+		$(".syllabus").each(function()
+		{
+			var _this = $(this);
+			var html = $(this).html();
+			if($.trim(html) == "/")
+			{
+				_this.html("");
+			}
+		})
+	})
+</script>
+</block>

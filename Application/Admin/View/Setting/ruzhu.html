@@ -1,0 +1,107 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	#con_div{
+		background:#c8fafa;
+	}
+	.parent{
+		display:flex;
+	}
+	.left{
+		flex:none;
+		width:10%;
+		text-align:center;
+		border-right:1px solid #ccc;
+		font-size:20px;
+	}
+	.right{
+		flex:none;
+		width:90%;
+	}
+	.content{
+		width:102px;
+		height:90px;
+		display:inline-block;
+		text-align:center;
+		border:1px solid #ddd;
+		margin:2px 5px;
+	}
+	.number{
+		display:inline-block;
+		width:7px;
+		height:7px;
+		margin-top:12px;
+		margin:6px;
+		margin-bottom:0;
+		border-radius:10px;
+	}
+	.exam{
+		display:inline-block;
+		width:20px;
+		height:10px;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：宿舍管理>入住信息</h1>
+<p style="margin-left:50px;display:inline-block;width:50%;margin-top:-20px;">
+	<span class="exam" style="background:red;"></span>&nbsp;&nbsp;&nbsp;已住
+	<br>
+	<span class="exam" style="background:green;"></span>&nbsp;&nbsp;&nbsp;未住
+</p>
+<div id="con_div">
+	<foreach item='list' key='k' name="hostelList">
+		<span class="parent">
+			<div class="left">
+				<span>{$k}</span>
+			</div>
+			<div class="right">
+				<foreach item="lists" key="ks" name='list'>
+					<p style="padding-left:10px;font-size:16px;">第{$ks}层</p>
+					<foreach item='listss' key='kss' name='lists'>
+						<if condition="$listss.contain eq 0">
+							<div class='content' style='background:#ccc;'>
+								<p style="line-height:30px;">&nbsp;</p>
+								<p style="line-height:30px;">{$listss.no}</p>
+								<p style="line-height:30px;">{$listss.type_text}</p>
+							</div>
+						<else />
+							<div class='content'>
+								<p style="height:30px;vertical-align:middle;">
+									<for start="0" end="$listss.contain">
+										<if condition="$listss.num gt $i">
+											<span class="number" style="background:red;"></span>
+										<else />
+											<span class="number" style="background:green;"></span>
+										</if>
+									</for>
+								</p>
+								<p style="line-height:30px;">{$listss.no}</p>
+								<p style="line-height:30px;">{$listss.type_text}</p>
+							</div>
+						</if>
+					</foreach>
+				</foreach>
+			</div>
+		</span>
+		<div style="height:1px;background:black;"></div>
+	</foreach>
+</div>
+<!-- <div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="__PUBLIC__/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
+</div> -->
+
+<script type="text/javascript">
+	$(".left").each(function()
+	{
+		var _this = $(this);
+		var h = _this.context.clientHeight;
+		_this.css('lineHeight',h+"px");
+		console.info(_this);
+		console.info(h);
+	})
+</script>
+</block>

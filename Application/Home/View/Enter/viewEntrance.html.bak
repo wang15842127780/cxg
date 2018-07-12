@@ -1,0 +1,46 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<h1 class="tt_h1">查看出入记录</h1>
+<div id="cond">
+	<form onsubmit="return false">
+		姓名：<input type="text" name="pname" id="pname" style="width:60px;">
+		&nbsp;
+		开始时间：<input class="sang_Calender" type="text" name="stime" id="stime" value="{$Think.post.stime}" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		结束时间：<input class="sang_Calender" type="text" name="etime" id="etime" value="{$Think.post.etime}" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<br>
+<table id="table" style="display:none;">
+	<tr class="tb_tr_th">
+		<th>ID</th>
+		<th>人员ID</th>
+		<th>姓名</th>
+		<th>时间</th>
+		<th>类型</th>
+	</tr>
+</table>
+<script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
+<script type="text/javascript">
+	$("#submit").click(function()
+	{
+		var pname = $("#pname").val();
+		var stime = $("#stime").val();
+		var etime = $("#etime").val();
+		var url = "index.php?m=Home&c=Enter&a=viewEntrance";
+		var data = {pname:pname,stime:stime,etime:etime,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").show();
+			listPage(res.content);
+		}
+		else
+		{
+			$("#table").hide();
+			tips(res.content,2);
+		}
+	})
+</script>
+</block>

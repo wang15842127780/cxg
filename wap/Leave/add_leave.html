@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<meta content="email=no" name="format-detection">
+	<meta http-equiv="refresh" content="100">
+	<title>新建请假</title>
+	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
+	<script src="/cxg/Public/js/lCalendar.js"></script>
+	<link rel="stylesheet" href="/cxg/Public/css/lCalendar.css">
+	<link rel="stylesheet" href="/cxg/Public/css/wap.css" type="text/css" />
+	<style>
+		body{
+			background:#397ace;
+		}
+		.zshow{
+			display:none;
+		}
+		.cond{
+			position:absolute;
+			left:0;
+			right:0;
+			bottom:0;
+			background:#eee;
+			top:60px;
+			padding-top:90px;
+			text-align:center;
+		}
+		.p{
+			color:#fff;
+			margin-top:30px;
+		}
+		.p select{
+			width:200px;
+			font-size:16px;
+			padding-left:53px;
+			height:33px;
+			background:#397ace;
+			border-radius:12px;
+			color:#fff;
+			appearance:none;
+			-moz-appearance:none;
+			-webkit-appearance:none;
+			background-image:url("../../Public/iconfont/select_logo.png");
+			background-size:8px 8px;
+			background-repeat:no-repeat;
+			background-position:176px 10px;
+		}
+		select::-ms-expand { display: none; }
+		.box_box{
+			border:1px solid black;
+			height:33px;
+			width:100%;
+			margin-top:-34px;
+			position:absolute;
+			z-index:50;
+			border:none;
+			line-height:33px;
+			font-size:16px;
+			color:#fff;
+		}
+		#reason{
+			width:35%;
+			border:1px solid #ccc;
+			border-radius:3px;
+		}
+		.input{
+			width: 90%;
+			font-size: 14px;
+			border-radius: 5px;
+			padding: 2px;
+			width:20%;
+			border:1px solid #ddd;
+			padding-left:20px;
+		}
+		.pp{
+			font-size:13px;
+			height:33px;
+			line-height:34px;
+			background:#fff;
+			border-bottom:1px solid #ccc;
+			border-top:1px solid #ccc;
+			margin-top:10px;
+			padding-left:12%;
+		}
+		#select_box{
+			position:absolute;
+			height:300px;
+			left:0;
+			right:0;
+			bottom:0;
+			z-index:999;
+			background:#fff;
+			padding-top:33px;
+			overflow:auto;
+			display:none;
+		}
+		.select_content{
+			display:inline-block;
+			width:100px;
+			height:30px;
+			font-size:20px;
+			text-align:center;
+			margin-top:3px;
+			margin-left:5px;
+			border:1px solid #ccc;
+			border-radius:3px;
+		}
+		.student_logo{
+			position:absolute;
+			background-image:url(../../Public/iconfont/student_logo.png);
+			background-size:50px 50px;
+			background-repeat:no-repeat;
+			margin-top:11px;
+			margin-left:13px;
+			width:50px;
+			height:50px;
+		}
+	</style>
+</head>
+<body>
+<h1 style="text-align:center;font-size:21px;color:#fff;font-family:'宋体';top:23px;position:absolute;width:100%;" id="h1">选 择 学 生</h1>
+<div id="cond1" class="cond" style="display:none;">
+	<p class="p year">
+		<select name="year" id="year">
+		</select>
+		<div id="year_box" class="box_box">
+			选择年级
+		</div>
+	</p>
+	<p class="p class phide">
+		<select name="class" id="class">
+			<option value="0"></option>
+		</select>
+		<div id="class_box" class="box_box">
+			选择班级
+		</div>
+	</p>
+	<p class="p student phide">
+		<select name="student" id="student">
+			<option value="0"></option>
+		</select>
+		<div id="student_box" class="box_box">
+			选择学生
+		</div>
+	</p>
+</div>
+<div id="cond2" class="cond" style="display:none;">
+	<p class="p student">
+		<select name="student" id="student">
+		
+		</select>
+		<div id="student_box" class="box_box">
+			选择学生
+		</div>
+	</p>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;top:55px;padding-top:20px;background:#eee;overflow-x:hidde;overflow-y:auto;font-family:cursive;display:none;" id="content">
+	<input type="hidden" id="hid">
+	<p class="pp" style="height:75px;margin-top:-21px;"><i class="student_logo"></i><input type="text" id="name" readonly="readonly" style="height:75pxpx;font-size:20px;border:none;background:transparent;margin-left:25%;margin-top:23px;"></p>
+	<p class="pp"><i class='reason_logo' style="left:0;"></i>
+		原&nbsp;&nbsp;因：&nbsp;&nbsp;&nbsp;&nbsp;<select name="reasons" id="reasons" style="width:35%;border:1px solid #ccc;border-radius:3px;padding-left:30px;">
+			<option value="病假">病假</option>
+			<option value="事假">事假</option>
+			<option value="其它">其它</option>
+		</select>
+	</p>
+	<p class="pp"><i class="stime_logo" style="left:0;"></i>开始时间：&nbsp;&nbsp;<input class="input" id="demo1" type="text" readonly="" name="input_date" placeholder="年-月-日" />  <input class="input" id="demo2" type="text" readonly="" name="input_date" placeholder="时:分:秒" /></p>
+	<p class="pp"><i class="etime_logo" style="left:0;"></i>结束时间：&nbsp;&nbsp;<input class="input" id="demo3" type="text" readonly="" name="input_date" placeholder="年-月-日" />  <input class="input" id="demo4" type="text" readonly="" name="input_date" placeholder="时:分:秒" /></p>
+	<p class="pp"><i class="leader_note_logo" style="left:0;"></i>班主任意见：<input type="text" style="width:50%;height:29px;" id="reason"></p>
+	<p style="margin-top:130px;text-align:center;">
+		<button class="confirm-btn"><i class="right_logo"></i><div style='display:inline-block;width:20px;'></div>提交</button>&nbsp;&nbsp;
+		<button class="cancel-btn"><i class="wrong_logo"></i><div style='display:inline-block;width:20px;'></div>取消</button>
+	</p>
+</div>
+<div style="display:none;" id="sbox" >
+	
+</div>
+<div id="select_box">
+	<h2 style="line-height:30px;border-top:1px solid black;border-bottom:1px solid #ddd;height:30px;position:fixed;width:100%;margin-top:-33px;">
+		<button style="float:left;margin-left:17px;font-size:17px;margin-top:3px;background:#fff;border:none;" id="cancel1">取消</button>
+		<button style="float:right;margin-right:17px;background:#fff;border:none;margin-top:3px;font-size:17px;" id="confirm1">确定</button>
+	</h2>
+</div>
+
+
+<div id="shell" class="zshow" style="z-index:99;">
+	
+</div>
+<div id="shell_img" class="zshow">
+	<img src="/cxg/Public/iconfont/loading.gif" width="100px">
+	<p>加载中...</p>
+</div>
+</body>
+<script>
+	var calendar = new lCalendar();
+	calendar.init({
+		'trigger': '#demo1',
+		'type': 'date'
+	});
+	var calendartime = new lCalendar();
+	calendartime.init({
+		'trigger': '#demo2',
+		'type': 'time'
+	});
+	var calendar = new lCalendar();
+	calendar.init({
+		'trigger': '#demo3',
+		'type': 'date'
+	});
+	var calendartime = new lCalendar();
+	calendartime.init({
+		'trigger': '#demo4',
+		'type': 'time'
+	});
+	window.getCookie = function(name)
+	{
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+		return unescape(arr[2]);
+	else
+		return null;
+	}
+	window.getStudentByClass = function(data)
+	{
+		var url = "/cxg/index.php?m=Home&c=Leave&a=getStudentByClass";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			var slist = res.content;
+			var sstr = "<option value='0'></option>";
+			for(var i in slist)
+			{
+				sstr += "<option value='"+slist[i].id+"'>"+slist[i].name+"</option>";
+			}
+			$("#student").html(sstr);
+		}
+		else
+		{
+			alert(res.content);
+		}
+	}
+
+	window.getClassByYear = function(data)
+	{
+		var url = "/cxg/index.php?m=Home&c=Leave&a=getClassByYear";
+		data.typ = 'json';
+		var res1 = ajax(url,data);
+		if(res1.status == 'success')
+		{
+			var clist = res1.content;
+			var cstr = "<option value='0'></option>";
+			for(var j in clist)
+			{
+				cstr += "<option value='"+clist[j].id+"'>"+clist[j].name+"</option>";
+			}
+			$("#class").html(cstr);
+		}
+		else
+		{
+			alert(res1.content);
+		}
+	}
+	window.addStudentInfo = function()
+	{
+		var url = '/cxg/index.php?m=Home&c=Wap&a=addStudentInfo';
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$(".zshow").hide();
+			var list = res.content.list;
+			if(res.content.types == 1)
+			{
+				$("#cond1").show();
+				$("#cond2").remove();
+				var str1 = "<option value='0'></option>";
+				for(var i in list)
+				{
+					str1 += '<option value="'+list[i].id+'">'+list[i].name+'</option>';
+				}
+				$("#year").html(str1);
+
+			}
+
+			if(res.content.types == 2)
+			{
+				$("#cond2").show();
+				$("#cond1").remove();
+				var str2 = "<option value='0'></option>";
+				for(var j in list)
+				{
+					str2 += '<option value="'+list[j].id+'">'+list[j].name+'</option>';
+				}
+				$("#student").html(str2);
+			}
+		}
+		else
+		{
+			$(".zshow").hide();
+			$("#cond2").show();
+			alert(res.content);
+		}
+	}
+
+	var id = getCookie('id');
+	if(id == null)
+	{
+		window.location.href = '/cxg/wap/login.html';
+	}
+
+	$("#year").live('change',function()
+	{
+		// var year = $(this).val();
+		var year = $("#year_box").attr('sign1');
+		var cond = {year:year};
+		getClassByYear(cond);
+		$("#student").html("");
+	})
+
+	$("#class").live("change",function()
+	{
+		// var classs = $(this).val();
+		var classs = $("#class_box").attr('sign1');
+		var cond = {class:classs};
+		getStudentByClass(cond);
+	})
+
+	$("#student").live('change',function()
+	{
+		// var val = $(this).val();
+		var val = $("#student_box").attr('sign1');
+		// var text = $("#student").find("option:selected").text();
+		var text = $("#student_box").html();
+		if(val == 0)
+		{
+
+		}
+		else
+		{
+			$("#content").show();
+			$("#hid").val(val);
+			$("#name").val('姓名：'+text);
+			$(".cond").hide();
+			$("#h1").html("新&nbsp;&nbsp;建&nbsp;&nbsp;请&nbsp;&nbsp;假");
+		}
+	})
+
+	$(".confirm-btn").live('click',function()
+	{
+		var student = $("#hid").val();
+		if($.trim(student) == '')
+		{
+			alert('学生信息错误，请重新选择！');
+			return;
+		}
+		var sd = $("#demo1").val();
+		var st = $("#demo2").val();
+		if($.trim(sd)=='' || $.trim(st)=='')
+		{
+			alert('开始时间不能为空！');
+			return;
+		}
+		var ed = $("#demo3").val();
+		var et = $("#demo4").val();
+		if($.trim(ed)=='' || $.trim(et)=="")
+		{
+			alert('结束时间不能为空！');
+			return;
+		}
+		var reasons = $("#reasons").val();
+		var reason = $("#reason").val();
+		if($.trim(reason) == '')
+		{
+			alert('班主任意见不能为空！');
+			return;
+		}
+		var stime = $.trim(sd)+" "+$.trim(st);
+		var etime = $.trim(ed)+" "+$.trim(et);
+		var url = "/cxg/index.php?m=Home&c=Leave&a=addStu";
+		var data = {student:student,stime:stime,etime:etime,reason:reason,reasons:reasons,status:3,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			alert(res.content);
+			window.location.href = "/cxg/wap/Leave/leave_record.html";
+		}
+		else
+		{
+			alert(res.content);
+		}
+
+	})
+
+	$(".cancel-btn").live("click",function()
+	{
+		window.location.href = '/cxg/wap/Leave/leave_record.html';
+	})
+	$(".select_content").live("click",function()
+	{
+		var _this = $(this);
+		$(".select_content").css('border-color','#ccc');
+		_this.css("border-color",'#397ace');
+		var aid = $(this).attr("id");
+		var ahtml = $(this).html();
+		$("#sbox").attr("sign1",aid);
+		$("#sbox").attr("sign2",ahtml);
+	})
+
+	$(".box_box").live("click",function()
+	{
+		var aid = $(this).attr("id");
+		var bid = aid.split("_")[0];
+		var arr = {};
+		var hcon = $("#"+bid).find("option");
+		for(var i=0;i<hcon.length;i++)
+		{
+			var cid = hcon[i].value;
+			arr[cid] = hcon[i].text;
+		}
+		console.info(arr);
+		var cstr = "";
+		$(".select_content").remove();
+		for(var j in arr)
+		{
+			if(parseInt(j) != 0)
+			{
+				cstr += "<div class='select_content' id="+j+">"+arr[j]+"</div>";
+			}
+		}
+		finalSign = bid;
+		$("#select_box").show();
+		$("#select_box").append(cstr);
+		$("#shell").show();
+
+	})
+
+	$("#cancel1").click(function()
+	{
+		$("#select_box").hide();
+		$("#shell").hide();
+	})
+
+	$("#confirm1").click(function()
+	{
+		$("#class_box").html('选择班级');
+		$("#student_box").html('选择学生');
+		var id = $("#sbox").attr('sign1');
+		if($.trim(id) != "")
+		{
+			var logs = finalSign+"_box";
+			$("#"+logs).attr('sign1',id);
+			var hhtml = $("#sbox").attr("sign2");
+			$("#"+logs).html(hhtml);
+			$("#"+finalSign).change();
+		}
+		//清空两个值
+		$("#sbox").attr("sign1","");
+		$("#sbox").attr("sign2","");
+		$("#select_box").hide();
+		$("#shell").hide();
+	})
+
+	setTimeout('addStudentInfo();',500);
+
+</script>
+</html>

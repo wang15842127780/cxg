@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>校园管理系统</title>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css" type="text/css">
+	<style type="text/css">
+		.hide{
+			display:none;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="body">
+		<!-- 顶部图片 -->
+		<!-- <img src="./images/top3.jpg" style="height:75px;width:1280px;" /> -->
+		<div id="top" style="background-image:url(__PUBLIC__/images/dbyc.jpg);background-size:100% 75px;">
+			<span style='display:inline-block;margin-right:20%;'>&nbsp;</span>
+		</div>
+		<!-- 主菜单 -->
+		<div id="main_menu">
+			<ul>
+				<li>主菜单</li>
+			</ul>
+		</div>
+		<!-- 主页内容  -->
+		<div id="home">
+			<if condition="$path eq ''">
+				<form id="form" action="" onsubmit="return false;">
+
+					<p style="margin-top:30px;font-size:18px;color:#fd2e0a;">登录信息</p>
+					<br>
+					<p style="font-size:21px;color:#10e410;" class="uname">用户名：<input type="text" name="uname" style="height:21px;"></p>
+					<br>
+					<br>
+					<p style="font-size:21px;color:#10e410;" class="upass">密&nbsp;&nbsp;&nbsp;码：<input type="password" name="upass" style="height:21px;"></p>
+					<br>
+					<br>
+					<button style="height:35px;width:70px;" id="submit">登录</button>
+				</form>
+
+			<else/>
+				<iframe src="__ROOT__/Application/Home/View/Index/{$path}" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
+			</if>
+		</div>
+
+		<!-- 子菜单 -->
+		
+		
+		<!-- 底部图片 -->
+		<img src="__PUBLIC__/images/footer1.jpg" style="height:35px;width:100%;margin-top:-4px;">
+	</div>
+	
+</body>
+</html>
+<script type="text/javascript">
+$("#submit").click(function()
+{
+	var uname = $("input[name='uname']").val();
+	if($.trim(uname) == "")
+	{
+		$(".tname").remove();
+		$(".uname").after("<span class='tname' style='color:red;'>请输入用户名！</span>");
+		return;
+	}
+	var upass = $("input[name='upass']").val();
+	if($.trim(upass) == "")
+	{
+		$(".tpass").remove();
+		$(".tname").remove();
+		$(".upass").after("<span class='tpass' style='color:red;'>请输入密码！</span>");
+		return;
+	}
+
+	$.ajax({
+		url:'/cxg/index.php?m=Home&c=Log&a=doLog',
+		data:$("#form").serialize(),
+		type:'post',
+		dataType:'json',
+		success:function(data)
+		{
+			if(data == 'true')
+			{
+				window.location.href = "./";
+			}
+			else
+			{
+				$(".tpass").remove();
+				$(".tname").remove();
+				$(".upass").after("<span class='tpass' style='color:red;'>用户名或密码错误！</span>");
+			}
+		},
+		error:function()
+		{
+			alert("网络繁忙，请稍后尝试！");
+		}
+	})
+})
+
+</script>

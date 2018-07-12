@@ -1,0 +1,32 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<h1 class="tt_h1">查看监控录像</h1>
+<br>
+<source src="http://192.168.1.66/doc/page/preview.asp" type="video/mp4">
+<script type="text/javascript">
+	$(".warning").click(function()
+	{
+		var id = $(this).attr('sign');
+		var url = "index.php?m=Home&c=Safe&a=read";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		var _this = $(this).find(".last_child");
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			_this.html('已读');
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	$(".page").click(function()
+	{
+		var page = $(this).html();
+		$("#page").val(page);
+		$("#form").submit();
+	})
+</script>
+</block>

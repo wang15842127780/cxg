@@ -1,0 +1,98 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：相机管理>查看相机信息</h1>
+<input type="hidden" id="cid">
+<br>
+<if condition="$camera eq ''">
+<p style="color:red;text-align:center">暂无相机信息</p>
+<else />
+<table id="table" class="new_table">
+	<tr class="tb_tr_th">
+		<th>相机ID</th>
+		<th>名称</th>
+		<th>班级</th>
+		<th>操作</th>
+	</tr>
+	<foreach item="list" name="camera">
+		<tr class="tb_tr_td">
+			<td>{$list.id}</td>
+			<td>{$list.name}</td>
+			<td>{$list.room_text}</td>
+			<td>
+				<if condition='$list.room_text eq "无"'>
+					<a href="javascript:void(0);" sign="{$list.id}" class="bindc">绑定班级</a>
+				<else />
+					<a href="javascript:void(0);" sign="{$list.id}" class="editc">修改班级</a>
+				</if>
+			</td>
+		</tr>
+	</foreach>
+</table>
+</if>
+<div id="shell" style="display:none;"></div>
+<div id='shell_box' style="position:absolute;z-index:9999;width:100%;height:300px;text-align:center;left:0;top:0;display:none;">
+	<div style="width:300px;height:250px;display:inline-block;background:#fff;margin-top:220px;border-radius:5px;">
+		<p class="title" style="text-align:left;padding:3px;border-radius:5px;border-bottom:1px solid #ccc;background:#eee;"></p>
+		<p style="margin-top:62px;text-align:center;">班级：<select name="clist" id="clist" style="width:100px;padding-left:15px;">
+			<foreach item="lists" name="clist">
+				<option value="{$lists.id}">{$lists.name}</option>
+			</foreach>
+		</select></p>
+		<p style="margin-top:100px;text-align:right;padding-right:10px;">
+			<button id='yes' style="background:#ff8d00;width:50px;height:25px;border-radius:8px;"></button>
+			<button id="no" style="width:50px;height:25px;border-radius:8px;">取消</button>
+		</p>
+	</div>
+</div>
+<script type="text/javascript">
+	$(".bindc").click(function()
+	{
+		$("#shell").show();
+		$("#show_box").show();
+		$(".title").html("绑定班绷");
+		$("#yes").html("确定");
+		var id = $(this).attr('sign');
+		$("#cid").val(id);
+	})
+	$(".editc").click(function()
+	{
+		$("#shell").show();
+		$("#shell_box").show();
+		$(".title").html('修改班级');
+		$("#yes").html('修改');
+		var id = $(this).attr("sign");
+		$("#cid").val(id);
+	})
+
+	$("#yes").click(function()
+	{
+		var cid = $("#cid").val();
+		var val = $("#clist").val();
+		var url = "index.php?m=Admin&c=Setting&a=editCamera";
+		var data = {cid:cid,room:val,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			window.location.reload();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	$("#no").click(function()
+	{
+		$("#shell").hide();
+		$("#shell_box").hide();
+	})
+</script>
+</block>

@@ -1,0 +1,123 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:20px;
+	}
+	td{
+		min-width:140px;
+		height:45px;
+		font-size:18px;
+		border:1px solid black;
+		line-height:45px;
+		text-align:center;
+	}
+	th{
+		border:1px solid black;
+		height:46px;
+	}
+	#cond{
+		padding-left:50px;
+		background:#ccc;
+		width:100%;
+		text-align:left;
+		height:35px;
+		line-height:35px;
+	}
+	th{
+		min-width:140px;
+	}
+	.p{
+		font-size:17px;
+		margin-top:20px;
+		color:#3dff00;
+	}
+	.close{
+		float:right;
+		width:19px;
+	}
+	.phide{
+		/*display:none;*/
+	}
+</style>
+<span id="add_manage">
+<br>
+<h1 class="tt_h1">新增请假信息</h1>
+<if condition="$userType eq 0">
+<input type="hidden" id="lid" value="{$info.id}">
+<p class="p">学生姓名：<input type="text" value="{$info.student_text}" readonly="readonly" style="width:134px;"></p>
+<p class="p phide">开始时间：<input class="sang_Calender" type="text" name="stime" value="" placeholder="{$info.begin_date}" readonly="" style="width:130px;" value="{$info.begin_date}"></p>
+<p class="p phide">结束时间：<input class="sang_Calender" type="text" name="etime" value="" placeholder="{$info.end_date}" readonly="" style="width:130px;" value="{$info.end_date}"></p>
+<p class="p phide">原因：<select name="reasons" id="reasons">
+	<option value="病假" <if condition="$info.reason eq '事假'" selected</if> >事假</option>
+	<option value="病假" <if condition="$info.reason eq '病假'">selected</if> >病假</option>
+	<option value="其它" <if condition="$info.reason eq '其它'">selected</if> >其它</option>
+</select>
+</p>
+<p class="p phide" style="vertical-align:top;"><textarea name="" id="reason" cols="30" rows="10" placeHolder="班主任意见">{$info.director_note}</textarea> </p>
+
+<br>
+<p class="phide">
+	<button class="confirm-btn">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<button class="confirm-btn1" style="background:#ef4b0a;width:82px;height:25px;">修改并提交</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<button class="cancel-btn">取消</button>
+</p>
+
+<script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
+<script type="text/javascript">
+	$(".confirm-btn").click(function()
+	{
+		var id = $("#lid").val();
+		var stime = $("input[name='stime']").val();
+		var etime = $("input[name='etime']").val();
+		var reason = $("#reason").val();
+		var reasons = $("#reasons").val();
+		var url = "index.php?m=Home&c=Leave&a=editStu";
+		var data = {id:id,stime:stime,etime:etime,reason:reason,reasons:reasons,status:1,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.href='index.php?m=Home&c=Leave&a=index&id=64.67'",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".confirm-btn1").click(function()
+	{
+		var id = $("#lid").val();
+		var stime = $("input[name='stime']").val();
+		var etime = $("input[name='etime']").val();
+		var reason = $("#reason").val();
+		var reasons = $("#reasons").val();
+		var url = "index.php?m=Home&c=Leave&a=editStu";
+		var data = {id:id,stime:stime,etime:etime,reason:reason,reasons:reasons,status:3,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.href='index.php?m=Home&c=Leave&a=index&id=64.67'",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		window.location.href = 'index.php?m=Home&c=Leave&a=index&id=64.67';
+	})
+
+	$(".close").click(function()
+	{
+		$(this).parent().parent().remove();
+	})
+
+</script>
+</block>

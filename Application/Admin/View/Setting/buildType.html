@@ -1,0 +1,185 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	#form{
+		width:400px;
+		height:230px;
+		display:inline-block;
+		margin-top:220px;
+		background:#fff;
+	}
+	#add_form input{
+		height:25px;
+		line-height:25px;
+		font-size:20px;
+		width:173px;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：宿舍管理>房间类型管理</h1>
+<p style="text-align:right;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加房间类型</button></p>
+<div id="con_div">
+	<table id="table" class="new_table">
+		<tr style="display:none;">
+			<th>ID</th>
+			<th>名称</th>
+			<th>可住人数</th>
+			<th>添加时间</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+	
+</div>
+<div  id="shell_img" class="zshow">
+	<img src="__PUBLIC__/iconfont/loading.gif" width="35" height="35" />
+	<p>加载中...</p>
+</div>
+<div id="add_form" style="position:absolute;left:0;top:0;right:0;z-index:9999;text-align:center;display:none;">
+	<form id="form" onsubmit="return false;">
+	<br>
+		<p>添房间类型</p>
+		<br>
+		<input type="hidden" id="hid">
+		房间类型：<input type="text" name="bname" id="bname"><br><br>
+		可住人数：<input type="text" name="bnum" id="bnum" value="0"><br><br><br><br>
+		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button>
+	</form>
+</div>
+<script type="text/javascript">
+	window.getList = function()
+	{
+		var url = "index.php?m=Admin&c=Setting&a=BuildTypeList";
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$(".zshow").hide();
+			$(".new_table").find('tr').show();
+			var list = res.content;
+			var field = Array();
+			field[0] = "id";
+			field[1] = "name";
+			field[2] = "number";
+			field[3] = "addtime";
+			if(res.leader == 1)
+			{
+				listPage(list,1,10,field,true);
+			}
+			else
+			{
+				field[4] = "act_text";
+				$(".add-btn").hide();
+				listPage(list,1,10,field);
+			}
+			
+		}
+		else
+		{
+			$(".zshow").hide();
+			tips(res.content,2);
+		}
+	}
+
+	setTimeout("getList();",500);
+
+	$(".edit-btn").live("click",function()
+	{
+		var id = $(this).attr('sign');
+		var url = "index.php?m=Admin&c=Setting&a=getBuildType";
+		var data = {id:id,typ:'json'};
+		var res2 = ajax(url,data);
+		if(res2.status == 'success')
+		{
+			$("#hid").val(id);
+			$("#shell").show();
+			$("#add_form").show();
+			var list = res2.content[0];
+			$("#bname").val(list.name);
+			$("#bnum").val(list.number);
+		}
+		else
+		{
+			tips(res2.content,2);
+		}
+	})
+
+	$(".del-btn").live("click",function()
+	{
+		var id = $(this).attr('sign');
+		var _this = $(this);
+		var msg = "您真的确定要删除吗？\n\n请确认！";
+		if(confirm(msg) == true)
+		{
+			var url = "index.php?m=Admin&c=Setting&a=delBuildType";
+			var data = {bid:id,typ:'json'};
+			var res = ajax(url,data);
+			if(res.status == 'success')
+			{
+				tips(res.content,1);
+				_this.parents("tr").remove();
+			}
+			else
+			{
+				tips(res.content,2);
+			}
+		}
+		
+			
+	})
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var hid = $("#hid").val();
+		var bname = $("#bname").val();
+		if($.trim(bname) == "")
+		{
+			tips('类型名称不能为空！',2);
+			return;
+		}
+		var bnum = $("#bnum").val();
+		if($.trim(bnum) == "")
+		{
+			tips('可容不数不能为空！',2);
+			return;
+		}
+		if($.trim(hid) == "")
+		{
+			var url = "index.php?m=Admin&c=Setting&a=addBuildType";
+			var data = {bname:bname,bnum:bnum,typ:'json'};
+		}
+		else
+		{
+			var url = "index.php?m=Admin&c=Setting&a=editBuildType";
+			var data = {bid:hid,bname:bname,bnum:bnum,typ:'json'};
+		}
+			
+		var res1 = ajax(url,data);
+		if(res1.status == 'success')
+		{
+			tips(res1.content,1);
+			setTimeout('window.location.reload();',300);
+		}
+		else
+		{
+			tips(res1.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		$("#bname").val("");
+		$("#bnum").val("");
+		$("#shell").hide();
+		$("#add_form").hide();
+		$("#hid").val("");
+	})
+</script>
+</block>

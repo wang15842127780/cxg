@@ -1,0 +1,167 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<h1 class="tt_h1">位置：宿舍管理>扣分项目管理</h1>
+<style type="text/css">
+	#show_box{
+		position:absolute;
+		height:280px;
+		width:300px;
+		text-align:center;
+		background:#fff;
+		left:450px;
+		top:160px;
+		border-radius:10px;
+	}
+	.tb_tr_th th{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.tb_tr_td td{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.edit-btn{
+		display:none;
+	}
+	.add_left{
+		display: inline-block;
+	    width: 25%;
+	    text-align: right;
+	}
+	.add_right{
+		display: inline-block;
+		width: auto;
+	}
+</style>
+<button class="add-btn" style="position:absolute;right:50px;"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加扣分项目</button>
+<br>
+<div style="position:absolute;left:0;top:111px;right:0;bottom:0;overflow:auto;">
+	<table id="table" style="display:none;margin-left:20px;margin-top:0;margin-bottom:10px;">
+		<tr class="tb_tr_th">
+			<th>ID</th>
+			<th>扣分项目</th>
+			<th>分值</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+	
+</div>
+<div id="shell_img" class="zshow">
+        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35">
+        <p>加载中...</p>
+</div>
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center; display:none;font-size:17px;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
+	<br>
+		<p>添 加 扣 分 项 目</p>
+		<br>
+		<p class="add_left">名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</p>
+		<p class="add_right"><input type="text" name="name" id="name"></p>
+		<br>
+		<br>
+		<p class="add_left">分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数：</p>
+		<p class="add_right"><input type="text" name="num" id="num" placeHolder='填入正整数即可'></p>
+		
+		<br><br>
+		<p>
+			<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+			<button class="cancel-btn">取消</button><br><br>
+		</p>
+		
+	</form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/admindate.js"></script>
+<script type="text/javascript">
+	window.getHealthItem = function()
+	{
+		var url = "index.php?m=Admin&c=Health&a=getHealthItem";
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").show();
+			$(".zshow").hide();
+			var list = res.content;
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'item';
+			field[2] = 'score';
+			listPage(list,1,20,field,true);
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+		}
+	}
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+	})
+	$(".cancel-btn").click(function()
+	{
+		$("#name").val("");
+		$("#num").val("");
+		$(".zshow").hide();
+		$("#add_form").hide();
+	})
+	$(".confirm-btn").click(function()
+	{
+		var name = $.trim($("#name").val());
+		var num = $.trim($("#num").val());
+		if(name == '')
+		{
+			tips("项目名称不能为空！");
+			return;
+		}
+		if(num == "")
+		{
+			tips("分值不能为空！");
+			return;
+		}
+		if(parseInt(num) == 0)
+		{
+			tips("分数格式不合理！");
+			return;
+		}
+		// alert(111);
+		var url = "index.php?m=Admin&c=Health&a=addHealthItem";
+		var data = {item:name,score:num,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	$(".del-btn").live("click",function()
+	{
+		var id = $(this).attr("sign");
+		var _this = $(this);
+		var url = "index.php?m=Admin&c=Health&a=delHealthItem";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			_this.parents("tr").remove();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	setTimeout("getHealthItem();",500);
+</script>
+</block>

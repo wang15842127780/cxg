@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>最新请假信息</title>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/fun.js"></script>
+	<style>
+		body{
+			background:url("__PUBLIC__/images/baoan.jpg");
+			background-size:100%;
+			background-repeat:no-repeat;
+		}
+		h1{
+			text-align:center;
+			font-size:40px;
+			font-family:cursive;
+			margin-bottom:25px;
+		}
+		p{
+			font-size:14px;
+			font-family:serif;
+			margin-bottom:20%;
+		}
+		.content{
+			float:left;
+			width:21%;
+			margin-left:3%;
+			border:1px solid #ccc;
+			padding-bottom:21%;
+			margin-bottom:50px;
+			border-radius:5px;
+			height:0;
+		}
+		.img{
+			width:100%;
+		}
+		.status{
+			text-align:center;
+			font-size:30px;
+			color:green;
+			margin-top: 20px
+		}
+		#shell{
+			position:absolute;
+			left:0;
+			right:0;
+			top:0;
+			bottom:0;
+			background:#ddd;
+			opacity:0.7;
+			display:none;
+		}
+		#show_box{
+			position:absolute;
+			left:0;
+			right:0;
+			top:0;
+			bottom:0;
+			text-align:center;
+			display:none;
+		}
+		.cc{
+			width:1500px;
+			background:rgb(0,136,204);
+			border:1px solid #ddd;
+			border-radius:5px;
+			margin-top:130px;
+			color:#fff;
+			display:inline-block;
+		}
+		.cc_img{
+			display:inline-block;
+		}
+		#left{
+			display:inline-block;
+			float:left;
+			margin-left:40px;
+		}
+		#right{
+			display:inline-block;
+			float:right;
+			margin-right:40px;
+		}
+	</style>
+</head>
+<body>
+	<h1>人脸识别校园出入管理系统</h1>
+	<div style="height:0;overflow-y:hidden;position:relative;width:100%;padding-bottom:47%;" id="box">
+		<foreach item="list" name="list">
+			<div class="content">
+				<div style="width:49%;display:inline-block;height:240px;line-height:240px;vertical-align:middle;">
+					<img src="{$list.photo_text}" alt="暂无学生图片" class="img">
+				</div>
+				<div style="width:49%;display:inline-block;float:right;">
+					<p>姓名：{$list.name_text}</p>
+					<p>班级：{$list.class_text}</p>
+					<p>请假日期：</p>
+					<p style="text-align:center;">
+						{$list.begin_date} <br>至<br> {$list.end_date}
+					</p>
+				</div>
+					
+				<div class="status">{$list.status_text}</div>
+			</div>
+		</foreach>
+		<!-- <div class="content">
+			<img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3955881421,2348767646&fm=27&gp=0.jpg" class="img">
+			<p>姓名：张三</p>
+			<p>班级：三年1班</p>
+			<p>开始——结束时间：</p>
+			<p style="text-align:center;">
+				2017-10-10 10:10:10 <br>|<br> 2017-11-11 11:11:11
+			</p>
+			<div class="status">已批准</div>
+		</div>
+ -->
+	</div>
+	<div id="sign"></div>
+	<div id="shell"></div>
+	<div id="show_box">
+		<div class="cc">
+			<span id="left"> 
+				<h2>抓拍截图</h2>
+				<img src="" id="img1" width=500 height=500  class="cc_img" />
+			</span>
+			<span id="right">
+				<h2>请假学生</h2>
+				<img src="" id="img2" width=500 height=500  class="cc_img" />
+			</span>
+			<p style="margin:0;margin-top:188px;font-size:45px;height:70px;font-weight:bold;" id="name">姓名：张三</p>
+			<p style="margin:0;font-size:45px;height:70px;font-weight:bold;" id="ccc">班级：二年1班</p>
+			<p style="margin:0;margin-bottom:20px;font-size:45px;height:70px;font-weight:bold;" id="state">状态：已批准</p>
+			<p style="margin:0;margin-top:175px;font-size:45px;height:70px;font-weight:bold;" id="time">时间：2018-01-01 10:10:10 至 2018-03-03 09:09:09</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
+	<script type="text/javascript">
+		window.getStudentById = function(id)
+		{
+			var url = "index.php?m=Home&c=Enter&a=getStudentById";
+			var data = {qqid:id,typ:'json'};
+			var cc = ajax(url,data);
+			return cc;
+		}
+		window.getAlarm = function(res)
+		{
+			console.info(res);
+			if(res.status == 'success')
+			{
+				var info = res.content;
+				$("#shell").show();
+				$("#show_box").show();
+				if(info.status_text == '该学生暂无请假信息！')
+				{
+					$("#name").html("姓名："+info.name_text);
+					$("#ccc").html("班级："+info.class_text);
+					$("#time").hide();
+					$("#state").html("状态：该学生暂无请假信息！");
+				}
+				else
+				{
+					$("#name").html("姓名："+info.name_text);
+					$("#ccc").html("班级："+info.class_text);
+					$("#time").show();
+					$("#time").html(info.leave_date);
+					$("#state").html("状态："+info.status_text);
+				}
+			}
+			else
+			{
+				tips(res.content,2);
+			}
+		}
+		window.addInfo = function(id)
+		{
+			var res = getStudentById(id);
+			console.info(res);
+			if(res.status == 'success')
+			{
+				var info = res.content;
+				if(info.status_text != '该学生暂无请假信息！')
+				{
+					// var str = '<div class="content"><img src="'+info.photo_text+'" alt="暂无学生图片" class="img"><p>姓名：'+info.name_text+'</p><p>班级：'+info.class_text+'</p><p>开始时间——结束时间：</p><p style="text-align:center;">'+info.begin_date+' <br>|<br> '+info.end_date+'</p><div class="status">'+info.status_text+'</div></div>';
+					
+					var str = '<div class="content"><div style="width:49%;display:inline-block;"><img src="'+info.photo_text+'" alt="暂无学生图片" class="img"></div><div style="width:49%;display:inline-block;float:right;"><p>姓名：'+info.name_text+'</p><p>班级：'+info.class_text+'</p><p>请假日期：</p><p style="text-align:center;">'+info.leave_date+'</p></div><div class="status">'+info.status_text+'</div>';
+					$("#box").prepend(str);
+				}
+					
+
+			}
+			else
+			{
+				tips(res.content);
+			}
+		}
+
+		window.hhide = function()
+		{
+			$("#shell").hide();
+			$("#show_box").hide();
+			$("#sign").html(2);
+		}
+		window.startWebSocket = function(num)
+		{
+			var socket = new WebSocket('ws://192.168.1.234:8080');
+			// 监听Socket的关闭
+			socket.onclose = function(event) {
+				// console.log('Client notified socket has closed',event);
+				num += 1;
+				if(num <= 3)
+				{
+					startWebSocket(num);
+				}
+				setTimeout("window.location.reload();",1000*300);
+				
+			}; 
+			socket.onerror = function(event) {
+				console.log('Client notified socket has error',event);
+			}; 
+			socket.onopen = function(event) {
+				console.log("Connected", event);
+			};
+			socket.onmessage = function(event) {
+				try{
+					var ss = $("#sign").html();
+					var dd = $.parseJSON(event.data);
+					console.info(dd);
+					if(dd.action == 'person_id')
+					{
+						var sid = dd.content;
+						addInfo(sid);
+					}
+					else if(dd.action == 'alarm_report')
+					{
+						if(ss != 1)
+						{
+							$("#shell").show();
+							$("#show_box").show();
+							console.log('Client received a message',event);
+							var url1 = "index.php?m=Home&c=Enter&a=getFace";
+							var img1 = ajax(url1,{dd:dd.content});
+							$("#img1").attr("src","data:image/jpeg;base64,"+img1.img1);
+							$("#img2").attr("src","data:image/jpeg;base64,"+img1.img2);
+							getAlarm(img1.pinfo);
+							$("#sign").html(1);
+							setTimeout("hhide();",1000*10);
+						}
+					}
+						
+				}catch(e){
+					console.log("message: "+ e);
+				}
+			};
+		}
+		startWebSocket(0);
+		// setTimeout("addInfo(19);",800);
+	</script>
+</body>
+</html>
+

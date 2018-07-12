@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>详细信息</title>
+	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
+	<link rel="stylesheet" href="/cxg/Public/css/wap.css" type="text/css" />
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		body{
+			background:#397ace;
+		}
+		#content{
+			position:absolute;
+			top:35px;
+			background:#eee;
+			left:0;
+			right:0;
+			bottom:0;
+			overflow-x:hidden;
+			overflow-y:auto;
+			font-family:'宋体';
+		}
+		.content{
+			width:100%;
+			line-height:34px;
+			font-size:13px;
+			background:#fff;
+			border-bottom:1px solid #ddd;
+		}
+		.p{
+			width:35%;
+			display:inline-block;
+			position:absolute;
+			margin-left:40px;
+		}
+		span{
+			display:inline-block;
+			width:97%;
+			text-align:right;
+		}
+		.p2{
+			display:none;
+		}
+		.p3{
+			display:none;
+		}
+	</style>
+</head>
+<body>
+	<h1 style="text-align:center;font-size:23px;top:4px;position:absolute;width:100%;font-family:'宋体';color:#fff;">详 细 信 息</h1>
+	<div id="content">
+		<div class="content" style="margin-bottom:15px;line-height:70px;"><p class="p"><div style="position:absolute;margin-left:32px;margin-top:12px;width:50px;height:50px;border-radius:25px;overflow:hidden;"><img src="" id="name1" alt="暂无图片" style="width:50px;"></div></p><span style="width:100%;text-align:center;font-size:23px;" id="name"></span></div>
+		<div class="content"><i class="class_logo"></i><p class="p">班级</p><span id="class"></span></div>
+		<div class="content"><i class="reason_logo"></i><p class="p">原因</p><span id="reason"></span></div>
+		<div class="content"><i class="director_logo"></i><p class="p">班主任</p><span id="leader"></span></div>
+		<div class="content"><i class="stime_logo"></i><p class="p">开始时间</p><span id="stime"></span></div>
+		<div class="content"><i class="etime_logo"></i><p class="p">结束时间</p><span id="etime"></span></div>
+		<div class="content"><i class="create_logo"></i><p class="p">创建人</p><span id="createby"></span></div>
+		<div class="content"><i class="director_note_logo"></i><p class="p">班主任意见</p><span id="director_note"></span></div>
+		<div class="content p2" style="line-height:44px;"><i class="leader_note_logo"></i><p class="p p2"> 年级主任意见</p><input type="text" name="note" id="note" style="height:26px;width:130px;border:1px solid #b5b5b5;margin-left:50%;"></div>
+		<div class="content p3"><i class="leader_note_logo"></i><p class="p p3">年级主任意见</p><span id="leader_note"></span></div>
+		<div class="content p3"><i class="audity_logo"></i><p class="p p3">审批人</p><span id="auditby"></span></div>
+		<div class="content"><i class="status_logo"></i><p class="p">状态</p><span id="status"></span></div>
+		<p class="p2" style="position:absolute;width:100%;text-align:center;padding:2px;background:#eee;margin-top:45px;">
+			<button class="confirm-btn"><i class="right_logo"></i><div style='display:inline-block;width:20px;'></div>同意</button>&nbsp;&nbsp;			
+			<button class="cancel-btn"><i class="wrong_logo"></i><div style='display:inline-block;width:20px;'></div>拒绝</button>
+		</p>
+	</div>
+<div id="shell" class="zshow">
+	
+</div>
+<div id="shell_img" class="zshow">
+	<img src="/cxg/Public/iconfont/loading.gif" width="50px">
+	<p>加载中...</p>
+</div>
+</body>
+</html>
+<script>
+	window.GetQueryString = function(name)
+	{
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if(r!=null)return  unescape(r[2]); return null;
+	}
+	window.getLeaveById = function()
+	{
+		var id = GetQueryString('id');
+		var url = "/cxg/index.php?m=Home&c=Wap&a=getLeaveById";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$(".zshow").hide();
+			var info = res.content;
+			$(".zhow").hide();
+			$("#name").html(info.student_text);
+			$("#name1").attr("src",info.photo_text)
+			$("#class").html(info.class_text);
+			$("#reason").html(info.reason);
+			$("#leader").html(info.leader);
+			$("#stime").html(info.begin_date);
+			$("#etime").html(info.end_date);
+			$("#createby").html(info.createby);
+			$("#director_note").html(info.director_note);
+			if(info.status == 1)
+			{
+				$("#status").html(info.status_text);
+				$(".p2").parents(".content").remove();
+				$(".p3").parents(".content").remove();
+				$(".p2").remove();
+			}
+			if(info.status==3 || info.status==4)
+			{
+				if(info.power == 1)
+				{
+					$(".p2").css('display','inline-block');
+					$("#status").parents(".content").remove();
+				}
+				else
+				{
+					$("#status").html(info.status_text);
+					$(".p2").parents(".content").remove();
+					$(".p3").parents(".content").remove();
+					$(".p2").remove();
+				}
+				
+			}
+			if(info.status==5 || info.status==6 || info.status==7)
+			{
+				$(".p2").remove();
+				$(".p3").css("display","inline-block");
+				$("#leader_note").html(info.leader_note);
+				$("#auditby").html(info.auditby);
+				$("#status").html(info.status_text);
+			}
+
+		}
+		else
+		{
+			$(".zshow").hide();
+			alert(res.content);
+		}
+	}
+	window.getCookie = function(name)
+	{
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+		return unescape(arr[2]);
+	else
+		return null;
+	}
+	var socket = new WebSocket("ws://192.168.1.234:8080");
+	socket.onclose = function(event)
+	{
+		console.info("Client notified socket has closed",event);
+	}
+	socket.onerror = function(event)
+	{
+		console.info("Client notified socket has error",event);
+	}
+	socket.onmessage = function(event)
+	{
+		console.info("收到新信息");
+	}
+	socket.onopen = function(event)
+	{
+		console.info("Connected",event);
+	}
+
+	var id = getCookie('id');
+	if(id == null)
+	{
+		window.location.href = '/cxg/wap/login.html';
+	}
+
+	$(".confirm-btn").live("click",function()
+	{
+		var id = GetQueryString('id');
+		var note = $("#note").val();
+		var url = "/cxg/index.php?m=Admin&c=Leave&a=checkLeave1";
+		var newData = {content:id,action:"person_id",location:"entrance"};
+		if($.trim(note) == '')
+		{
+			var data = {id:id,note:'同意请假',status:5,typ:'json'};
+		}
+		else
+		{
+			var data = {id:id,note:note,status:5,typ:'json'};
+		}
+		$.ajax({
+			url:url,
+			async:true,
+			data:data,
+			type:"post",
+			dataType:'json',
+			success:function(res)
+			{
+				if(res.status == 'success')
+				{
+					console.info(newData);
+					socket.send(JSON.stringify(newData));
+					alert(res.content);
+					window.location.href = '/cxg/wap/Leave/check_leave.html';
+				}
+				else
+				{
+					alert(res.content);
+				}
+			},
+			error:function()
+			{
+				alert("网络错误"); 
+			}
+		});
+		// var res = ajax(url,data);
+		// if(res.status == 'success')
+		// {
+		// 	alert(res.content);
+		// 	window.location.href = '/cxg/wap/Leave/leave_record.html';
+		// }
+		// else
+		// {
+		// 	alert(res.content);
+		// }
+
+	})
+
+
+	$(".cancel-btn").live("click",function()
+	{
+		var id = GetQueryString('id');
+		var note = $("#note").val();
+		var url = '/cxg/index.php?m=Home&c=Wap&a=checkLeave';
+		if($.trim(note) == '')
+		{
+			var data = {id:id,note:'同意请假',status:7,typ:'json'};
+		}
+		else
+		{
+			var data = {id:id,note:note,status:7,typ:'json'};
+		}
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			alert(res.content);
+			window.location.href = '/cxg/wap/Leave/leave_record.html';
+		}
+		else
+		{
+			alert(res.content);
+		}
+	})
+	
+	setTimeout('getLeaveById();',500);
+
+
+</script>

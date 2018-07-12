@@ -1,0 +1,113 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	td{
+		/*min-width:140px;
+		height:45px;
+		font-size:18px;
+		border:1px solid black;
+		line-height:45px;*/
+	}
+	.del-btn{
+		/*width:30px;
+		height:100%;
+		float:right;*/
+		/*background:black;*/
+		/*color:white;*/
+		display:none;
+		/*cursor:pointer;*/
+		/*border-left:1px solid black;*/
+	}
+	.edit-btn{
+		/*width:30px;
+		height:100%;
+		float:right;*/
+		background:#fff !important;
+		/*color:white;*/
+		/*display:none;*/
+		/*cursor:pointer;
+		border-left:1px solid black;*/
+	}
+</style>
+<br>
+<h1 class="tt_h1">查看出勤信息</h1>
+<br>
+<form action="index.php?m=Home&c=Stu&a=index&id=1.44" method="post" id="form" style="display:none;">
+	<input type="text" name="croom" id="croom">
+	<input type="text" name="ctype" value="2">
+	<input type="text" name="ctime" id="ctime">
+</form>
+<table id="record">
+	<foreach item="list" name='class'>
+		<tr id="l1">
+			<td class="tb_tr_tt">{$list.name}</td>
+			<foreach item="lists" name="list.sub">
+				<td title="{$lists.id}" class='croom'>
+					{$lists.name}
+					<span <if condition="$lists.count eq ''">class="del-btn"<else />class="edit-btn"</if>>
+						<if condition="$lists.count eq ''">0<else />{$lists.count}</if>
+					</span>
+				</td>
+			</foreach>
+		</tr>
+	</foreach>
+</table>
+<table id="detail" style="display:none;">
+	<tr class="tb_tr_th">
+		<th>日期</th>
+		<th>星期</th>
+		<th>课时</th>
+		<th>课程</th>
+		<th>总计</th>
+		<th>出席</th>
+		<th>缺席</th>
+		<th>操作</th>
+	</tr>
+</table>
+
+<script type="text/javascript">
+	$(".edit-btn").click(function()
+	{
+		var croom = $(this).parent().attr('title');
+		var url = "index.php?m=Home&c=Stu&a=getAttendRecord";
+		var data = {croom:croom,typ:'json'};
+		var res = ajax(url,data);
+		$(".detail").remove();
+		var str = String();
+		if(res.status == 'success')
+		{
+			for(var i in res.content)
+			{
+				str += "<tr class='detail tb_tr_td'>"
+				+ "<td>" + res.content[i].date + "</td>"
+				+ "<td>" + res.content[i].week_text + "</td>"
+				+ "<td>" + res.content[i].time_text + "</td>"
+				+ "<td>" + res.content[i].lesson_text + "</td>"
+				+ "<td>" + res.content[i].total + "</td>"
+				+ "<td>" + res.content[i].attend + "</td>"
+				+ "<td>" + res.content[i].absent + "</td>"
+				+ "<td><a href='javascript:void(0);' sign='"+res.content[i].time+"' class='dddd'>查看详情</a></td>"
+				+ "</tr>";
+			}
+			$("#detail").show();
+			$("#record").hide();
+			$("#detail").append(str);
+
+			$(".dddd").click(function()
+			{
+				var ctime = $(this).attr('sign');
+				$("#ctime").val(ctime);
+				$("#croom").val(croom);
+				$("#form").submit();
+			})
+		}
+			
+		console.info(res);
+	})
+</script>
+</block>

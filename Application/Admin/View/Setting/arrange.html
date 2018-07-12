@@ -1,0 +1,205 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	#left,#right,#center{
+		width:160px;
+		height:400px;
+		display:inline-block;
+		overflow-y:auto;
+	}
+	.stu_info{
+		height:24px;
+	}
+	.stu_info_l{
+		display:inline-block;
+		width:80px;
+		line-height:20px;
+		border:1px solid #ccc;
+		background: #fff;
+		border-radius:5px;
+		vertical-align: middle;
+		margin:1px;
+	}
+	.stu_info_r{
+		display:inline-block;
+		width:80px;
+		line-height:20px;
+		border:1px solid #ccc;
+		background: #fff;
+		border-radius:5px;
+		vertical-align: middle;
+		margin:1px;
+	}
+</style>
+<br>
+<h1 class="tt_h1" id="title">位置：课表管理>编辑上课人员</h1>
+<div id="cond">
+	<form method="post" id="form">
+		星期：<select name="week" id="week"  style='width:75px;padding-left:5px;'>
+			<option value="1" <if condition="$Think.post.week eq 1">selected</if> >星期一</option>
+			<option value="2" <if condition="$Think.post.week eq 2">selected</if> >星期二</option>
+			<option value="3" <if condition="$Think.post.week eq 3">selected</if> >星期三</option>
+			<option value="4" <if condition="$Think.post.week eq 4">selected</if> >星期四</option>
+			<option value="5" <if condition="$Think.post.week eq 5">selected</if> >星期五</option>
+			<option value="6" <if condition="$Think.post.week eq 6">selected</if> >星期六</option>
+			<option value="7" <if condition="$Think.post.week eq 7">selected</if> >星期日</option>
+		</select>
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<br>
+<table id="table">
+	<tr class="tb_tr_th">
+		<th>教室</th>
+		<foreach item="list" name="clist">
+			<th>
+				{$list.name}
+			</th>
+		</foreach>
+	</tr>
+	<for start="1" end="9" name="i">
+		<tr class="tb_tr_td">
+			<td>第{$i}节</td>
+			<foreach item="lists" key="k" name="clist">
+				<td class="syllabus" sign="{$lists.$i.sid}">
+					{$lists.$i.count}
+				</td>
+			</foreach>
+		</tr>
+	</for>
+</table>
+<div style="height:410px;display:none;text-align:center;" id="detail">
+	<p id="tinfo" style="height:50px;"></p>
+	<div id="left" style="border:1px solid black;">
+		
+	</div>
+	<div id="center" style="line-height:380px;"><<————>></div>
+	<div id="right" style="border:1px solid black;">
+		
+	</div>
+	<p>
+		<button id="gogo">完成</button>
+		<button id="return">返回</button>
+	</p>
+</div>
+<script type="text/javascript">
+	window.getStuList = function(id)
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getStuByClass";
+		var data = {typ:'json',id:id};
+		var res = ajax(url,data);
+		return res;
+	}
+	window.liclick = function(id)
+	{
+		$(".stu_info_l").live("click",function()
+		{
+			var _this = $(this);
+			var sid = $(this).attr("sign");
+			var url1 = "index.php?m=Admin&c=Setting&a=delLessonStu";
+			var data1 = {sid:sid,id:id,typ:'json'};
+			var res1 = ajax(url1,data1);
+			if(res1.status == 'success')
+			{
+				var html = _this.html();
+				_this.remove();
+				$("#right").find("ul").append("<li class='stu_info_r' sign="+sid+">"+html+"</li>");
+			}
+			else
+			{
+				tips(res1.content,2);
+			}
+		})
+		$(".stu_info_r").live("click",function()
+		{
+			var _this = $(this);
+			var sid = $(this).attr('sign');
+			var url2 = "index.php?m=Admin&c=Setting&a=addLessonStu";
+			var data2 = {sid:sid,id:id,typ:'json'};
+			var res2 = ajax(url2,data2);
+			if(res2.status == 'success')
+			{
+				var ban = _this.attr("ban");
+				var ban_list = $("."+ban);
+				var cou = ban_list.length;
+				if(cou == 1)
+				{
+					_this.prev().remove();
+				}
+				var html = _this.html();
+				_this.remove();
+				$("#left").find("ul").append("<li class='stu_info_l' sign="+sid+">"+html+"</li>");
+
+			}
+		})
+	}
+	$("#return").click(function()
+	{
+		$("#table").show();
+		$("#detail").hide();
+		$("#title").html('位置：课表管理>编辑上课人员');
+	})
+	$("#gogo").click(function()
+	{
+		window.location.reload();
+	})
+	$(".syllabus").click(function()
+	{
+		var id = $(this).attr('sign');
+		if($.trim(id) == "")
+		{
+			tips('请先安排课程，再安排学生！',2);
+			return;
+		}
+		$(".stu_info_r").parent().remove();
+		$(".stu_info_l").parent().remove();
+		$("#table").hide();
+		$("#title").html("人员管理");
+		$("#detail").show();
+		var res = getStuList(id);
+		if(res.status == 'success')
+		{
+			$("#tinfo").html(res.content.ttitle);
+			var str = String();
+			var str1 = String();
+			var sign = String();
+			str = "<ul>";
+			if(res.content.tleft != "")
+			{
+				var left = res.content.tleft;
+				
+				for(var i in left)
+				{
+					str += "<li class='stu_info_l' sign='"+left[i].id+"'>"+left[i].name+"</li>";
+				}
+				
+			}
+			str += "</ul>";
+			$("#left").append(str);
+			str1 = "<ul>";
+			if(res.content.tright != "")
+			{
+				var right = res.content.tright;
+				for(var j in right)
+				{
+					if(sign != right[j].room)
+					{
+						str1 += "<li style='text-align:left;padding-left:20px;margin-top:5px;font-weight:bold;' class='sroom'>"+right[j].room+"</li>";
+						sign = right[j].room;
+					}
+
+					str1 += "<li class='stu_info_r "+sign+"' sign='"+right[j].id+"' ban="+sign+">"+right[j].name+"</li>";
+				}
+			}
+			str1 += "<hr style='margin-top:5px;'/></ul>";
+			$("#right").append(str1);
+			liclick(id);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+
+	})
+</script>
+</block>

@@ -1,0 +1,297 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+	.add_left{
+		display: inline-block;
+		width: 25%;
+		text-align: right;
+	}
+	.add_right{
+		display: inline-block;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：教师管理>查看教师</h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	姓名：<input type="text" id="sname">&nbsp;&nbsp;
+	年组名：<select name="syear" id="syear">
+		<foreach item='list' name="yearList">
+			<option value="{$list.id}">{$list.name}</option>
+		</foreach>
+	</select> &nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加教师信息</button></p>
+<br>
+<div id="con_div">
+	<table id="table" class="new_table">
+		<tr style="display:none;">
+			<th>ID</th>
+			<th>姓名</th>
+			<th>用户名</th>
+			<th>年组</th>
+			<th>备注</th>
+			<th>重置密码</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="__PUBLIC__/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
+</div>
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
+	<br>
+		<p>添 加 教 师</p>
+		<br>
+		<input type="hidden" id="hid">
+		<p class="add_left">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</p><p class="add_right"><input type="text" name="name" id="name"></p><br>
+		<p class="add_left">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组：</p><p class="add_right"><select name="year" id="year" style="margin-top:10px;width:104px;"></select></p><br>
+		<p class="add_left">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</p><p class="add_right"><input type="text" name="note" id="note"></p><br>
+		<p class="add_left">用&nbsp;&nbsp;户&nbsp;&nbsp;名：</p><p class="add_right"><input type="text" name="uname" id="uname"></p><br>
+		<p class="add_left">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</p><p class="add_right"><input type="password" id="pass"></p><br>
+		<p class="add_left">确认密码：</p><p class="add_right"><input type="password" id="repass"></p><br><br>
+		<p><button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button><br><br></p>
+		
+		
+		
+		
+	</form>
+</div>
+
+<script type="text/javascript">
+	window.getList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getTeacherList";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").find('tr').show();
+			$(".zshow").hide();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'name';
+			field[2] = 'uname';
+			field[3] = 'year_text';
+			field[4] = 'note';
+			field[5] = 'reset_text';
+			var lists = res.content;
+			if(res.leader == 1)
+			{
+				listPage(lists,1,15,field,true);
+			}
+			else
+			{
+				field[5] = 'act_text';
+				$(".add-btn").hide();
+				listPage(lists,1,15,field);
+			}
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
+		}
+	}
+
+	$(".search").click(function()
+	{
+		var sname = $("#sname").val();
+		var syear = $("#syear").val();
+		var cond = {sname:sname,syear:syear};
+		getList(cond);
+	})
+
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+		$("#uname").show();
+		$("#pass").show();
+		$("#repass").show();
+		var ylist = {$yearLists};
+		console.info(ylist);
+		var str = "";
+		for(var i in ylist)
+		{
+			str += "<option value='"+ylist[i].id+"'>"+ylist[i].name+"</option>";
+		}
+		$("#year").html(str);
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var id = $("#hid").val();
+		var name = $("#name").val();
+		if($.trim(name) == "")
+		{
+			tips('教师名不能为空！',2);
+			return;
+		}
+		var year = $("#year").val();
+		if($.trim(year) == '')
+		{
+			tips('请先设置年组信息！',2);
+			return;
+		}
+		var note = $("#note").val();
+		if($.trim(id) == "")
+		{
+			var uname = $("#uname").val();
+			if($.trim(uname) == "")
+			{
+				tips('用户名不能为空！',2);
+				return;
+			}
+			var pass = $("#pass").val();
+			if($.trim(pass) == "")
+			{
+				tips('密码不能为空！',2);
+				return;
+			}
+			var repass = $("#repass").val();
+			if(repass != pass)
+			{
+				tips('两次密码输入不一致！',2);
+				return;
+			}
+			var url = "index.php?m=Admin&c=Setting&a=addTeacher";
+			var data = {year:year,name:name,note:note,uname:uname,pass:pass,typ:'json'};
+		}
+		else
+		{
+			var url = "index.php?m=Admin&c=Setting&a=editTeacher";
+			var data = {id:id,year:year,name:name,note:note,typ:'json'};
+		}
+			
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		$("#shell").hide();
+		$("#add_form").hide();
+		$("#hid").val('');
+		$("#pass").parent().show();
+		$("#pass").parent().prev().show();
+		$("#repass").parent().show();
+		$("#repass").parent().prev().show();
+		$("#uname").parent().show();
+		$("#uname").parent().prev().show();
+		$("#name").val("");
+		$("#note").val("");
+	})
+
+	$(".edit-btn").live("click",function()
+	{
+		var id = $(this).attr('sign');
+		var url = "index.php?m=Admin&c=Setting&a=getTeacherById";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#hid").val(id);
+			$("#shell").show();
+			$("#add_form").show();
+			$("#pass").parent().hide();
+			$("#pass").parent().prev().hide();
+			$("#repass").parent().hide();
+			$("#repass").parent().prev().hide();
+			$("#uname").parent().hide();
+			$("#uname").parent().prev().hide();
+			var info = res.content;
+			$("#name").val(info.name);
+			$("#note").val(info.note);
+			var ylist = {$yearLists};
+			var str = "";
+			for(var i in ylist)
+			{
+				if(ylist[i].id == info.year_id)
+				{
+					str += "<option value='"+ylist[i].id+"' selected>"+ylist[i].name+"</option>";
+				}
+				else
+				{
+					str += "<option value='"+ylist[i].id+"'>"+ylist[i].name+"</option>";
+				}
+			}
+			$("#year").html(str);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+
+	})
+
+	$(".del-btn").live("click",function()
+	{
+		var msg = "您真的确定要删除吗？\n\n请确认！";
+		if(confirm(msg)==true)
+		{
+			var _this = $(this);
+			var id = $(this).attr("sign");
+			var url = "index.php?m=Admin&c=Setting&a=delTeacher";
+			var data = {id:id,typ:'json'};
+			var res = ajax(url,data);
+			if(res.status == 'success')
+			{
+				tips(res.content,1);
+				_this.parents('tr').remove();
+			}
+			else
+			{
+				tips(res.content,2);
+			}
+		}
+	})
+
+	$(".reset").live("click",function()
+	{
+		var id = $(this).attr('sign');
+		var url = "index.php?m=Admin&c=Setting&a=resetTeacherPass";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	setTimeout("getList();",500);
+</script>
+</block>

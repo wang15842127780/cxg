@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>请假记录</title>
+	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
+	<link rel="stylesheet" href="/cxg/Public/css/wap.css" type="text/css" />
+	<style type="text/css">
+		*{
+			padding:0;
+			margin:0;
+		}
+		body{
+			background:#397ace;
+		}
+		.left{
+			position:absolute;
+			width:100%;
+			text-align:center;
+			background:#50b2f9;
+			border:0;
+			color:#fff;
+		}
+		.right{
+			display:inline-block;
+			text-align:center;
+			display:none;
+			border:0;
+			margin-left:49%;
+			width:51%;
+			background:#397ace;
+			color:#fff;
+		}
+		.content{
+			background:#fff;
+			border-bottom:1px solid #ccc;
+		}
+
+		.p{
+			font-size:12px;
+			margin-left:30px;
+			line-height:40px;
+		}
+		.pname{
+			border-bottom:1px dashed #ccc;
+			height:50px;
+			font-size:27px;
+			line-height:50px;
+		}
+		.img{
+			position:absolute;
+			right:20px;
+			height:140px;
+			max-width:100px;
+			margin-top:50px;
+		}
+		.check_box{
+			width:100%;
+			text-align:right;
+			height:65px;
+			line-height:65px;
+		}
+		#add-btn{
+			position:absolute;
+			width:26px;
+			height:26px;
+			font-size:30px;
+			line-height:25px;
+			color:#fff;
+			right:20px;
+			border-radius:13px;
+			background:transparent;
+			border:0;
+		}
+	</style>
+</head>
+<body>
+	<h1 style="text-align:center;font-size:23px;top:7px;position:absolute;width:100%;font-family:'宋体';color:#fff;">请&nbsp;假&nbsp;记&nbsp;录&nbsp;&nbsp;<button id='add-btn'>+</button></h1>
+	<div style="position:fixed;width:100%;font-size:17px;background:#fff;line-height:50px;font-family:'宋体';bottom:0;z-index:99;">
+		<p class="left">请假记录</p>
+		<p class="right">待办事项</p>
+	</div>
+	<div id="content_div" style="position:absolute;top:40px;left:0;right:0;bottom:50px;overflow-x:hidden;overflow:auto;font-family:'宋体';">
+		<!-- <div class='content'>
+			<img class='img' src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1171728071,641509905&fm=27&gp=0.jpg">
+			<p class='pname p'>张小锋</p>
+			<p class='ptpye p'>种&nbsp;&nbsp;&nbsp;&nbsp;类：病假</p>
+			<p class='preason p'>事&nbsp;&nbsp;&nbsp;&nbsp;由：非常严重</p>
+			<p class='pclass p'>班&nbsp;&nbsp;&nbsp;&nbsp;级：1年2班</p>
+			<p class='pstime p'>开始时间：2017-12-05 10:10:10</p>
+			<p class='petime p'>结束时间：2017-12-05 10:10:10</p>
+			<p class='pstatus p'>状态：</p>
+		</div> -->
+	</div>
+<div id="shell">
+	
+</div>
+<div id="shell_img">
+	<img src="/cxg/Public/iconfont/loading.gif" width="50px">
+	<p>加载中...</p>
+</div>
+</body>
+<script>
+	window.getCookie = function(name)
+	{
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+		return unescape(arr[2]);
+	else
+		return null;
+	}
+	window.getLeaveInfo = function()
+	{
+		var url = '/cxg/index.php?m=Home&c=Wap&a=getLeaveInfo';
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		if(res.content.leader == 1)
+		{
+			$(".left").css('width','50%');
+			$(".right").css('display','inline-block');
+			$(".right").html('待办事项（'+res.content.count+'）');
+
+		}
+		else
+		{
+			$(".left").parent().hide();
+			$("#content_div").css("bottom",0);
+		}
+		if(res.status == 'success')
+		{
+			$("#shell").hide();
+			$("#shell_img").hide();
+			var list = res.content.list;
+			var str = "";
+			for(var i in list)
+			{
+				str += "<div class='content' sign='"+list[i].id+"'>" +
+				"<img class='img' src='"+list[i].photo+"'>"+
+				"<p class='pname p'>"+list[i].student_text+"</p>"+
+				"<p class='ptpye p'>种&nbsp;&nbsp;&nbsp;&nbsp;类："+list[i].reason+"</p>"+
+				"<p class='preason p'>事&nbsp;&nbsp;&nbsp;&nbsp;由："+list[i].director_note+"</p>"+
+				"<p class='pclass p'>班&nbsp;&nbsp;&nbsp;&nbsp;级："+list[i].class_text+"</p>"+
+				"<p class='pstime p'>开始时间："+list[i].begin_date+"</p>"+
+				"<p class='petime p'>结束时间："+list[i].end_date+"</p>"+
+				"<p class='pstatus p'>状态："+list[i].status_text+"</p>"+
+				"</div>";
+			}
+			$("#content_div").html(str);
+		}
+		else
+		{
+			$("#shell").hide();
+			$("#shell_img").hide();
+			alert(res.content.info);
+		}
+	}
+	var id = getCookie('id');
+	if(id == null)
+	{
+		window.location.href = '/cxg/wap/login.html';
+	}
+	setTimeout("getLeaveInfo();",500);
+	$(".right").live("click",function()
+	{
+		window.location.href = '/cxg/wap/Leave/check_leave.html';
+	})
+	$(".content").live('click',function()
+	{
+		var id = $(this).attr('sign');
+		window.location.href = '/cxg/wap/Leave/leave_detail.html?id='+id;
+	})
+	$("#add-btn").click(function()
+	{
+		window.location.href = '/cxg/wap/Leave/add_leave.html';
+	})
+</script>
+</html>

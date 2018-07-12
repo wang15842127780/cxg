@@ -1,0 +1,124 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<style type="text/css">
+	.total{
+		font-size:15px;
+		padding-right:3px;
+		border:1px solid #eee;
+		background:#efefef;
+		border-radius:3px;
+		cursor:pointer;
+	}
+	#all{
+		font-size:15px;
+		padding-right:3px;
+		border:1px solid #eee;
+		background:#efefef;
+		border-radius:3px;
+		cursor:pointer;
+	}
+</style>
+<h1 class="tt_h1">消费记录</h1>
+<div id="cond">
+	<form action="index.php?m=Home&c=Mess&a=index&id=5.55" method="post">
+		姓名：<input type="text" name="sname" id="sname" value="{$Think.post.sname}" style="width:60px;">
+		&nbsp;
+		开始时间：<input class="sang_Calender" type="text" name="stime" value="{$Think.post.stime}" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		结束时间：<input class="sang_Calender" type="text" name="etime" value="{$Think.post.etime}" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		<!-- 类型：<select name="ctype" id="ctype">
+			<option value="0" <if condition="$Think.post.ctype eq 0">selected</if> >全部</option>
+			<option value="1" <if condition="$Think.post.ctype eq 1">selected</if> >正常</option>
+			<option value="2" <if condition="$Think.post.ctype eq 2">selected</if> >异常</option>
+		</select> -->
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+		<span style="float:right;margin-right:60px;">
+			统计：
+			<span class="total" id="today">今日统计</span>
+			<span class="total" id="seven">近七天</span>
+			<span class="total" id="month">本月统计</span>
+			<span id="all">总览</span>
+		</span>
+	</form>
+</div>
+<br id="bb">
+<if condition="$log eq ''">
+	<p class="ss" style="color:red;font-size:20px;">暂无统计数据</p>
+<else />
+<table id="table" class="ss">
+	<tr class="tb_tr_th">
+		<th>ID</th>
+		<th>姓名</th>
+		<th>操作</th>
+		<th>时间</th>
+	</tr> 
+	<foreach item="lists" name="log">
+		<tr class="tb_tr_td">
+			<td>{$lists.id}</td>
+			<td>{$lists.stu_name}</td>
+			<td>{$lists.operate}</td>
+			<td>{$lists.datetime}</td>
+		</tr>
+	</foreach>
+	<tr>
+		<td colspan="5">{$page_info}</td>
+	</tr>
+</table>
+</if>
+<p style="font-size:30px;margin-top:50px;display:none;" class="aa"><span id="sleft"></span><span id="sright" style="color:red;"></span></p>
+<script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
+<script type="text/javascript">
+	$("#submit").click(function()
+	{
+		$(".ss").show();
+		$(".aa").hide();
+		$(".dd").hide();
+	})
+	$(".total").click(function()
+	{
+		var id = $(this).attr("id");
+		var url = "index.php?m=Home&c=Mess&a=getTotal";
+		var data = {did:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#sleft").html(res.sleft);
+			$("#sright").html(res.sright);
+			$(".ss").hide();
+			$(".aa").show();
+			$(".dd").hide();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	$("#all").click(function()
+	{
+		$(".ss").hide();
+		$(".aa").hide();
+		var url = "index.php?m=Home&c=Mess&a=getAll";
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		console.info(res);
+		if(res.status == 'success')
+		{
+			var str = String();
+			var list = res.content;
+			str = "<table id='table' class=\"dd\"><tr class=\"tb_tr_th\"><th>月份</th><th>充值总额</th><th>销售总额</th></tr>";
+			for(var i in list)
+			{
+				str += "<tr class='tb_tr_td'><td>"+i+"</td><td>￥"+list[i].recharge+"</td><td>￥"+list[i].consume+"</td></tr>";
+			}
+			str += "</table>";
+			// $(".ss").show();
+			$(".dd").remove();
+			$("#bb").after(str);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+</script>
+</block>

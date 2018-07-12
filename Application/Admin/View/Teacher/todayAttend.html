@@ -1,0 +1,81 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	.new_table th{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.tb_tr_td td{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：教师管理>今日出勤</h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	姓名：<input type="text" id="sname">&nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加学生信息</button></p>
+<br>
+<div id="con_div" style="left:30px;">
+	<table id="table" class="new_table" style="overflow-x:auto;">
+		<tr style="display:none;">
+			<th>姓名</th>
+			<th>日期</th>
+			<th>打卡时间</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="__PUBLIC__/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
+</div>
+<script type="text/javascript">
+	window.getList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Teacher&a=getTodayAttend";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").find('tr').show();
+			$(".zshow").hide();
+			var field = Array();
+			field[0] = 'name';
+			field[1] = 'date';
+			field[2] = 'sign_time';
+			var lists = res.content;
+			listPage(lists,1,15);
+			
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").hide();
+		}
+	}
+	setTimeout("getList();",500);
+</script>
+</block>

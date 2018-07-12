@@ -1,0 +1,166 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	#show_box{
+		position:absolute;
+		height:250px;
+		width:300px;
+		text-align:center;
+		background:#fff;
+		left:600px;
+		top:230px;
+		display:none;
+	}
+</style>
+<br>
+<h1 class="tt_h1">我的请假记录</h1>
+<br>
+<button id="add-btn" style="background:orange;width:75px;height:25px;border-radius:5px;display:block;margin-top:-20px;margin-left:50px;">+请假申请</button>
+<if condition="$Think.cookie.leader eq 1">
+<button id="group-btn" style="background:orange;width:75px;height:25px;border-radius:5px;display:block;margin-top:-25px;margin-left:150px;">组员管理</button>
+</if>
+<br>
+<table id="table" style="display:none;">
+	<tr class="tb_tr_th">
+		<th>ID</th>
+		<th>姓名</th>
+		<th>开始时间</th>
+		<th>结束时间</th>
+		<th>请假理由</th>
+		<th>状态</th>
+		<th>拒绝理由</th>
+		<th>审批人</th>
+	</tr>
+	</foreach>
+</table>
+<div id="shell" style="position:absolute;top:0;left:0;right:0;bottom:-200px;background:#ccc;opacity:0.7;display:none;">
+	
+</div>
+<div id="show_box">
+	<p style="margin-top:10px;margin-bottom:20px;">请假人：<span id="pp"></span></p>
+	<textarea name="" id="refuse" cols="30" rows="8"></textarea>
+	<br>
+	<br>
+	<p>
+		<button class="confirm-btn">同意</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">拒绝</button>
+	</p>
+</div>
+<input type="hidden" id="hid">
+<script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
+<script type="text/javascript">
+	window.getRecord = function()
+	{
+		var url = "index.php?m=Home&c=Leave&a=myself";
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").show();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'name';
+			field[2] = 'start_time';
+			field[3] = 'end_time';
+			field[4] = 'reason';
+			field[5] = 'status_text';
+			field[6] = 'refuse';
+			field[7] = 'agree';
+			listPage(res.content,1,10,field);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	}
+	setTimeout("getRecord();",300);
+	$("#add-btn").click(function()
+	{
+		window.location.href = "index.php?m=Home&c=Leave&a=index&id=64.68";
+	})
+
+	$("#group-btn").click(function()
+	{
+		var url = "index.php?m=Home&c=Leave&a=getGroupLeave";
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").show();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'name';
+			field[2] = 'start_time';
+			field[3] = 'end_time';
+			field[4] = 'reason';
+			field[5] = 'status_text';
+			field[6] = 'refuse';
+			field[7] = 'agree';
+			listPage(res.content,1,10,field);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".verify").live("click",function()
+	{
+		var id = $(this).attr('sign');
+		$("#hid").val(id);
+		var name = $(this).parents("tr").find("td:eq(1)").html();
+		$("#pp").val(name);
+		$("#shell").show();
+		$("#show_box").show();
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var url = 'index.php?m=Home&c=Leave&a=agreeLeave';
+		var id = $("#hid").val();
+		if($.trim(id) == '')
+		{
+			window.location.reload();
+		}
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout('window.location.reload();',500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		var id = $("#hid").val();
+		if($.trim(id) == '')
+		{
+			window.location.reload();
+		}
+		var refuse = $("#refuse").val();
+		if($.trim(refuse) == '')
+		{
+			tips('拒绝理由不能为空！');
+			return;
+		}
+		var url = 'index.php?m=Home&c=Leave&a=refuseLeave';
+		var data = {id:id,refuse:refuse,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+</script>
+
+</block>

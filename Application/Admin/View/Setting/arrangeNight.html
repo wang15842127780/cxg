@@ -1,0 +1,188 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	#left,#right,#center{
+		width:160px;
+		height:400px;
+		display:inline-block;
+		overflow-y:auto;
+	}
+	.stu_info{
+		height:24px;
+	}
+	.stu_info_l{
+		display:inline-block;
+		width:80px;
+		line-height:20px;
+		border:1px solid #ccc;
+		background: #fff;
+		border-radius:5px;
+		vertical-align: middle;
+		margin:1px;
+	}
+	.stu_info_r{
+		display:inline-block;
+		width:80px;
+		line-height:20px;
+		border:1px solid #ccc;
+		background: #fff;
+		border-radius:5px;
+		vertical-align: middle;
+		margin:1px;
+	}
+</style>
+<br>
+<h1 class="tt_h1" id="title">位置：课表管理>编辑上课人员（晚自习）</h1>
+<br>
+<table id="table">
+	<tr class="tb_tr_th">
+		<th>教室</th>
+		<foreach item="list" name="clist">
+			<th>
+				{$list.name}
+			</th>
+		</foreach>
+	</tr>
+	<for start="1" end="4" name="i">
+		<tr class="tb_tr_td">
+			<td>第{$i}节</td>
+			<foreach item="lists" key="k" name="clist">
+				<td class="night" ntime="{$i}" nroom="{$lists.id}">
+					{$lists.$i.count}
+				</td>
+			</foreach>
+		</tr>
+	</for>
+</table>
+<div style="height:410px;display:none;text-align:center;" id="detail">
+	<p id="tinfo" style="height:50px;"></p>
+	<div id="left" style="border:1px solid black;">
+		
+	</div>
+	<div id="center" style="line-height:380px;"><<————>></div>
+	<div id="right" style="border:1px solid black;">
+		
+	</div>
+	<p>
+		<button id="gogo">完成</button>
+		<button id="return">返回</button>
+	</p>
+</div>
+<script type="text/javascript">
+	window.getStuList = function(nroom,ntime)
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getNightStu";
+		var data = {typ:'json',room:nroom,time:ntime};
+		var res = ajax(url,data);
+		return res;
+	}
+	window.liclick = function(nroom,ntime)
+	{
+		$(".stu_info_l").live("click",function()
+		{
+			var _this = $(this);
+			var sid = $(this).attr("sign");
+			var url1 = "index.php?m=Admin&c=Setting&a=delNightStu";
+			var data1 = {sid:sid,room:nroom,time:ntime,typ:'json'};
+			var res1 = ajax(url1,data1);
+			if(res1.status == 'success')
+			{
+				var html = _this.html();
+				_this.remove();
+				// $("#right").find("ul").append("<li class='stu_info_r'>"+html+"</li>");
+				$("#right").find("ul").append("<li class='stu_info_r' sign="+sid+">"+html+"</li>");
+			}
+			else
+			{
+				tips(res1.content,2);
+			}
+		})
+		$(".stu_info_r").live("click",function()
+		{
+			var _this = $(this);
+			var sid = $(this).attr('sign');
+			var url2 = "index.php?m=Admin&c=Setting&a=addNightStu";
+			var data2 = {sid:sid,room:nroom,time:ntime,typ:'json'};
+			var res2 = ajax(url2,data2);
+			if(res2.status == 'success')
+			{
+				var ban = _this.attr("ban");
+				var ban_list = $("."+ban);
+				var cou = ban_list.length;
+				if(cou == 1)
+				{
+					_this.prev().remove();
+				}
+				var html = _this.html();
+				_this.remove();
+				// $("#left").find("ul").append("<li class='stu_info_l'>"+html+"</li>");
+				$("#left").find("ul").append("<li class='stu_info_l' sign="+sid+">"+html+"</li>");
+			}
+		})
+	}
+	$("#return").click(function()
+	{
+		$("#table").show();
+		$("#detail").hide();
+		$("#title").html('位置：课表管理>编辑上课人员（晚自习）');
+	})
+	$("#gogo").click(function()
+	{
+		window.location.reload();
+	})
+	$(".night").click(function()
+	{
+		var nroom = $(this).attr("nroom");
+		var ntime = $(this).attr('ntime');
+		$(".stu_info_r").parent().remove();
+		$(".stu_info_l").parent().remove();
+		$("#table").hide();
+		$("#title").html("人员管理");
+		$("#detail").show();
+		var res = getStuList(nroom,ntime);
+		console.info(res);
+		if(res.status == 'success')
+		{
+			$("#tinfo").html(res.content.ttitle);
+			var str = String();
+			var str1 = String();
+			var sign = String();
+			str = "<ul>";
+			if(res.content.tleft != "")
+			{
+				var left = res.content.tleft;
+				
+				for(var i in left)
+				{
+					str += "<li class='stu_info_l' sign='"+left[i].id+"'>"+left[i].name+"</li>";
+				}
+				
+			}
+			str += "</ul>";
+			$("#left").append(str);
+			str1 = "<ul>";
+			if(res.content.tright != "")
+			{
+				var right = res.content.tright;
+				for(var j in right)
+				{
+					if(sign != right[j].room)
+					{
+						str1 += "<li style='text-align:left;padding-left:50px;'>"+right[j].room+"</li>";
+						sign = right[j].room;
+					}
+					str1 += "<li class='stu_info_r "+sign+"' sign='"+right[j].id+"' ban="+sign+">"+right[j].name+"</li>";
+				}
+			}
+			str1 += "<hr style='margin-top:5px;'/></ul>";
+			$("#right").append(str1);
+			liclick(nroom,ntime);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+
+	})
+</script>
+</block>
