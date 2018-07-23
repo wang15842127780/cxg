@@ -128,186 +128,324 @@
 		<div id="home">
 			
 <style type="text/css">
-	#form{
-		width:400px;
-		height:230px;
-		display:inline-block;
-		margin-top:220px;
-		background:#fff;
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
 	}
-	#add_form input{
-		height:25px;
-		line-height:25px;
-		font-size:20px;
-		width:173px;
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+	.add_left{
+		display: inline-block;
+		width: 25%;
+		text-align: right;
+	}
+	.add_right{
+		display: inline-block;
 	}
 </style>
 <br>
-<h1 class="tt_h1">位置：宿舍管理>房间类型管理</h1>
-<p style="text-align:right;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加房间类型</button></p>
+<h1 class="tt_h1">位置：班级管理>查看班级</h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	年组名：<select name="syear" id="syear">
+		<?php if(is_array($yearList)): foreach($yearList as $key=>$list): ?><option value="<?php echo ($list["id"]); ?>"><?php echo ($list["name"]); ?></option><?php endforeach; endif; ?>
+	</select> &nbsp;&nbsp;
+	班级名：<input type="text" id="sname">&nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加班级信息</button></p>
+<br>
 <div id="con_div">
 	<table id="table" class="new_table">
 		<tr style="display:none;">
 			<th>ID</th>
-			<th>名称</th>
-			<th>可住人数</th>
-			<th>添加时间</th>
+			<th>年组名</th>
+			<th>班级名</th>
+			<th>班主任</th>
+			<th>班级人数</th>
 			<th>操作</th>
 		</tr>
 	</table>
 </div>
 <div id="shell" class="zshow">
-	
+
 </div>
 <div  id="shell_img" class="zshow">
-	<img src="/cxg/Public/iconfont/loading.gif" width="35" height="35" />
-	<p>加载中...</p>
+        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
 </div>
-<div id="add_form" style="position:absolute;left:0;top:0;right:0;z-index:9999;text-align:center;display:none;">
-	<form id="form" onsubmit="return false;">
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
 	<br>
-		<p>添房间类型</p>
+		<p>添 加 班 级</p>
 		<br>
 		<input type="hidden" id="hid">
-		房间类型：<input type="text" name="bname" id="bname"><br><br>
-		可住人数：<input type="text" name="bnum" id="bnum" value="0"><br><br><br><br>
-		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
-		<button class="cancel-btn">取消</button>
+		<p class="add_left">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组：</p>
+		<p class="add_right"><select name="year" id="year" style="margin-top:10px;width:104px;">
+			
+		</select></p>
+		<br>
+		<p class="add_left">班&nbsp;主&nbsp;任：</p>
+		<p class="add_right">
+			<select name="leader" id="leader" style="margin-top:10px;width:104px;">
+			
+		</select>
+		</p>
+		<br>
+		<p class="add_left">班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</p>
+		<p class="add_right"><input type="text" name="name" id="name"></p>
+		<br>
+		<p class="add_left">人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数：</p>
+		<p class="add_right"><input type="text" name="num" id="num"></p>
+		
+		<br><br>
+		<p>
+			<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button><br><br>
+		</p>
+		
 	</form>
 </div>
+
 <script type="text/javascript">
-	window.getList = function()
+	window.getList = function(data={})
 	{
-		var url = "index.php?m=Admin&c=Setting&a=BuildTypeList";
-		var data = {typ:'json'};
+		var url = "index.php?m=Admin&c=Setting&a=getClassList";
+		data.typ = 'json';
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
+			$("#table").find('tr').show();
 			$(".zshow").hide();
-			$(".new_table").find('tr').show();
-			var list = res.content;
 			var field = Array();
-			field[0] = "id";
-			field[1] = "name";
-			field[2] = "number";
-			field[3] = "addtime";
+			field[0] = 'id';
+			field[1] = 'year_text';
+			field[2] = 'name';
+			field[3] = 'leader_text';
+			field[4] = 'num';
+			var lists = res.content;
 			if(res.leader == 1)
 			{
-				listPage(list,1,10,field,true);
+				listPage(lists,1,15,field,true);
 			}
 			else
 			{
-				field[4] = "act_text";
+				field[5] = "act_text";
 				$(".add-btn").hide();
-				listPage(list,1,10,field);
+				listPage(lists,1,15,field);
 			}
 			
 		}
 		else
 		{
-			$(".zshow").hide();
 			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
 		}
 	}
 
-	setTimeout("getList();",500);
+	$(".search").click(function()
+	{
+		var sname = $("#sname").val();
+		var syear = $("#syear").val();
+		var cond = {sname:sname,syear:syear};
+		getList(cond);
+	})
+
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+		var ylist = <?php echo ($yearLists); ?>;
+		console.info(ylist);
+		var str = "";
+		for(var i in ylist)
+		{
+			str += "<option value='"+ylist[i].id+"'>"+ylist[i].name+"</option>";
+		}
+		$("#year").html(str);
+		var url = "index.php?m=Admin&c=Setting&a=getTeacherByYear";
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			var llist = res.content;
+			var strl = "";
+			for(var j in llist)
+			{
+				strl += "<option value='"+llist[j].id+"'>"+llist[j].name+"</option>";
+			}
+			$("#leader").html(strl);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+			
+	})
+
+	$("#year").live("change",function()
+	{
+		var val = $(this).val();
+		var url = "index.php?m=Admin&c=Setting&a=getTeacherByYear";
+		var data = {id:val,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			var list = res.content;
+			var str = "";
+			for(var i in list)
+			{
+				str += "<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+			}
+			$("#leader").html(str);
+		}
+		else
+		{
+			tips(res.content,2);
+			$("#leader").html("");
+		}
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var id = $("#hid").val();
+		var year = $("#year").val();
+		if($.trim(year) == '')
+		{
+			tips('请先设置年组信息！',2);
+			return;
+		}
+		var leader = $("#leader").val();
+		if($.trim(leader) == "")
+		{
+			tips("请先设置教师信息！",2);
+			return;
+		}
+		var name = $("#name").val();
+		if($.trim(name) == "")
+		{
+			tips('班级名不能为空！',2);
+			return;
+		}
+		var num = $("#num").val();
+		if($.trim(num) == '')
+		{
+			tips('班级人数不能为空！',2);
+			return;
+		}
+		if($.trim(id) == "")
+		{
+			var url = "index.php?m=Admin&c=Setting&a=addClass";
+			var data = {year:year,name:name,num:num,leader:leader,typ:'json'};
+		}
+		else
+		{
+			var url = "index.php?m=Admin&c=Setting&a=editClass";
+			var data = {id:id,year:year,name:name,num:num,leader:leader,typ:'json'};
+		}
+			
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		$("#shell").hide();
+		$("#add_form").hide();
+		$("#hid").val('');
+		$("#name").val("");
+		$("#num").val("");
+	})
 
 	$(".edit-btn").live("click",function()
 	{
 		var id = $(this).attr('sign');
-		var url = "index.php?m=Admin&c=Setting&a=getBuildType";
+		var url = "index.php?m=Admin&c=Setting&a=getClassById";
 		var data = {id:id,typ:'json'};
-		var res2 = ajax(url,data);
-		if(res2.status == 'success')
+		var res = ajax(url,data);
+		if(res.status == 'success')
 		{
 			$("#hid").val(id);
 			$("#shell").show();
 			$("#add_form").show();
-			var list = res2.content[0];
-			$("#bname").val(list.name);
-			$("#bnum").val(list.number);
+			var info = res.content;
+			$("#name").val(info.name);
+			$("#num").val(info.num);
+			var ylist = <?php echo ($yearLists); ?>;
+			var str = "";
+			for(var i in ylist)
+			{
+				if(ylist[i].id == info.year_id)
+				{
+					str += "<option value='"+ylist[i].id+"' selected>"+ylist[i].name+"</option>";
+				}
+				else
+				{
+					str += "<option value='"+ylist[i].id+"'>"+ylist[i].name+"</option>";
+				}
+			}
+			$("#year").html(str);
+			var llist = <?php echo ($leaderLists); ?>;
+			var strl = "";
+			for(var j in llist)
+			{
+				if(llist[j].id == info.leader_id)
+				{
+					strl += "<option value='"+llist[j].id+"' selected>"+llist[j].name+"</option>";
+				}
+				else
+				{
+					strl += "<option value='"+llist[j].id+"'>"+llist[j].name+"</option>";
+				}
+			}
+			$("#leader").html(strl);
 		}
 		else
 		{
-			tips(res2.content,2);
+			tips(res.content,2);
 		}
+
 	})
 
 	$(".del-btn").live("click",function()
 	{
-		var id = $(this).attr('sign');
-		var _this = $(this);
 		var msg = "您真的确定要删除吗？\n\n请确认！";
-		if(confirm(msg) == true)
+		if(confirm(msg)==true)
 		{
-			var url = "index.php?m=Admin&c=Setting&a=delBuildType";
-			var data = {bid:id,typ:'json'};
+			var _this = $(this);
+			var id = $(this).attr("sign");
+			var url = "index.php?m=Admin&c=Setting&a=delClass";
+			var data = {id:id,typ:'json'};
 			var res = ajax(url,data);
 			if(res.status == 'success')
 			{
 				tips(res.content,1);
-				_this.parents("tr").remove();
+				_this.parents('tr').remove();
 			}
 			else
 			{
 				tips(res.content,2);
 			}
 		}
-		
-			
 	})
-	$(".add-btn").click(function()
-	{
-		$("#shell").show();
-		$("#add_form").show();
-	})
-
-	$(".confirm-btn").click(function()
-	{
-		var hid = $("#hid").val();
-		var bname = $("#bname").val();
-		if($.trim(bname) == "")
-		{
-			tips('类型名称不能为空！',2);
-			return;
-		}
-		var bnum = $("#bnum").val();
-		if($.trim(bnum) == "")
-		{
-			tips('可容不数不能为空！',2);
-			return;
-		}
-		if($.trim(hid) == "")
-		{
-			var url = "index.php?m=Admin&c=Setting&a=addBuildType";
-			var data = {bname:bname,bnum:bnum,typ:'json'};
-		}
-		else
-		{
-			var url = "index.php?m=Admin&c=Setting&a=editBuildType";
-			var data = {bid:hid,bname:bname,bnum:bnum,typ:'json'};
-		}
-			
-		var res1 = ajax(url,data);
-		if(res1.status == 'success')
-		{
-			tips(res1.content,1);
-			setTimeout('window.location.reload();',300);
-		}
-		else
-		{
-			tips(res1.content,2);
-		}
-	})
-
-	$(".cancel-btn").click(function()
-	{
-		$("#bname").val("");
-		$("#bnum").val("");
-		$("#shell").hide();
-		$("#add_form").hide();
-		$("#hid").val("");
-	})
+	setTimeout("getList();",500);
 </script>
 
 		</div>
@@ -370,7 +508,5 @@
 	$(".fun").hide();
 	$("#m"+nn).show();
 	$("#m"+nn).siblings().show();
-
-	setTimeout("getInfo();",500);
 
 </script>

@@ -1,0 +1,218 @@
+[ 2018-07-17T15:31:18+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=AddVisitor&phone=????&entry_time=2018-07-17&number=2&creator_id=1&types=json
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000052s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000112s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000495s ]
+
+[ 2018-07-17T15:38:10+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitorOnWeixin&a=AddVisitor&phone=????&entry_time=2018-07-17&number=2&creator_id=1&types=json
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000059s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000120s ]
+ERR: 无法加载控制器:AndroidVisitorOnWeixin
+
+[ 2018-07-17T15:40:00+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitorOnWeixin&a=AddVisitor&phone=%E5%BE%AE%E4%BF%A1%E5%A5%BD%E5%8F%8B&entry_time=2018-07-17&number=2&creator_id=1&types=json
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000057s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000121s ]
+ERR: 无法加载控制器:AndroidVisitorOnWeixin
+
+[ 2018-07-17T15:40:48+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=AddVisitorOnWeixin&phone=????&entry_time=2018-07-17&number=2&creator_id=1&types=json
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000047s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000101s ]
+ERR: 非法操作:addvisitoronweixin
+
+[ 2018-07-17T15:41:06+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=AddVisitorOnWeixin&phone=%E5%BE%AE%E4%BF%A1%E5%A5%BD%E5%8F%8B&entry_time=2018-07-17&number=2&creator_id=1&types=json
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000051s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000112s ]
+ERR: 非法操作:addvisitoronweixin
+
+[ 2018-07-17T16:05:41+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000053s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000115s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000499s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000156s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000063s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000087s ]
+
+[ 2018-07-17T16:05:41+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000044s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000087s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000389s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000158s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000055s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000078s ]
+
+[ 2018-07-17T16:05:47+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000049s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000105s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000528s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000178s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000058s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000083s ]
+
+[ 2018-07-17T16:05:47+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000046s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000089s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000345s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000141s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000056s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000079s ]
+
+[ 2018-07-17T16:10:24+08:00 ] 101.226.225.86 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980E8BF9BE8A18CE88EB7E58F96&nsukey=HEvvqIckCXz%2B6nrsIVvaJ4hbl74bp7GkVLpLHlA%2FQ93R2gmFW86YCdC%2FEkd0ZoGjx41jDO48BrvkqpGxmW1usI4naZpGgsiR%2Fis7b5R23EJM2pUqF3Aeyr7nAuZLr%2B0jeI%2FzcfVEFSjMGEOUnUEWhyoTyQPwl1s7BD%2F5WgAu4YJyDEQbdun%2FY8KlgOYKI4PBHfQGjfmFbW12rEsEPpXYfA%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000053s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000115s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000475s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000159s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000067s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000092s ]
+
+[ 2018-07-17T16:10:25+08:00 ] 61.129.6.147 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980E8BF9BE8A18CE88EB7E58F96&nsukey=HEvvqIckCXz%2B6nrsIVvaJ4hbl74bp7GkVLpLHlA%2FQ93R2gmFW86YCdC%2FEkd0ZoGjx41jDO48BrvkqpGxmW1usI4naZpGgsiR%2Fis7b5R23EJM2pUqF3Aeyr7nAuZLr%2B0jeI%2FzcfVEFSjMGEOUnUEWhyoTyQPwl1s7BD%2F5WgAu4YJyDEQbdun%2FY8KlgOYKI4PBHfQGjfmFbW12rEsEPpXYfA%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000047s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000101s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000483s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000203s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000061s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000094s ]
+
+[ 2018-07-17T16:10:25+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980E8BF9BE8A18CE88EB7E58F96&nsukey=HEvvqIckCXz%2B6nrsIVvaJ4hbl74bp7GkVLpLHlA%2FQ93R2gmFW86YCdC%2FEkd0ZoGjx41jDO48BrvkqpGxmW1usI4naZpGgsiR%2Fis7b5R23EJM2pUqF3Aeyr7nAuZLr%2B0jeI%2FzcfVEFSjMGEOUnUEWhyoTyQPwl1s7BD%2F5WgAu4YJyDEQbdun%2FY8KlgOYKI4PBHfQGjfmFbW12rEsEPpXYfA%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000046s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000099s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000484s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000161s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000064s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000099s ]
+
+[ 2018-07-17T16:10:45+08:00 ] 61.151.178.169 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980E8BF9BE8A18CE88EB7E58F96&nsukey=yxX%2BJGlygyw%2FCxKhR52iGzMVzT5TipdO%2B%2BtMEWJZwDPf2JSyugkkm6iUGtIhMvwgea429OHJWgbc5DAsUDFXTqhPOyp3X1owAjfe4vvmt44O8TFnXhjrYQoWCibpsNlof6rsm25o%2F9MXJBY1vwDi%2FwrJ79R0Bf4%2F0lHKceadGO%2FvR9cMvNiK2av7i5fBwkf4%2F2HLBGZtJnXB5fK3tEiYGA%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000048s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000102s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000513s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000167s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000064s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000089s ]
+
+[ 2018-07-17T16:10:49+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980E8BF9BE8A18CE88EB7E58F96&nsukey=yxX%2BJGlygyw%2FCxKhR52iGzMVzT5TipdO%2B%2BtMEWJZwDPf2JSyugkkm6iUGtIhMvwgea429OHJWgbc5DAsUDFXTqhPOyp3X1owAjfe4vvmt44O8TFnXhjrYQoWCibpsNlof6rsm25o%2F9MXJBY1vwDi%2FwrJ79R0Bf4%2F0lHKceadGO%2FvR9cMvNiK2av7i5fBwkf4%2F2HLBGZtJnXB5fK3tEiYGA%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000050s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000112s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000517s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000178s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000062s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000086s ]
+
+[ 2018-07-17T16:11:45+08:00 ] 61.151.226.61 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980E8BF9BE8A18CE88EB7E58F96&nsukey=yxX%2BJGlygyw%2FCxKhR52iGzMVzT5TipdO%2B%2BtMEWJZwDPf2JSyugkkm6iUGtIhMvwgea429OHJWgbc5DAsUDFXTqhPOyp3X1owAjfe4vvmt44O8TFnXhjrYQoWCibpsNlof6rsm25o%2F9MXJBY1vwDi%2FwrJ79R0Bf4%2F0lHKceadGO%2FvR9cMvNiK2av7i5fBwkf4%2F2HLBGZtJnXB5fK3tEiYGA%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000064s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000132s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000467s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000169s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000068s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000094s ]
+
+[ 2018-07-17T16:11:48+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980E8BF9BE8A18CE88EB7E58F96&nsukey=xgwtDU1YjDgT2S0KWSseSQEMWi6Znpplp7ivbguN63T6EEhlMPFiZh%2BX%2Beoja7I3Xn0sqR5A34cWJWGRsUsyMgbsCFQk%2BPnNg5Wk1FhmYhl9RAl0XHDM6ouZevXAEX2Dg1tFGfY2iW6lEqaHTwezLGjFFjJHe96iGbad7EyNXWTaZJ5dTy4QJ9xfBLtAJD7Ir5QqynGkxMYX2AOak1I1bA%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000046s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000114s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000505s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000173s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000058s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000082s ]
+
+[ 2018-07-17T16:12:23+08:00 ] 117.185.117.57 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980E8BF9BE8A18CE88EB7E58F96
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000045s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000097s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000495s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000165s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000067s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000094s ]
+
+[ 2018-07-17T16:23:37+08:00 ] 101.226.225.84 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980&nsukey=svISIJKrsbQ%2BGWK%2FfjrOPZwnkMg6JvvpLUYn%2BTRHFeh6grpsEDdfn6kKSlVPehYLoz4pAbT8XvrcUK8VBSo8aS0h2SlB%2BOUxWZogghaMp1cDwIbxsf0ODcxttC8xdBL78vvo%2Bi8wmzHb4Nv2QB%2FQWNW%2B6AtE%2B8wZkBGEPx8Kuv4ZsFUPW9wCuU0HHgjaI71XlCeasm%2BgQi8BOSdaSMkP6w%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000052s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000112s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000500s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000167s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000074s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000101s ]
+
+[ 2018-07-17T16:23:38+08:00 ] 101.226.225.84 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980&nsukey=svISIJKrsbQ%2BGWK%2FfjrOPZwnkMg6JvvpLUYn%2BTRHFeh6grpsEDdfn6kKSlVPehYLoz4pAbT8XvrcUK8VBSo8aS0h2SlB%2BOUxWZogghaMp1cDwIbxsf0ODcxttC8xdBL78vvo%2Bi8wmzHb4Nv2QB%2FQWNW%2B6AtE%2B8wZkBGEPx8Kuv4ZsFUPW9wCuU0HHgjaI71XlCeasm%2BgQi8BOSdaSMkP6w%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000049s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000104s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000466s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000162s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000060s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000085s ]
+
+[ 2018-07-17T16:23:38+08:00 ] 116.2.171.17 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980&nsukey=svISIJKrsbQ%2BGWK%2FfjrOPZwnkMg6JvvpLUYn%2BTRHFeh6grpsEDdfn6kKSlVPehYLoz4pAbT8XvrcUK8VBSo8aS0h2SlB%2BOUxWZogghaMp1cDwIbxsf0ODcxttC8xdBL78vvo%2Bi8wmzHb4Nv2QB%2FQWNW%2B6AtE%2B8wZkBGEPx8Kuv4ZsFUPW9wCuU0HHgjaI71XlCeasm%2BgQi8BOSdaSMkP6w%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000048s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000102s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000529s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000170s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000058s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000083s ]
+
+[ 2018-07-17T16:24:37+08:00 ] 101.226.86.156 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980&nsukey=svISIJKrsbQ%2BGWK%2FfjrOPZwnkMg6JvvpLUYn%2BTRHFeh6grpsEDdfn6kKSlVPehYLoz4pAbT8XvrcUK8VBSo8aS0h2SlB%2BOUxWZogghaMp1cDwIbxsf0ODcxttC8xdBL78vvo%2Bi8wmzHb4Nv2QB%2FQWNW%2B6AtE%2B8wZkBGEPx8Kuv4ZsFUPW9wCuU0HHgjaI71XlCeasm%2BgQi8BOSdaSMkP6w%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000046s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000101s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000519s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000164s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000059s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000083s ]
+
+[ 2018-07-17T16:26:57+08:00 ] 117.185.117.52 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=48&r=84980E8BF9BE8A18CE88EB7E58F96&nsukey=HEvvqIckCXz%2B6nrsIVvaJ4hbl74bp7GkVLpLHlA%2FQ93R2gmFW86YCdC%2FEkd0ZoGjx41jDO48BrvkqpGxmW1usI4naZpGgsiR%2Fis7b5R23EJM2pUqF3Aeyr7nAuZLr%2B0jeI%2FzcfVEFSjMGEOUnUEWhyoTyQPwl1s7BD%2F5WgAu4YJyDEQbdun%2FY8KlgOYKI4PBHfQGjfmFbW12rEsEPpXYfA%3D%3D
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000052s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000113s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000492s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 48 ) AND ( `rand` = 84980 ) LIMIT 0,100   [ RunTime:0.000158s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000063s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000086s ]
+

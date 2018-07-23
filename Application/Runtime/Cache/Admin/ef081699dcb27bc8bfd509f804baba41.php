@@ -128,186 +128,238 @@
 		<div id="home">
 			
 <style type="text/css">
-	#form{
-		width:400px;
-		height:230px;
-		display:inline-block;
-		margin-top:220px;
-		background:#fff;
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
 	}
-	#add_form input{
-		height:25px;
-		line-height:25px;
-		font-size:20px;
-		width:173px;
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+	.add_left{
+		display: inline-block;
+		width:25%;
+		text-align: right;
+	}
+	.add_right{
+		display: inline-block;
+		width:auto;
 	}
 </style>
 <br>
-<h1 class="tt_h1">位置：宿舍管理>房间类型管理</h1>
-<p style="text-align:right;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加房间类型</button></p>
+<h1 class="tt_h1">位置：班级设置>年组设置</h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	年组名称：<input type="text" id="sname">&nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加年组信息</button></p>
+<br>
 <div id="con_div">
 	<table id="table" class="new_table">
 		<tr style="display:none;">
 			<th>ID</th>
-			<th>名称</th>
-			<th>可住人数</th>
-			<th>添加时间</th>
+			<th>年组名称</th>
+			<th>年组主任</th>
 			<th>操作</th>
 		</tr>
 	</table>
 </div>
 <div id="shell" class="zshow">
-	
+
 </div>
 <div  id="shell_img" class="zshow">
-	<img src="/cxg/Public/iconfont/loading.gif" width="35" height="35" />
-	<p>加载中...</p>
+        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
 </div>
-<div id="add_form" style="position:absolute;left:0;top:0;right:0;z-index:9999;text-align:center;display:none;">
-	<form id="form" onsubmit="return false;">
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
 	<br>
-		<p>添房间类型</p>
+		<p>添 加 年 组</p>
 		<br>
 		<input type="hidden" id="hid">
-		房间类型：<input type="text" name="bname" id="bname"><br><br>
-		可住人数：<input type="text" name="bnum" id="bnum" value="0"><br><br><br><br>
-		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
-		<button class="cancel-btn">取消</button>
+		<p>
+			<p class="add_left">年组名称：</p><p class="add_right"><input type="text" name="name" id="name"></p>
+		</p>
+		
+		<p>
+			<p class="add_left">年级主任：</p><p class="add_right"><select name="director" id="director" style="margin-top:10px;width:104px;">
+			
+			</select>
+			</p>
+		</p>
+		<br><br>
+		
+		<p><button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button><br><br></p>
+		
 	</form>
 </div>
+
 <script type="text/javascript">
-	window.getList = function()
+	window.getList = function(data={})
 	{
-		var url = "index.php?m=Admin&c=Setting&a=BuildTypeList";
-		var data = {typ:'json'};
+		var url = "index.php?m=Admin&c=Setting&a=getClassYearList";
+		data.typ = 'json';
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
+			$("#table").find('tr').show();
 			$(".zshow").hide();
-			$(".new_table").find('tr').show();
-			var list = res.content;
 			var field = Array();
-			field[0] = "id";
-			field[1] = "name";
-			field[2] = "number";
-			field[3] = "addtime";
+			field[0] = 'id';
+			field[1] = 'name';
+			field[2] = 'director_name';
+			var lists = res.content;
 			if(res.leader == 1)
 			{
-				listPage(list,1,10,field,true);
+				listPage(lists,1,15,field,true);
 			}
 			else
 			{
-				field[4] = "act_text";
+				field[3] = 'act_text';
 				$(".add-btn").hide();
-				listPage(list,1,10,field);
+				listPage(lists,1,15,field);
 			}
 			
 		}
 		else
 		{
-			$(".zshow").hide();
 			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
 		}
 	}
 
-	setTimeout("getList();",500);
+	$(".search").click(function()
+	{
+		var sname = $("#sname").val();
+		var cond = {sname:sname};
+		getList(cond);
+	})
+
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+		var mlist = <?php echo ($manageList); ?>;
+		var str = '';
+		for(var i in mlist)
+		{
+			str += '<option value="'+mlist[i].id+'">'+mlist[i].nick+'</option>';
+		}
+		$("#director").html(str);
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var id = $("#hid").val();
+		var name = $("#name").val();
+		if($.trim(name) == '')
+		{
+			tips('年组名称不能为空！',2);
+			return;
+		}
+		var director = $("#director").val();
+		if($.trim(director) == '')
+		{
+			tips('请在身份管理>人员管理进行添加');
+			return;
+		}
+		if($.trim(id) == '')
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=addClassYear';
+			var data = {name:name,director:director,typ:'json'};
+		}
+		else
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=editClassYear';
+			var data = {id:id,name:name,director:director,typ:'json'};
+		}
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		$("#shell").hide();
+		$("#add_form").hide();
+		$("#hid").val('');
+		$("#name").val("");
+	})
 
 	$(".edit-btn").live("click",function()
 	{
 		var id = $(this).attr('sign');
-		var url = "index.php?m=Admin&c=Setting&a=getBuildType";
+		var url = "index.php?m=Admin&c=Setting&a=getClassYearById";
 		var data = {id:id,typ:'json'};
-		var res2 = ajax(url,data);
-		if(res2.status == 'success')
+		var res = ajax(url,data);
+		if(res.status == 'success')
 		{
 			$("#hid").val(id);
 			$("#shell").show();
 			$("#add_form").show();
-			var list = res2.content[0];
-			$("#bname").val(list.name);
-			$("#bnum").val(list.number);
+			var info = res.content;
+			var str = '';
+			var mlist = <?php echo ($manageList); ?>;
+			$("#name").val(info.name);
+			for(var i in mlist)
+			{
+				if(mlist[i].id == info.director_id)
+				{
+					str += "<option value='"+mlist[i].id+"' selected>"+mlist[i].nick+"</option>";
+				}
+				else
+				{
+					str += "<option value='"+mlist[i].id+"'>"+mlist[i].nick+"</option>";
+				}
+			}
+			$("#director").html(str);
+			
 		}
 		else
 		{
-			tips(res2.content,2);
+			tips(res.content,2);
 		}
+
 	})
 
 	$(".del-btn").live("click",function()
 	{
-		var id = $(this).attr('sign');
-		var _this = $(this);
 		var msg = "您真的确定要删除吗？\n\n请确认！";
-		if(confirm(msg) == true)
+		if(confirm(msg)==true)
 		{
-			var url = "index.php?m=Admin&c=Setting&a=delBuildType";
-			var data = {bid:id,typ:'json'};
+			var _this = $(this);
+			var id = $(this).attr("sign");
+			var url = "index.php?m=Admin&c=Setting&a=delClassYear";
+			var data = {id:id,typ:'json'};
 			var res = ajax(url,data);
 			if(res.status == 'success')
 			{
 				tips(res.content,1);
-				_this.parents("tr").remove();
+				_this.parents('tr').remove();
 			}
 			else
 			{
 				tips(res.content,2);
 			}
 		}
-		
-			
 	})
-	$(".add-btn").click(function()
-	{
-		$("#shell").show();
-		$("#add_form").show();
-	})
-
-	$(".confirm-btn").click(function()
-	{
-		var hid = $("#hid").val();
-		var bname = $("#bname").val();
-		if($.trim(bname) == "")
-		{
-			tips('类型名称不能为空！',2);
-			return;
-		}
-		var bnum = $("#bnum").val();
-		if($.trim(bnum) == "")
-		{
-			tips('可容不数不能为空！',2);
-			return;
-		}
-		if($.trim(hid) == "")
-		{
-			var url = "index.php?m=Admin&c=Setting&a=addBuildType";
-			var data = {bname:bname,bnum:bnum,typ:'json'};
-		}
-		else
-		{
-			var url = "index.php?m=Admin&c=Setting&a=editBuildType";
-			var data = {bid:hid,bname:bname,bnum:bnum,typ:'json'};
-		}
-			
-		var res1 = ajax(url,data);
-		if(res1.status == 'success')
-		{
-			tips(res1.content,1);
-			setTimeout('window.location.reload();',300);
-		}
-		else
-		{
-			tips(res1.content,2);
-		}
-	})
-
-	$(".cancel-btn").click(function()
-	{
-		$("#bname").val("");
-		$("#bnum").val("");
-		$("#shell").hide();
-		$("#add_form").hide();
-		$("#hid").val("");
-	})
+	setTimeout("getList();",500);
 </script>
 
 		</div>
@@ -370,7 +422,5 @@
 	$(".fun").hide();
 	$("#m"+nn).show();
 	$("#m"+nn).siblings().show();
-
-	setTimeout("getInfo();",500);
 
 </script>

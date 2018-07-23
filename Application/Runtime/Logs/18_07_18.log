@@ -1,0 +1,33 @@
+[ 2018-07-18T16:24:58+08:00 ] 116.2.163.213 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=56&r=17334
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000057s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000117s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000491s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 56 ) AND ( `rand` = 17334 ) LIMIT 0,100   [ RunTime:0.000139s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000065s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000087s ]
+
+[ 2018-07-18T16:24:58+08:00 ] 116.2.163.213 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=56&r=17334
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000058s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000117s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000492s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 56 ) AND ( `rand` = 17334 ) LIMIT 0,100   [ RunTime:0.000176s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000063s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000086s ]
+
+[ 2018-07-18T16:25:04+08:00 ] 116.2.163.213 /cxg/index.php?m=Home&c=AndroidVisitor&a=getVisitor&types=json&i=56&r=17334
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000047s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000098s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `entry_record` [ RunTime:0.000495s ]
+SQL: SELECT * FROM `entry_record` WHERE ( `id` = 56 ) AND ( `rand` = 17334 ) LIMIT 0,100   [ RunTime:0.000166s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000071s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000094s ]
+

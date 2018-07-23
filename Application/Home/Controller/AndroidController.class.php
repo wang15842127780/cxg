@@ -59,7 +59,7 @@ class AndroidController extends Controller{
 				}else{
 					$power = 10;
 				}
-				$res = "success".",".$res[0]['id'].",".$power;
+				$ret = "success".",".$res[0]['id'].",".$power;
 			}
 			else
 			{
@@ -71,7 +71,7 @@ class AndroidController extends Controller{
 		{
 			$ret = "failure".","."协议内容有误！";
 		}
-		echo $res;
+		echo $ret;
 	}
 
 //=========================================================================================================

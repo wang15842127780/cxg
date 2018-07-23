@@ -149,13 +149,44 @@
 		height:30px;
 		font-size:10pt;
 	}
+	#power_table{
+		border:2px solid #AEAEAE;
+		border-collapse:collapse;
+		display:none;
+	}
+	.power_tr{
+		height:32px;
+		vertical-align:middle;
+		text-align:center;
+	}
+	.select_box{
+		border-radius:10px;
+		width:80px;
+		height:20px;
+		margin-top:4px;
+		display:inline-block;
+		border:1px solid #ccc;
+		background:#bbb;
+	}
+	.select_div{
+		width:50px;
+		height:20px;
+		border-radius:10px;
+		background:orange;
+		float:left;
+		color:#fff;
+		cursor:pointer;
+	}
 	input{
 		margin-top:10px;
 		width:100px;
 	}
+	.edit-btn{
+		display:none;
+	}
 	.add_left{
-		display:inline-block;
-		width: 25%;
+		display: inline-block;
+		width:25%;
 		text-align: right;
 	}
 	.add_right{
@@ -163,25 +194,69 @@
 	}
 </style>
 <br>
-<h1 class="tt_h1">位置：宿舍管理>查看宿舍</h1>
+<h1 class="tt_h1">位置：身份管理>成员管理</h1>
 <p style="display:inline-block;width:45%;padding-left:30px;">
-	楼号：<input type="text" id="sbuild">&nbsp;&nbsp;
-	房间号：<input type="text" id="sno">&nbsp;&nbsp;
+	真实姓名：<input type="text" id="snick">&nbsp;&nbsp;
+	用户名：<input type="text" id="sname">&nbsp;&nbsp;
 	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
 </p>
-<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加宿舍信息</button></p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加管理人员</button></p>
 <br>
 <div id="con_div">
 	<table id="table" class="new_table">
 		<tr style="display:none;">
 			<th>ID</th>
-			<th>楼号</th>
-			<th>楼层</th>
-			<th>房间号</th>
-			<th>性别</th>
-			<th>房间类型</th>
-			<th>可住人数</th>
+			<th>真实姓名</th>
+			<th>用户名</th>
+			<th>角色名</th>
+			<th>重置密码</th>
+			<th>权限管理</th>
 			<th>操作</th>
+		</tr>
+	</table>
+	<table id="power_table" class="new_table">
+		<input type="hidden" id="pid">
+		<tr>
+			<th style="width:200px;">操作</th>
+			<th style="width:200px;">权限</th>
+		</tr>
+		<tr class="power_tr tb_tr_td">
+			<td>班级管理</td>
+			<td><div class="select_box"><div class="select_div power1" sign="1">无</div></div></td>
+		</tr>
+		<tr class="power_tr tb_tr_td">
+			<td>宿舍管理</td>
+			<td><div class="select_box"><div class="select_div power2" sign="2">无</div></div></td>
+		</tr>
+		<tr class="power_tr tb_tr_td">
+			<td>学生管理</td>
+			<td><div class="select_box"><div class="select_div power3" sign="3">无</div></div></td>
+		</tr>
+		<tr class="power_tr tb_tr_td">
+			<td>教师管理</td>
+			<td><div class="select_box"><div class="select_div power4" sign="4">无</div></div></td>
+		</tr>
+		<tr class="power_tr tb_tr_td">
+			<td>学科管理</td>
+			<td><div class="select_box"><div class="select_div power5" sign="5">无</div></div></td>
+		</tr>
+		<tr class="power_tr tb_tr_td">
+			<td>请假审批</td>
+			<td><div class="select_box"><div class="select_div power6" sign="6">无</div></div></td>
+		</tr>
+		<tr class="power_tr tb_tr_td">
+			<td>课表管理</td>
+			<td><div class="select_box"><div class="select_div power7" sign="7">无</div></div></td>
+		</tr>
+		<tr class="power_tr tb_tr_td">
+			<td>身份管理</td>
+			<td><div class="select_box"><div class="select_div power8" sign="8">无</div></div></td>
+		</tr>
+		<tr style="height:40px;text-align:center;">
+			<td colspan="2">
+				<button style="width:50px;height:25px;background:#449d44;border-color:#398439;color:#fff;" class="confirm-btn1">确定</button>
+				<button style="width:50px;height:25px;background:#f0ad4e;border-color:#eea236;color:#fff;margin-left:50px;" class="cancel-btn1">取消</button>
+			</td>
 		</tr>
 	</table>
 </div>
@@ -195,15 +270,25 @@
 <div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
 	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
 	<br>
-		<p>添 加 宿 舍</p>
+		<p>添 加 管 理 人 员</p>
 		<br>
 		<input type="hidden" id="hid">
-		<p class="add_left">楼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</p><p class="add_right"><input type="text" name="build" id="build"></p><br>
-		<p class="add_left">楼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;层：</p><p class="add_right"><input type="text" name="floor" id="floor"></p><br>
-		<p class="add_left">房&nbsp;间&nbsp;号：</p><p class="add_right"><input type="text" name="no" id="no"></p><br>
-		<p class="add_left">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</p><p class="add_right"><select name="sex" id="sex" style="margin-top:10px;width:104px;"></select></p><br>
-		<p class="add_left">房间类型：</p><p class="add_right"><select name="htype" id="htype" style="margin-top:10px;width:104px;"></select></p><br><br>
-		<p>		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class="cancel-btn">取消</button><br><br></p>
+		<p class="add_left">真实姓名：</p><p class="add_right"><input type="text" name="nick" id="nick"></p><br>
+		<p class="add_left">用&nbsp;户&nbsp;名：</p><p class="add_right"><input type="text" name="name" id="name"></p><br>
+		
+		<p><span style="font-size:9pt;color:green;">*注册后可用于前后台登录</span></p><br>
+		<p class="add_left">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</p><p class="add_right"><input type="password" name="password" id="password"></p><br>
+		<p class="add_left">确认密码：</p><p class="add_right"><input type="password" name="repass" id="repass"></p><br>
+		
+		<p><span style="font-size:9pt;color:red;display:none;" class="diff_pass">两次输入的密码不一致</span>
+		<br class="diff_pass" style="display:none;"></p>
+		<p class="add_left">身份名称：</p><p class="add_right"><select name="role" id="role" style="margin-top:10px;width:104px;">
+			
+		</select></p>
+		
+		<br><br>
+		<p><button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button><br><br></p>
 		
 	</form>
 </div>
@@ -211,7 +296,7 @@
 <script type="text/javascript">
 	window.getList = function(data={})
 	{
-		var url = "index.php?m=Admin&c=Setting&a=getHostelList";
+		var url = "index.php?m=Admin&c=Setting&a=getManageList";
 		data.typ = 'json';
 		var res = ajax(url,data);
 		if(res.status == 'success')
@@ -220,12 +305,11 @@
 			$(".zshow").hide();
 			var field = Array();
 			field[0] = 'id';
-			field[1] = 'build';
-			field[2] = 'floor';
-			field[3] = 'no';
-			field[4] = 'sex_text';
-			field[5] = 'name';
-			field[6] = 'contain';
+			field[1] = 'nick';
+			field[2] = 'name';
+			field[3] = 'role_text';
+			field[4] = 'reset_pass';
+			field[5] = 'set_power';
 			var lists = res.content;
 			if(res.leader == 1)
 			{
@@ -233,7 +317,7 @@
 			}
 			else
 			{
-				field[7] = 'act_text';
+				field[6] = 'act_text';
 				$(".add-btn").hide();
 				listPage(lists,1,15,field);
 			}
@@ -245,75 +329,100 @@
 			$(".new_table").find('tr').hide();
 		}
 	}
-
+	//查找按钮
 	$(".search").click(function()
 	{
-		var build = $("#sbuild").val();
-		var no = $("#sno").val();
-		var cond = {build:build,no:no};
+		var snick = $("#snick").val();
+		var sname = $("#sname").val();
+		var cond = {snick:snick,sname:sname};
 		getList(cond);
+		$("#table").show();
+		$("#power_table").hide();
 	})
-
+	//添加按钮
 	$(".add-btn").click(function()
 	{
 		$("#shell").show();
 		$("#add_form").show();
-		var sex_str = "<option value='0'>女</option><option value='1'>男</option><option value='2'>无</option>";
-		$("#sex").html(sex_str);
-		var htype_str = '';
-		var htype_list = <?php echo ($typeList); ?>;
-		console.info(htype_list);
-		for(var i in htype_list)
+		var rl = <?php echo ($roleList); ?>;
+		var str = String();
+		for(var i in rl)
 		{
-			htype_str += '<option value="'+htype_list[i].id+'">'+htype_list[i].name+'</option>';
+			str += "<option value='"+rl[i].id+"'>"+rl[i].role_name+"</option>";
 		}
-		$("#htype").html(htype_str);
+		$("#role").html(str);
 	})
-
+	//确定按钮
 	$(".confirm-btn").click(function()
 	{
 		var id = $("#hid").val();
-		var build = $("#build").val();
-		if($.trim(build) == '')
+		var nick = $("#nick").val();
+		if($.trim(nick) == "")
 		{
-			tips('楼号不能为空！',2);
+			tips("真实姓名不能为空！",2);
 			return;
 		}
-		var floor = $("#floor").val();
-		if($.trim(floor) == '')
+		var name = $("#name").val();
+		if($.trim(name) == '')
 		{
-			tips('楼层号不能为空！',2);
+			tips('用户名不能为空！',2);
 			return;
 		}
-		var no = $("#no").val();
-		if($.trim(no) == '')
+		var pass = $("#password").val();
+		if($.trim(pass) == "")
 		{
-			tips('房间号不能为空！',2);
+			tips('密码不能为空！',2);
 			return;
 		}
-		var sex = $("#sex").val();
-		var htype = $("#htype").val();
-		if($.trim(htype) == '')
+		var repass = $("#repass").val();
+		if(pass != repass)
 		{
-			tips('房间类型不能为空，请先设置房间类型!',2);
+			$(".diff_pass").show();
 			return;
-		}
-		if($.trim(id) == '')
-		{
-			var url = 'index.php?m=Admin&c=Setting&a=addHostel';
-			var data = {build:build,floor:floor,no:no,sex:sex,htype:htype,typ:'json'};
 		}
 		else
 		{
-			var url = 'index.php?m=Admin&c=Setting&a=editHostel';
-			var data = {id:id,build:build,floor:floor,no:no,sex:sex,htype:htype,typ:'json'};
+			$(".diff_pass").hide();
 		}
-			
+		var role = $("#role").val();
+		if($.trim(role) == '')
+		{
+			tips('请先设置身份，才能添加！',2);
+			return;
+		}
+
+		if($.trim(id) == '')
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=addManage';
+			var data = {nick:nick,name:name,pass:pass,role:role,typ:'json'};
+		}
+		else
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=editManage';
+			var data = {id:id,nick:nick,name:name,pass:pass,role:role,typ:'json'};
+		}
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
 			tips(res.content,1);
 			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content);
+		}
+	})
+
+	//重置密码
+	$(".reset").live("click",function()
+	{
+		var id = $(this).attr('sign');
+		var url = "index.php?m=Admin&c=Setting&a=resetPass";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
 		}
 		else
 		{
@@ -326,62 +435,91 @@
 		$("#shell").hide();
 		$("#add_form").hide();
 		$("#hid").val('');
-		$("#build").val("");
-		$("#floor").val("");
-		$("#no").val("");
 	})
 
-	$(".edit-btn").live("click",function()
+	//权限管理
+	$(".power_set").live("click",function()
 	{
-		var id = $(this).attr('sign');
-		var url = "index.php?m=Admin&c=Setting&a=getHostelById";
-		var data = {id:id,typ:'json'};
+		var pid = $(this).attr("sign");
+		$("#pid").val(pid);
+		var url = "index.php?m=Admin&c=Setting&a=getPowerById";
+		var data = {pid:pid,typ:'json'};
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
-			$("#hid").val(id);
-			$("#shell").show();
-			$("#add_form").show();
+			$(".select_div").css("float","left");
+			$(".select_div").html("无");
 			var info = res.content;
-			$("#build").val(info.build);
-			$("#floor").val(info.floor);
-			$("#no").val(info.no);
-			if(info.sex == 1)
+			$("#table").hide();
+			$("#power_table").show();
+			for(var i in info)
 			{
-				var sex_str = "<option value='0'>女</option><option value='1' selected>男</option><option value='2'>无</option>";
+				var n = info[i];
+				$(".power"+n).css("float","right");
+				$(".power"+n).html("有");				
 			}
-			else if(info.sex == 2)
-			{
-				var sex_str = "<option value='0'>女</option><option value='1'>男</option><option value='2' selected>无</option>";
-			}
-			else
-			{
-				var sex_str = "<option value='0' selected>女</option><option value='1'>男</option><option value='2'>无</option>";
-			}
-			$("#sex").html(sex_str);
-			var htype_str = '';
-			var htype = <?php echo ($typeList); ?>;
-			for(var i in htype)
-			{
-				if(htype[i].id == info.type)
-				{
-					htype_str += "<option value='"+htype[i].id+"' selected>"+htype[i].name+"</option>";
-				}
-				else
-				{
-					htype_str += "<option value='"+htype[i].id+"'>"+htype[i].name+"</option>";
-				}
-				
-			}
-			$("#htype").html(htype_str);
 		}
 		else
 		{
 			tips(res.content,2);
 		}
 
+	});
+	$(".select_div").live("click",function()
+	{
+		var _this = $(this);
+		var ff = _this.css("float");
+		switch(ff){
+			case "left":
+			_this.css("float","right");
+			_this.html('有');
+			break;
+			case "right":
+			_this.css("float","left");
+			_this.html("无");
+			break;
+			default:break;
+		}
+	})
+	$(".cancel-btn1").live("click",function()
+	{
+		$("#power_table").hide();
+		$("#table").show();
+	})
+	$(".confirm-btn1").live("click",function()
+	{
+		var i = 0;
+		var arr = Array();
+		$(".select_div").each(function()
+		{
+			var _this = $(this);
+			if(_this.html() == '有')
+			{
+				arr[i] = _this.attr("sign");
+				i++;
+			}
+			
+		})
+		console.info(arr);
+		var str = arr.join(",");
+		console.info(str);
+		var pid = $("#pid").val();
+		var url = "index.php?m=Admin&c=Setting&a=setPower";
+		var data = {pid:pid,power:str,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			$("#table").show();
+			$("#power_table").hide();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
 	})
 
+	//删除按钮
 	$(".del-btn").live("click",function()
 	{
 		var msg = "您真的确定要删除吗？\n\n请确认！";
@@ -389,7 +527,7 @@
 		{
 			var _this = $(this);
 			var id = $(this).attr("sign");
-			var url = "index.php?m=Admin&c=Setting&a=delHostel";
+			var url = "index.php?m=Admin&c=Setting&a=delManage";
 			var data = {id:id,typ:'json'};
 			var res = ajax(url,data);
 			if(res.status == 'success')

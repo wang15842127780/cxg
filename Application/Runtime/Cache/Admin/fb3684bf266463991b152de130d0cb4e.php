@@ -279,6 +279,4 @@
 	$("#m"+nn).show();
 	$("#m"+nn).siblings().show();
 
-	setTimeout("getInfo();",500);
-
 </script>

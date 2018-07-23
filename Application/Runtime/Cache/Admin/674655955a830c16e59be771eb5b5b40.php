@@ -5,6 +5,7 @@
 	<title>校园管理系统</title>
 	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
 	<link rel="stylesheet" href="/cxg/Public/css/admin.css" type="text/css">
 	<style type="text/css">
 		.hide{
@@ -104,10 +105,6 @@
 				<img src="/cxg/Public/iconfont/health.png" alt="宿舍卫生管理" height="25">
 				<p>宿舍卫生</p>
 			</a>
-			<a href="/cxg/index.php?m=Admin&c=Face&a=index&id=77.78" class="tmenu">
-				<img src="/cxg/Public/iconfont/face_manage.png" alt="人脸库管理" height="25">
-				<p>人脸库管理</p>
-			</a>
 			</div>
 			<span class="user" style='display:inline-block;height:20px;margin-right:30px;margin-top:10px;background:#b8ceda;padding:7px;color:#b8ceda;background:rgb(0,52,113) repeat-x;border-radius:30px;'>&nbsp;&nbsp;&nbsp;&nbsp;用户名：【<?php echo (cookie('auser')); ?>】&nbsp;&nbsp;&nbsp;&nbsp;<b id="editPass">修改密码</b>&nbsp;&nbsp;&nbsp;&nbsp;<b id="logout">退出</b></span>
 		</div>
@@ -121,8 +118,7 @@
 				<?php if(is_array($main_menu)): foreach($main_menu as $k=>$lists): ?><ul class="menu<?php echo ($lists["id"]); ?> sub">
 						<li class="main_menu"><span style="display:inline-block;"><img src="/cxg/Public/iconfont/sub_logo.png" width="16">
 						<?php echo ($lists["menu_name"]); ?></li>
-						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" <?php if($k > 0): ?>style="display:none;"<?php endif; ?> >
-								<!-- <p class='min_menu' style="font-size:15px;height:30px;line-height:30px;"><a href="javascript:void(0);" class="fun fun<?php echo ($min["id"]); ?>" title="<?php echo ($lists["id"]); ?>.<?php echo ($min["id"]); ?>"><?php echo ($min["menu_name"]); ?></a></p> -->
+						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" id="m<?php echo ($min["id"]); ?>">
 								><?php echo ($min["menu_name"]); ?>
 							</li><?php endforeach; endif; ?>
 					</ul><?php endforeach; endif; ?>
@@ -130,43 +126,177 @@
 		</div>
 		<!-- 主页内容  -->
 		<div id="home">
-			<div class="content" sign="index.php?m=Admin&c=Leave&a=index&id=60.62">
-				<img src="/cxg/Public/iconfont/leave_logo.png" class="img">
-				<div class="title">
-					学生请假信息
-				</div>
-				<div class="second">
-					<span class="number" id="leave">-</span>条消息待处理
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="shell" class="zshow">
-		
-	</div>
-	<div id="shell_img" class="zshow">
+			
+<br>
+<h1 class="tt_h1">位置：宿舍管理>扣分项目管理</h1>
+<style type="text/css">
+	#show_box{
+		position:absolute;
+		height:280px;
+		width:300px;
+		text-align:center;
+		background:#fff;
+		left:450px;
+		top:160px;
+		border-radius:10px;
+	}
+	.tb_tr_th th{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.tb_tr_td td{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.edit-btn{
+		display:none;
+	}
+	.add_left{
+		display: inline-block;
+	    width: 25%;
+	    text-align: right;
+	}
+	.add_right{
+		display: inline-block;
+		width: auto;
+	}
+</style>
+<button class="add-btn" style="position:absolute;right:50px;"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加扣分项目</button>
+<br>
+<div style="position:absolute;left:0;top:111px;right:0;bottom:0;overflow:auto;">
+	<table id="table" style="display:none;margin-left:20px;margin-top:0;margin-bottom:10px;">
+		<tr class="tb_tr_th">
+			<th>ID</th>
+			<th>扣分项目</th>
+			<th>分值</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+	
+</div>
+<div id="shell_img" class="zshow">
         <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35">
         <p>加载中...</p>
-	</div>
-</body>
-</html>
+</div>
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center; display:none;font-size:17px;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
+	<br>
+		<p>添 加 扣 分 项 目</p>
+		<br>
+		<p class="add_left">名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</p>
+		<p class="add_right"><input type="text" name="name" id="name"></p>
+		<br>
+		<br>
+		<p class="add_left">分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数：</p>
+		<p class="add_right"><input type="text" name="num" id="num" placeHolder='填入正整数即可'></p>
+		
+		<br><br>
+		<p>
+			<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+			<button class="cancel-btn">取消</button><br><br>
+		</p>
+		
+	</form>
+</div>
+<script type="text/javascript" src="/cxg/Public/js/admindate.js"></script>
 <script type="text/javascript">
-	window.getInfo = function()
+	window.getHealthItem = function()
 	{
-		var url = 'index.php?m=Admin&c=Index&a=getInfo';
+		var url = "index.php?m=Admin&c=Health&a=getHealthItem";
 		var data = {typ:'json'};
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
+			$("#table").show();
 			$(".zshow").hide();
-			$("#leave").html(res.content.leave);
+			var list = res.content;
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'item';
+			field[2] = 'score';
+			listPage(list,1,20,field,true);
 		}
 		else
 		{
-			$(".zshow").hide();
 			tips(res.content,2);
+			$(".zshow").hide();
 		}
 	}
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+	})
+	$(".cancel-btn").click(function()
+	{
+		$("#name").val("");
+		$("#num").val("");
+		$(".zshow").hide();
+		$("#add_form").hide();
+	})
+	$(".confirm-btn").click(function()
+	{
+		var name = $.trim($("#name").val());
+		var num = $.trim($("#num").val());
+		if(name == '')
+		{
+			tips("项目名称不能为空！");
+			return;
+		}
+		if(num == "")
+		{
+			tips("分值不能为空！");
+			return;
+		}
+		if(parseInt(num) == 0)
+		{
+			tips("分数格式不合理！");
+			return;
+		}
+		// alert(111);
+		var url = "index.php?m=Admin&c=Health&a=addHealthItem";
+		var data = {item:name,score:num,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	$(".del-btn").live("click",function()
+	{
+		var id = $(this).attr("sign");
+		var _this = $(this);
+		var url = "index.php?m=Admin&c=Health&a=delHealthItem";
+		var data = {id:id,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			_this.parents("tr").remove();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	setTimeout("getHealthItem();",500);
+</script>
+
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
 	$("#logout").click(function()
 	{
 		window.location.href = "/cxg/index.php?m=Admin&c=Log&a=logout";
@@ -177,22 +307,6 @@
 		_this.siblings(".sub").find("li:gt(0)").slideUp();
 		_this.find('li').slideDown();
 	})
-	
-	function getCookie(cookieName)
-	{
-		var strCookie = document.cookie;
-		var arrCookie = strCookie.split("; ");
-		console.info(arrCookie);
-		for(var i=0;i<arrCookie.length;i++)
-		{
-			var arr = arrCookie[i].split("=");
-			if(cookieName == arr[0])
-			{
-				return arr[1];
-			}
-		}
-		return "";
-	}
 
 	$(".fun").click(function()
 	{
@@ -210,12 +324,37 @@
 		window.location.href = 'index.php?m=Admin&c=Setting&a=index&id=7.21';
 	})
 
-	$(".content").click(function()
+	var url = window.location.href;
+	var arr = url.split(".");
+	var count = arr.length;
+	var num = parseInt(count)-1;
+	var nn = arr[num];
+	if(parseInt(nn) == 32)
 	{
-		var url = $(this).attr('sign');
-		window.location.href = url;
-	})
-
-	setTimeout("getInfo();",500);
+		nn = 26;
+	}
+	if(parseInt(nn) == 33)
+	{
+		nn = 31;
+	}
+	if(parseInt(nn) == 62)
+	{
+		nn = 25;
+	}
+	if(parseInt(nn) == 73)
+	{
+		nn = 27;
+	}
+	if(parseInt(nn) == 74)
+	{
+		nn = 27;
+	}
+	if(parseInt(nn) == 76)
+	{
+		nn = 58;
+	}
+	$(".fun").hide();
+	$("#m"+nn).show();
+	$("#m"+nn).siblings().show();
 
 </script>

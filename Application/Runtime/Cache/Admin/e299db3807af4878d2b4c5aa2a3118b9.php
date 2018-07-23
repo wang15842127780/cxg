@@ -128,185 +128,182 @@
 		<div id="home">
 			
 <style type="text/css">
-	#form{
-		width:400px;
-		height:230px;
+	#left,#right,#center{
+		width:160px;
+		height:400px;
 		display:inline-block;
-		margin-top:220px;
-		background:#fff;
+		overflow-y:auto;
 	}
-	#add_form input{
-		height:25px;
-		line-height:25px;
-		font-size:20px;
-		width:173px;
+	.stu_info{
+		height:24px;
+	}
+	.stu_info_l{
+		display:inline-block;
+		width:80px;
+		line-height:20px;
+		border:1px solid #ccc;
+		background: #fff;
+		border-radius:5px;
+		vertical-align: middle;
+		margin:1px;
+	}
+	.stu_info_r{
+		display:inline-block;
+		width:80px;
+		line-height:20px;
+		border:1px solid #ccc;
+		background: #fff;
+		border-radius:5px;
+		vertical-align: middle;
+		margin:1px;
 	}
 </style>
 <br>
-<h1 class="tt_h1">位置：宿舍管理>房间类型管理</h1>
-<p style="text-align:right;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加房间类型</button></p>
-<div id="con_div">
-	<table id="table" class="new_table">
-		<tr style="display:none;">
-			<th>ID</th>
-			<th>名称</th>
-			<th>可住人数</th>
-			<th>添加时间</th>
-			<th>操作</th>
-		</tr>
-	</table>
-</div>
-<div id="shell" class="zshow">
-	
-</div>
-<div  id="shell_img" class="zshow">
-	<img src="/cxg/Public/iconfont/loading.gif" width="35" height="35" />
-	<p>加载中...</p>
-</div>
-<div id="add_form" style="position:absolute;left:0;top:0;right:0;z-index:9999;text-align:center;display:none;">
-	<form id="form" onsubmit="return false;">
-	<br>
-		<p>添房间类型</p>
-		<br>
-		<input type="hidden" id="hid">
-		房间类型：<input type="text" name="bname" id="bname"><br><br>
-		可住人数：<input type="text" name="bnum" id="bnum" value="0"><br><br><br><br>
-		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
-		<button class="cancel-btn">取消</button>
-	</form>
+<h1 class="tt_h1" id="title">位置：课表管理>编辑上课人员（晚自习）</h1>
+<br>
+<table id="table">
+	<tr class="tb_tr_th">
+		<th>教室</th>
+		<?php if(is_array($clist)): foreach($clist as $key=>$list): ?><th>
+				<?php echo ($list["name"]); ?>
+			</th><?php endforeach; endif; ?>
+	</tr>
+	<?php $__FOR_START_2021582646__=1;$__FOR_END_2021582646__=4;for($i=$__FOR_START_2021582646__;$i < $__FOR_END_2021582646__;$i+=1){ ?><tr class="tb_tr_td">
+			<td>第<?php echo ($i); ?>节</td>
+			<?php if(is_array($clist)): foreach($clist as $k=>$lists): ?><td class="night" ntime="<?php echo ($i); ?>" nroom="<?php echo ($lists["id"]); ?>">
+					<?php echo ($lists["$i"]["count"]); ?>
+				</td><?php endforeach; endif; ?>
+		</tr><?php } ?>
+</table>
+<div style="height:410px;display:none;text-align:center;" id="detail">
+	<p id="tinfo" style="height:50px;"></p>
+	<div id="left" style="border:1px solid black;">
+		
+	</div>
+	<div id="center" style="line-height:380px;"><<————>></div>
+	<div id="right" style="border:1px solid black;">
+		
+	</div>
+	<p>
+		<button id="gogo">完成</button>
+		<button id="return">返回</button>
+	</p>
 </div>
 <script type="text/javascript">
-	window.getList = function()
+	window.getStuList = function(nroom,ntime)
 	{
-		var url = "index.php?m=Admin&c=Setting&a=BuildTypeList";
-		var data = {typ:'json'};
+		var url = "index.php?m=Admin&c=Setting&a=getNightStu";
+		var data = {typ:'json',room:nroom,time:ntime};
 		var res = ajax(url,data);
+		return res;
+	}
+	window.liclick = function(nroom,ntime)
+	{
+		$(".stu_info_l").live("click",function()
+		{
+			var _this = $(this);
+			var sid = $(this).attr("sign");
+			var url1 = "index.php?m=Admin&c=Setting&a=delNightStu";
+			var data1 = {sid:sid,room:nroom,time:ntime,typ:'json'};
+			var res1 = ajax(url1,data1);
+			if(res1.status == 'success')
+			{
+				var html = _this.html();
+				_this.remove();
+				// $("#right").find("ul").append("<li class='stu_info_r'>"+html+"</li>");
+				$("#right").find("ul").append("<li class='stu_info_r' sign="+sid+">"+html+"</li>");
+			}
+			else
+			{
+				tips(res1.content,2);
+			}
+		})
+		$(".stu_info_r").live("click",function()
+		{
+			var _this = $(this);
+			var sid = $(this).attr('sign');
+			var url2 = "index.php?m=Admin&c=Setting&a=addNightStu";
+			var data2 = {sid:sid,room:nroom,time:ntime,typ:'json'};
+			var res2 = ajax(url2,data2);
+			if(res2.status == 'success')
+			{
+				var ban = _this.attr("ban");
+				var ban_list = $("."+ban);
+				var cou = ban_list.length;
+				if(cou == 1)
+				{
+					_this.prev().remove();
+				}
+				var html = _this.html();
+				_this.remove();
+				// $("#left").find("ul").append("<li class='stu_info_l'>"+html+"</li>");
+				$("#left").find("ul").append("<li class='stu_info_l' sign="+sid+">"+html+"</li>");
+			}
+		})
+	}
+	$("#return").click(function()
+	{
+		$("#table").show();
+		$("#detail").hide();
+		$("#title").html('位置：课表管理>编辑上课人员（晚自习）');
+	})
+	$("#gogo").click(function()
+	{
+		window.location.reload();
+	})
+	$(".night").click(function()
+	{
+		var nroom = $(this).attr("nroom");
+		var ntime = $(this).attr('ntime');
+		$(".stu_info_r").parent().remove();
+		$(".stu_info_l").parent().remove();
+		$("#table").hide();
+		$("#title").html("人员管理");
+		$("#detail").show();
+		var res = getStuList(nroom,ntime);
+		console.info(res);
 		if(res.status == 'success')
 		{
-			$(".zshow").hide();
-			$(".new_table").find('tr').show();
-			var list = res.content;
-			var field = Array();
-			field[0] = "id";
-			field[1] = "name";
-			field[2] = "number";
-			field[3] = "addtime";
-			if(res.leader == 1)
+			$("#tinfo").html(res.content.ttitle);
+			var str = String();
+			var str1 = String();
+			var sign = String();
+			str = "<ul>";
+			if(res.content.tleft != "")
 			{
-				listPage(list,1,10,field,true);
+				var left = res.content.tleft;
+				
+				for(var i in left)
+				{
+					str += "<li class='stu_info_l' sign='"+left[i].id+"'>"+left[i].name+"</li>";
+				}
+				
 			}
-			else
+			str += "</ul>";
+			$("#left").append(str);
+			str1 = "<ul>";
+			if(res.content.tright != "")
 			{
-				field[4] = "act_text";
-				$(".add-btn").hide();
-				listPage(list,1,10,field);
+				var right = res.content.tright;
+				for(var j in right)
+				{
+					if(sign != right[j].room)
+					{
+						str1 += "<li style='text-align:left;padding-left:50px;'>"+right[j].room+"</li>";
+						sign = right[j].room;
+					}
+					str1 += "<li class='stu_info_r "+sign+"' sign='"+right[j].id+"' ban="+sign+">"+right[j].name+"</li>";
+				}
 			}
-			
+			str1 += "<hr style='margin-top:5px;'/></ul>";
+			$("#right").append(str1);
+			liclick(nroom,ntime);
 		}
 		else
 		{
-			$(".zshow").hide();
 			tips(res.content,2);
 		}
-	}
 
-	setTimeout("getList();",500);
-
-	$(".edit-btn").live("click",function()
-	{
-		var id = $(this).attr('sign');
-		var url = "index.php?m=Admin&c=Setting&a=getBuildType";
-		var data = {id:id,typ:'json'};
-		var res2 = ajax(url,data);
-		if(res2.status == 'success')
-		{
-			$("#hid").val(id);
-			$("#shell").show();
-			$("#add_form").show();
-			var list = res2.content[0];
-			$("#bname").val(list.name);
-			$("#bnum").val(list.number);
-		}
-		else
-		{
-			tips(res2.content,2);
-		}
-	})
-
-	$(".del-btn").live("click",function()
-	{
-		var id = $(this).attr('sign');
-		var _this = $(this);
-		var msg = "您真的确定要删除吗？\n\n请确认！";
-		if(confirm(msg) == true)
-		{
-			var url = "index.php?m=Admin&c=Setting&a=delBuildType";
-			var data = {bid:id,typ:'json'};
-			var res = ajax(url,data);
-			if(res.status == 'success')
-			{
-				tips(res.content,1);
-				_this.parents("tr").remove();
-			}
-			else
-			{
-				tips(res.content,2);
-			}
-		}
-		
-			
-	})
-	$(".add-btn").click(function()
-	{
-		$("#shell").show();
-		$("#add_form").show();
-	})
-
-	$(".confirm-btn").click(function()
-	{
-		var hid = $("#hid").val();
-		var bname = $("#bname").val();
-		if($.trim(bname) == "")
-		{
-			tips('类型名称不能为空！',2);
-			return;
-		}
-		var bnum = $("#bnum").val();
-		if($.trim(bnum) == "")
-		{
-			tips('可容不数不能为空！',2);
-			return;
-		}
-		if($.trim(hid) == "")
-		{
-			var url = "index.php?m=Admin&c=Setting&a=addBuildType";
-			var data = {bname:bname,bnum:bnum,typ:'json'};
-		}
-		else
-		{
-			var url = "index.php?m=Admin&c=Setting&a=editBuildType";
-			var data = {bid:hid,bname:bname,bnum:bnum,typ:'json'};
-		}
-			
-		var res1 = ajax(url,data);
-		if(res1.status == 'success')
-		{
-			tips(res1.content,1);
-			setTimeout('window.location.reload();',300);
-		}
-		else
-		{
-			tips(res1.content,2);
-		}
-	})
-
-	$(".cancel-btn").click(function()
-	{
-		$("#bname").val("");
-		$("#bnum").val("");
-		$("#shell").hide();
-		$("#add_form").hide();
-		$("#hid").val("");
 	})
 </script>
 
@@ -370,7 +367,5 @@
 	$(".fun").hide();
 	$("#m"+nn).show();
 	$("#m"+nn).siblings().show();
-
-	setTimeout("getInfo();",500);
 
 </script>

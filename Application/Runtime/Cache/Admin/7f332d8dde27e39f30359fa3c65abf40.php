@@ -5,6 +5,7 @@
 	<title>校园管理系统</title>
 	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
 	<link rel="stylesheet" href="/cxg/Public/css/admin.css" type="text/css">
 	<style type="text/css">
 		.hide{
@@ -104,10 +105,6 @@
 				<img src="/cxg/Public/iconfont/health.png" alt="宿舍卫生管理" height="25">
 				<p>宿舍卫生</p>
 			</a>
-			<a href="/cxg/index.php?m=Admin&c=Face&a=index&id=77.78" class="tmenu">
-				<img src="/cxg/Public/iconfont/face_manage.png" alt="人脸库管理" height="25">
-				<p>人脸库管理</p>
-			</a>
 			</div>
 			<span class="user" style='display:inline-block;height:20px;margin-right:30px;margin-top:10px;background:#b8ceda;padding:7px;color:#b8ceda;background:rgb(0,52,113) repeat-x;border-radius:30px;'>&nbsp;&nbsp;&nbsp;&nbsp;用户名：【<?php echo (cookie('auser')); ?>】&nbsp;&nbsp;&nbsp;&nbsp;<b id="editPass">修改密码</b>&nbsp;&nbsp;&nbsp;&nbsp;<b id="logout">退出</b></span>
 		</div>
@@ -121,8 +118,7 @@
 				<?php if(is_array($main_menu)): foreach($main_menu as $k=>$lists): ?><ul class="menu<?php echo ($lists["id"]); ?> sub">
 						<li class="main_menu"><span style="display:inline-block;"><img src="/cxg/Public/iconfont/sub_logo.png" width="16">
 						<?php echo ($lists["menu_name"]); ?></li>
-						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" <?php if($k > 0): ?>style="display:none;"<?php endif; ?> >
-								<!-- <p class='min_menu' style="font-size:15px;height:30px;line-height:30px;"><a href="javascript:void(0);" class="fun fun<?php echo ($min["id"]); ?>" title="<?php echo ($lists["id"]); ?>.<?php echo ($min["id"]); ?>"><?php echo ($min["menu_name"]); ?></a></p> -->
+						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" id="m<?php echo ($min["id"]); ?>">
 								><?php echo ($min["menu_name"]); ?>
 							</li><?php endforeach; endif; ?>
 					</ul><?php endforeach; endif; ?>
@@ -130,43 +126,197 @@
 		</div>
 		<!-- 主页内容  -->
 		<div id="home">
-			<div class="content" sign="index.php?m=Admin&c=Leave&a=index&id=60.62">
-				<img src="/cxg/Public/iconfont/leave_logo.png" class="img">
-				<div class="title">
-					学生请假信息
-				</div>
-				<div class="second">
-					<span class="number" id="leave">-</span>条消息待处理
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="shell" class="zshow">
-		
-	</div>
-	<div id="shell_img" class="zshow">
-        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35">
+			
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	.new_table th{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.tb_tr_td td{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：身份管理>角色管理</h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	角色名称：<input type="text" id="srole">&nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加角色信息</button></p>
+<br>
+<div id="con_div">
+	<table id="table" class="new_table">
+		<tr style="display:none;">
+			<th>ID</th>
+			<th>角色名称</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35" />
         <p>加载中...</p>
+</div>
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
+	<br>
+		<p>添 加 角 色</p>
+		<br>
+		<input type="hidden" id="hid">
+		角色名称：<input type="text" name="role" id="role"><br><br>
+		<br><br>
+		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button><br><br>
+	</form>
+</div>
+
+<script type="text/javascript">
+	window.getList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getRoleList";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").find('tr').show();
+			$(".zshow").hide();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'role_name';
+			var lists = res.content;
+			if(res.leader == 1)
+			{
+				listPage(lists,1,15,field,true);
+			}
+			else
+			{
+				field[2] = 'act_text';
+				$(".add-btn").hide();
+				listPage(lists,1,15,field);
+			}
+			
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
+		}
+	}
+
+	$(".search").click(function()
+	{
+		var srole = $("#srole").val();
+		var cond = {name:srole};
+		getList(cond);
+	})
+
+	$(".add-btn").click(function()
+	{
+		$("#shell").show();
+		$("#add_form").show();
+	})
+
+	$(".confirm-btn").click(function()
+	{
+		var id = $("#hid").val();
+		var role = $("#role").val();
+		if($.trim(role) == "")
+		{
+			tips('角色名称不能为空！',2);
+			return;
+		}
+		if($.trim(id) == '')
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=addRole';
+			var data = {name:role,typ:'json'};
+		}
+		else
+		{
+			var url = 'index.php?m=Admin&c=Setting&a=editRole';
+			var data = {id:id,name:role,typ:'json'};
+		}
+			
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$(".cancel-btn").click(function()
+	{
+		$("#shell").hide();
+		$("#add_form").hide();
+		$("#hid").val('');
+		$("#role").val("");
+	})
+
+	$(".edit-btn").live("click",function()
+	{
+		var role = $(this).parent().prev().html();
+		$("#role").val(role);
+		$("#shell").show();
+		$("#add_form").show();
+		var id = $(this).attr('sign');
+		$("#hid").val(id);
+	})
+
+	$(".del-btn").live("click",function()
+	{
+		var msg = "您真的确定要删除吗？\n\n请确认！";
+		if(confirm(msg)==true)
+		{
+			var _this = $(this);
+			var id = $(this).attr("sign");
+			var url = "index.php?m=Admin&c=Setting&a=delRole";
+			var data = {id:id,typ:'json'};
+			var res = ajax(url,data);
+			if(res.status == 'success')
+			{
+				tips(res.content,1);
+				_this.parents('tr').remove();
+			}
+			else
+			{
+				tips(res.content,2);
+			}
+		}
+	})
+	setTimeout("getList();",500);
+</script>
+
+		</div>
 	</div>
 </body>
 </html>
 <script type="text/javascript">
-	window.getInfo = function()
-	{
-		var url = 'index.php?m=Admin&c=Index&a=getInfo';
-		var data = {typ:'json'};
-		var res = ajax(url,data);
-		if(res.status == 'success')
-		{
-			$(".zshow").hide();
-			$("#leave").html(res.content.leave);
-		}
-		else
-		{
-			$(".zshow").hide();
-			tips(res.content,2);
-		}
-	}
 	$("#logout").click(function()
 	{
 		window.location.href = "/cxg/index.php?m=Admin&c=Log&a=logout";
@@ -177,22 +327,6 @@
 		_this.siblings(".sub").find("li:gt(0)").slideUp();
 		_this.find('li').slideDown();
 	})
-	
-	function getCookie(cookieName)
-	{
-		var strCookie = document.cookie;
-		var arrCookie = strCookie.split("; ");
-		console.info(arrCookie);
-		for(var i=0;i<arrCookie.length;i++)
-		{
-			var arr = arrCookie[i].split("=");
-			if(cookieName == arr[0])
-			{
-				return arr[1];
-			}
-		}
-		return "";
-	}
 
 	$(".fun").click(function()
 	{
@@ -210,12 +344,33 @@
 		window.location.href = 'index.php?m=Admin&c=Setting&a=index&id=7.21';
 	})
 
-	$(".content").click(function()
+	var url = window.location.href;
+	var arr = url.split(".");
+	var count = arr.length;
+	var num = parseInt(count)-1;
+	var nn = arr[num];
+	if(parseInt(nn) == 32)
 	{
-		var url = $(this).attr('sign');
-		window.location.href = url;
-	})
-
-	setTimeout("getInfo();",500);
+		nn = 26;
+	}
+	if(parseInt(nn) == 33)
+	{
+		nn = 31;
+	}
+	if(parseInt(nn) == 62)
+	{
+		nn = 25;
+	}
+	if(parseInt(nn) == 73)
+	{
+		nn = 27;
+	}
+	if(parseInt(nn) == 76)
+	{
+		nn = 58;
+	}
+	$(".fun").hide();
+	$("#m"+nn).show();
+	$("#m"+nn).siblings().show();
 
 </script>
