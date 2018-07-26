@@ -132,260 +132,344 @@
 		<div id="home">
 			
 <style type="text/css">
-	table{
-		border-collapse:collapse;
-		margin-left:30px;
-		margin-top:10px;
+	#shell{
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    z-index: 555px;
+	    background: #ccc;
+	    opacity: 0.7;
 	}
-	#table{
-		margin-left:40px;
+	#shell_img{
+		position: absolute;
+	    left: 0;
+	    right: 0;
+	    text-align: center;
+	    top: 400px;
 	}
-	.new_table{
-		margin-top:20px;
+	#shell_photo{
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    z-index: 555px;
+	    background: #ccc;
+	    opacity: 0.7;
+	    display: none;
 	}
-	.new_table th{
-		width:130px;
-		height:30px;
-		font-size:10pt;
+	#shell_box{
+		position: absolute;
+	    left: 0;
+	    right: 0;
+	    text-align: center;
+	    top: 150px;
+	    display: none;
 	}
-	.tb_tr_td td{
-		width:130px;
-		height:30px;
-		font-size:10pt;
+	#con_div{
+		position: absolute;
+	    left: 100px;
+	    top: 120px;
+	    right: 30px;
+	    bottom: 20px;
+	    background: #eee;
+	    border: 1px solid gray;
+	    border-radius: 5px;
+	    overflow-y: auto;
+	    overflow-x: hidden
 	}
-	input{
-		margin-top:10px;
-		width:100px;
+	.edit-btn{
+		display:none;
 	}
 	.add_left{
-		display:inline-block;
-		width: 25%;
+		display: inline-block;
+		width: 15%;
 		text-align: right;
 	}
 	.add_right{
 		display: inline-block;
+		margin-top: 13px;
+	}
+	.add_right input{
+		width:120px;
+	}
+	#teacher{
+		width:120px;
+		padding-left:10px;
+	}
+	.file{
+		position: absolute;
+	    display: inline-block;
+	    border: 1px solid #99D3F5;
+	    border-radius: 4px;
+	    padding: 4px 12px;
+	    overflow: hidden;
+	    color: #1E88C7;
+	    text-decoration: none;
+	    text-indent: 0;
+	    line-height: 20px;
 	}
 </style>
 <br>
-<h1 class="tt_h1">位置：宿舍管理>查看宿舍</h1>
+<h1 class="tt_h1">位置：人脸信息>人脸库管理</h1>
 <p style="display:inline-block;width:45%;padding-left:30px;">
-	楼号：<input type="text" id="sbuild">&nbsp;&nbsp;
-	房间号：<input type="text" id="sno">&nbsp;&nbsp;
+	姓名：<input type="text" id="sname">&nbsp;&nbsp;
 	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
 </p>
-<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加宿舍信息</button></p>
-<br>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新增人脸信息</button></p>
 <div id="con_div">
-	<table id="table" class="new_table">
-		<tr style="display:none;">
+	<table id="table" style="margin-top:25px;">
+		<tr class="tb_tr_th">
 			<th>ID</th>
-			<th>楼号</th>
-			<th>楼层</th>
-			<th>房间号</th>
-			<th>性别</th>
-			<th>房间类型</th>
-			<th>可住人数</th>
+			<th>姓名</th>
+			<th>备注</th>
+			<th>教师</th>
+			<th>图片</th>
 			<th>操作</th>
 		</tr>
 	</table>
 </div>
+
+<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
+	<form id="form" onsubmit="return false;" style="display:inline-block;width:500px;background:#fff;margin-top:50px;">
+	<br>
+		<p>添 加 人 脸 信 息</p>
+		<br>
+		<p class="add_left">是否教师：</p><p class="add_right">
+			<select name="teacher" id="teacher">
+				
+			</select>
+		</p><br>
+		<p class="add_left">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</p><p class="add_right"><input type="text" name="name" id="name"></p><br>
+		<p class="add_left">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</p><p class="add_right"><input type="text" name="note" id="note"></p ><br><br>
+		
+		<img src="" width="200" height="280" id="image" bbc_type="store_banner" alt="暂无图片">
+		<br>
+		<a href="javascript:void(0);" class='file'>上传图片
+			<input type="file" id="file" name='file' style="position:absolute;font-size:100px;right:0;top:-10px;opacity:0;width:74px;" bbc_type="change_store_banner">
+		</a>
+		<br><br>
+		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="cancel-btn">取消</button><br><br>
+	</form>
+</div>
+	
+<div id="shell_photo" class="show_photo">
+
+</div>
+<div id="shell_box" class="show_photo">
+    <img src="" width="300" height="420" id="teacher_photo">
+</div>
 <div id="shell" class="zshow">
 
 </div>
-<div  id="shell_img" class="zshow">
-        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35" />
-        <p>加载中...</p>
-</div>
-<div id="add_form" style="position: absolute; left: 0px; top: 0px; right: 0px; z-index: 9999; text-align: center;display:none;">
-	<form id="form" onsubmit="return false;" style="display:inline-block;width:400px;background:#fff;margin-top:150px;">
-	<br>
-		<p>添 加 宿 舍</p>
-		<br>
-		<input type="hidden" id="hid">
-		<p class="add_left">楼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</p><p class="add_right"><input type="text" name="build" id="build"></p><br>
-		<p class="add_left">楼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;层：</p><p class="add_right"><input type="text" name="floor" id="floor"></p><br>
-		<p class="add_left">房&nbsp;间&nbsp;号：</p><p class="add_right"><input type="text" name="no" id="no"></p><br>
-		<p class="add_left">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</p><p class="add_right"><select name="sex" id="sex" style="margin-top:10px;width:104px;"></select></p><br>
-		<p class="add_left">房间类型：</p><p class="add_right"><select name="htype" id="htype" style="margin-top:10px;width:104px;"></select></p><br><br>
-		<p>		<button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class="cancel-btn">取消</button><br><br></p>
-		
-	</form>
+<div id="shell_img" class="zshow">
+    <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35">
+    <p>加载中...</p>
 </div>
 
 <script type="text/javascript">
-	window.getList = function(data={})
+	window.getList = function(data = {})
 	{
-		var url = "index.php?m=Admin&c=Setting&a=getHostelList";
+		var url = '?m=Admin&c=Face&a=getFace';
 		data.typ = 'json';
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
-			$("#table").find('tr').show();
-			$(".zshow").hide();
+			$("#table").show();
+			$(".tb_tr_td").remove();
 			var field = Array();
 			field[0] = 'id';
-			field[1] = 'build';
-			field[2] = 'floor';
-			field[3] = 'no';
-			field[4] = 'sex_text';
-			field[5] = 'name';
-			field[6] = 'contain';
-			var lists = res.content;
-			if(res.leader == 1)
-			{
-				listPage(lists,1,15,field,true);
-			}
-			else
-			{
-				field[7] = 'act_text';
-				$(".add-btn").hide();
-				listPage(lists,1,15,field);
-			}
+			field[1] = 'name';
+			field[2] = 'note';
+			field[3] = 'teacher';
+			field[4] = 'image';
+			listPage(res.content,1,15,field,true);
 		}
 		else
 		{
 			tips(res.content,2);
-			$(".zshow").hide();
-			$(".new_table").find('tr').hide();
+			$("#table").hide();
 		}
+		$(".zshow").hide();
 	}
-
-	$(".search").click(function()
+	window.getTeacherList = function()
 	{
-		var build = $("#sbuild").val();
-		var no = $("#sno").val();
-		var cond = {build:build,no:no};
-		getList(cond);
-	})
-
-	$(".add-btn").click(function()
-	{
-		$("#shell").show();
-		$("#add_form").show();
-		var sex_str = "<option value='0'>女</option><option value='1'>男</option><option value='2'>无</option>";
-		$("#sex").html(sex_str);
-		var htype_str = '';
-		var htype_list = <?php echo ($typeList); ?>;
-		console.info(htype_list);
-		for(var i in htype_list)
-		{
-			htype_str += '<option value="'+htype_list[i].id+'">'+htype_list[i].name+'</option>';
-		}
-		$("#htype").html(htype_str);
-	})
-
-	$(".confirm-btn").click(function()
-	{
-		var id = $("#hid").val();
-		var build = $("#build").val();
-		if($.trim(build) == '')
-		{
-			tips('楼号不能为空！',2);
-			return;
-		}
-		var floor = $("#floor").val();
-		if($.trim(floor) == '')
-		{
-			tips('楼层号不能为空！',2);
-			return;
-		}
-		var no = $("#no").val();
-		if($.trim(no) == '')
-		{
-			tips('房间号不能为空！',2);
-			return;
-		}
-		var sex = $("#sex").val();
-		var htype = $("#htype").val();
-		if($.trim(htype) == '')
-		{
-			tips('房间类型不能为空，请先设置房间类型!',2);
-			return;
-		}
-		if($.trim(id) == '')
-		{
-			var url = 'index.php?m=Admin&c=Setting&a=addHostel';
-			var data = {build:build,floor:floor,no:no,sex:sex,htype:htype,typ:'json'};
-		}
-		else
-		{
-			var url = 'index.php?m=Admin&c=Setting&a=editHostel';
-			var data = {id:id,build:build,floor:floor,no:no,sex:sex,htype:htype,typ:'json'};
-		}
-			
+		var url = '?m=Admin&c=Face&a=getTeacherList';
+		var data = {typ:'json'};
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
-			tips(res.content,1);
-			setTimeout("window.location.reload();",500);
+			$("#add_form").show();
+			$("#shell").show();
+			var list = res.content;
+			var str = "<option>否</option>";
+			for(var i in list)
+			{
+				str += "<option disabled='disabled'>"+list[i].class_name+"</option>";
+				var list1 = list[i]['list'];
+				for(var j in list1)
+				{
+					str += "<option value='"+list1[j].id+"'>&nbsp;&nbsp;&nbsp;"+list1[j].name+"</option>";
+				}
+			}
+			$("#teacher").html(str);
 		}
 		else
 		{
 			tips(res.content,2);
 		}
-	})
+	}
+	$('input[bbc_type="change_store_banner"]').change(function(){
+		var src = getFullPath($(this)[0]);
+		$('img[bbc_type="store_banner"]').attr('src', src);
+		change1 = 1;
+	});
+	function getFullPath(obj)
+	{
+	    if(obj)
+	    {
+	        //ie
+	        if (window.navigator.userAgent.indexOf("MSIE")>=1)
+	        {
+	            obj.select();
+	            if(window.navigator.userAgent.indexOf("MSIE") == 25){
+	                obj.blur();
+	            }
+	            return document.selection.createRange().text;
+	        }
+	        //firefox
+	        else if(window.navigator.userAgent.indexOf("Firefox")>=1)
+	        {
+	            if(obj.files)
+	            {
+	                //return obj.files.item(0).getAsDataURL();
+	                return window.URL.createObjectURL(obj.files.item(0));
+	            }
+	            return obj.value;
+	        }else if(window.navigator.userAgent.indexOf("Chrome")>=1){
+	            if(obj.files)
+	            {
+	                return window.URL.createObjectURL(obj.files[0]);
+	            }
 
+	        }
+	        return obj.value;
+	    }
+	}
+	function doUpload(formid) {  
+	     var formData = new FormData($( "#"+formid )[0]);
+	     $.ajax({  
+	          url: "/cxg/Public/function/upload.php",  
+	          type: 'POST',  
+	          data: formData,
+	          async: false,  
+	          cache: false,  
+	          contentType: false,  
+	          processData: false,  
+	          dataType:'json',
+	          success: function (returndata) {  
+	              // alert(returndata);  
+	              re = returndata;
+	          },  
+	          error: function (returndata) {  
+	              // alert(returndata); 
+	              re = returndata;
+	          }  
+	     });
+	     return re;
+	}
+	$(".add-btn").click(function()
+	{
+		// $("#add_form").show();
+		getTeacherList();
+	})
+	$(".confirm-btn").click(function()
+	{
+		var name = $("#name").val();
+		var teacher = $("#teacher").val();
+		var note = $("#note").val();
+		var photo = $("#image").attr("src");
+		if($.trim(name) == "")
+		{
+			tips("姓名不能为空！",2);
+			return;
+		}
+		if($.trim(photo) == "")
+		{
+			tips("人员照片不能为空！",2);
+			return;
+		}
+		var res = doUpload('form');
+		if(res.status == 'success')
+		{
+			var photo1 = res.file_name;
+			var url = '?m=Admin&c=Face&a=addFace';
+			var data = {name:name,note:note,teacher:teacher,photo:photo1,typ:'json'};
+			// console.info(data);
+			var ret = ajax(url,data);
+			if(ret.status == 'success')
+			{
+				tips(ret.content,1);
+				setTimeout("window.location.reload();",500);
+			}
+			else
+			{
+				tips(ret.content,2);
+			}
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+			
+	});
 	$(".cancel-btn").click(function()
 	{
-		$("#shell").hide();
+		$(".zshow").hide();
 		$("#add_form").hide();
-		$("#hid").val('');
-		$("#build").val("");
-		$("#floor").val("");
-		$("#no").val("");
 	})
-
-	$(".edit-btn").live("click",function()
+	$("#teacher").live("change",function()
 	{
-		var id = $(this).attr('sign');
-		var url = "index.php?m=Admin&c=Setting&a=getHostelById";
+		var val = $("#teacher").val();
+		if($.trim(val) == "否")
+		{
+			$("#name").val("");
+		}
+		else
+		{
+			var text = $("#teacher option:selected").text();
+			$("#name").val($.trim(text));
+		}
+	})
+	$(".search").click(function()
+	{
+		var sname = $("#sname").val();
+		var data = {sname:sname};
+		getList(data);
+	})
+	$(".photo").live("click",function()
+	{
+		var id = $(this).attr("sign");
+		var url = '?m=Admin&c=Face&a=getFaceById';
 		var data = {id:id,typ:'json'};
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
-			$("#hid").val(id);
-			$("#shell").show();
-			$("#add_form").show();
-			var info = res.content;
-			$("#build").val(info.build);
-			$("#floor").val(info.floor);
-			$("#no").val(info.no);
-			if(info.sex == 1)
-			{
-				var sex_str = "<option value='0'>女</option><option value='1' selected>男</option><option value='2'>无</option>";
-			}
-			else if(info.sex == 2)
-			{
-				var sex_str = "<option value='0'>女</option><option value='1'>男</option><option value='2' selected>无</option>";
-			}
-			else
-			{
-				var sex_str = "<option value='0' selected>女</option><option value='1'>男</option><option value='2'>无</option>";
-			}
-			$("#sex").html(sex_str);
-			var htype_str = '';
-			var htype = <?php echo ($typeList); ?>;
-			for(var i in htype)
-			{
-				if(htype[i].id == info.type)
-				{
-					htype_str += "<option value='"+htype[i].id+"' selected>"+htype[i].name+"</option>";
-				}
-				else
-				{
-					htype_str += "<option value='"+htype[i].id+"'>"+htype[i].name+"</option>";
-				}
-				
-			}
-			$("#htype").html(htype_str);
+			$(".show_photo").show();
+			$("#teacher_photo").attr("src",res.content);
 		}
 		else
 		{
 			tips(res.content,2);
 		}
-
 	})
-
+	$(".show_photo").live("click",function()
+	{
+		$(".show_photo").hide();
+	})
 	$(".del-btn").live("click",function()
 	{
 		var msg = "您真的确定要删除吗？\n\n请确认！";
@@ -393,7 +477,7 @@
 		{
 			var _this = $(this);
 			var id = $(this).attr("sign");
-			var url = "index.php?m=Admin&c=Setting&a=delHostel";
+			var url = "index.php?m=Admin&c=Face&a=delFace";
 			var data = {id:id,typ:'json'};
 			var res = ajax(url,data);
 			if(res.status == 'success')
@@ -464,6 +548,10 @@
 		nn = 27;
 	}
 	if(parseInt(nn) == 76)
+	{
+		nn = 58;
+	}
+	if(parseInt(nn) == 78)
 	{
 		nn = 58;
 	}
