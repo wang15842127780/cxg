@@ -1421,3 +1421,53 @@ NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be rem
 SQL: SHOW COLUMNS FROM `face` [ RunTime:0.001713s ]
 SQL: SELECT * FROM `face` LIMIT 0,1000   [ RunTime:0.001084s ]
 
+[ 2018-07-26T18:51:35+08:00 ] 192.168.1.102 /cxg/index.php?m=Admin&c=Face&a=index&id=77.78
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000193s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000395s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `menu` [ RunTime:0.002227s ]
+SQL: SHOW COLUMNS FROM `menu` [ RunTime:0.001340s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 0 ) AND ( `show` = 1 ) AND ( `type` = 2 ) ORDER BY `id` ASC  [ RunTime:0.000603s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 7 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000418s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 14 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000451s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 15 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000484s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 16 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000375s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 17 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000380s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 18 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000506s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 19 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000674s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 20 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000759s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 40 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000529s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 60 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000440s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 61 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000372s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 75 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000369s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000180s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000261s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.013416s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013495s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000149s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000195s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000182s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000240s ]
+
+[ 2018-07-26T18:51:35+08:00 ] 192.168.1.102 /cxg/index.php?m=Admin&c=Face&a=getFace
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000171s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000287s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `face` [ RunTime:0.002008s ]
+SQL: SELECT * FROM `face` LIMIT 0,1000   [ RunTime:0.001303s ]
+
+[ 2018-07-26T18:51:38+08:00 ] 192.168.1.102 /cxg/index.php?m=Admin&c=Face&a=delFace
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000169s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000290s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `face` [ RunTime:0.001844s ]
+SQL: SELECT * FROM `face` WHERE ( `id` = 5 ) LIMIT 0,100   [ RunTime:0.000810s ]
+SQL: DELETE FROM `face` WHERE ( id=5 ) [ RunTime:0.000877s ]
+
