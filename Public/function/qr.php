@@ -8,16 +8,12 @@ if(empty($id) || empty($rand))
 {
 	die("邀请信息不存在！");
 }
-$sql = "SELECT * FROM entry_record WHERE id='".$id."' AND rand='".$rand."'";
-$res = mysql_query($sql);
-$sql1 = "SELECT * FROM config WHERE name='host_ip'";
-$res1 = mysql_query($sql1);
-$re1 = mysql_fetch_assoc($res1);
-if(!empty($res))
+$s = $id.explode(",", $rand)[0];
+$img = '../qrcode/'.$s.'_logo.png';
+if($img)
 {
-	//生成二维码图片
 	$s = $id.$rand;
-	echo '<div style="width:100%;text-align:center;"><img style="display:inline-block;" src="../qrcode/'.$s.'_logo.png"></div>'; 
+	echo '<div style="width:100%;text-align:center;"><img style="display:inline-block;" src="'.$img.'"></div>'; 
 }
 else
 {

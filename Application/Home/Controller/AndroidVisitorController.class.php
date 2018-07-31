@@ -33,43 +33,32 @@ class AndroidVisitorController extends Controller{
                 $visitor->startTrans();
                 $res1 = $visitor->addEntryRecord($add_row);
                 $config = new ConfigModel();
-                $config_info = $config->getConfig(array("name"=>"host_ip"));
+                $config_info = $config->getConfig(array("name"=>"outside_ip"));
                 $ip = $config_info[0]['value'];
                 $id = $this->getEntryRecordLastId();
                 $code = "?i=".$id."&r=".$add_row['rand'];
                 $school = "创新谷公司";
                 $res2 = \Aliyun\DySDKLite\Sms\Sms::sendSms($add_row['phone'],$code,$add_row['entry_time'],$school);
                 $r = $res2->Message;
-                if($res1 && $r=='OK')
+
+                //远程生成二维码
+                // 1. 初始化一个cURL会话
+                $ch = curl_init();
+
+                // 2. 设置请求选项, 包括具体的url
+                curl_setopt($ch, CURLOPT_URL, $ip."/cxg/Public/function/saveQr.php?i=".$id."&r=".$add_row['rand']);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+
+                // 3. 执行一个cURL会话并且获取相关回复
+                $response = curl_exec($ch);
+                // 4. 释放cURL句柄,关闭一个cURL会话
+                curl_close($ch);
+                var_dump($res1);
+                var_dump($r);
+                var_dump($response);
+                if($res1 && $r=='OK' && $response=='success')
                 {
-                    //生成二维码图片
-                    $value = "&i=".$id."&n=".rand(0000,9999)."&q=".rand(00000,99999)."&r=".$add_row['rand']."\r";
-                    $errorCorrectionLevel = 'L';    //容错级别 
-                    $matrixPointSize = 14;           //生成图片大小  
-
-                    //生成二维码图片
-                    $s = $id.$rand;
-                    $filename = '../qrcode/'.$id.$rand.'.png';
-                    QRcode::png($value,$filename , $errorCorrectionLevel, $matrixPointSize, 2);  
-
-                    $QR = $filename;                //已经生成的原始二维码图片文件  
-                    $logo = "./Public/images/lingxianguoji.png";
-                    if ($logo !== FALSE) { 
-                         $QR = imagecreatefromstring(file_get_contents($QR)); 
-                         $logo = imagecreatefromstring(file_get_contents($logo));
-                         $QR_width = imagesx($QR);//二维码图片宽度 
-                         $QR_height = imagesy($QR);//二维码图片高度 
-                         $logo_width = imagesx($logo);//logo图片宽度 
-                         $logo_height = imagesy($logo);//logo图片高度 
-                         $logo_qr_width = $QR_width / 5; 
-                         $scale = $logo_width/$logo_qr_width; 
-                         $logo_qr_height = $logo_height/$scale; 
-                         $from_width = ($QR_width - $logo_qr_width) / 2; 
-                         //重新组合图片并调整大小 
-                         imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height); 
-                    } 
-                    //输出图片 
-                    imagepng($QR, './Public/qrcode/'.$s.'_logo.png'); 
                 	$visitor->commit();
                 	$return['status']	= 'success';
                 	$return['content']	= '操作成功！';

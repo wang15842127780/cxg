@@ -34,7 +34,7 @@ class Sms{
         $params["SignName"] = "创新谷科技";
 
         // fixme 必填: 短信模板Code，应严格按"模板CODE"填写, 请参考: https://dysms.console.aliyun.com/dysms.htm#/develop/template
-        $params["TemplateCode"] = "SMS_139237373";
+        $params["TemplateCode"] = "SMS_140720121";
 
         // fixme 可选: 设置模板参数, 假如模板中存在变量需要替换则为必填项
         $params['TemplateParam'] = Array (

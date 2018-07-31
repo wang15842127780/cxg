@@ -10,6 +10,7 @@ function editIpConfig()
 	if($type == 'json')
 	{
 		$host_ip = $_POST['host_ip'];
+		$outside_ip = $_POST['outside_ip'];
 		$teacher_attendance_ip = $_POST['teacher_attendance_ip'];
 
 		$sql1 = "UPDATE config SET value='".$host_ip."' WHERE name='host_ip'";
@@ -20,7 +21,11 @@ function editIpConfig()
 		mysql_query($sql2);
 		$res2 = mysql_affected_rows();
 
-		if($res1 || $res2)
+		$sql3 = "UPDATE config SET value='".$outside_ip."' WHERE name='outside_ip'";
+		mysql_query($sql3);
+		$res3 = mysql_affected_rows();
+
+		if($res1 || $res2 || $res3)
 		{
 			$return['status']	= 'success';
 			$return['content']	= '修改配置文件成功！';

@@ -75,6 +75,10 @@ while($re = mysql_fetch_assoc($res))
 					<td><input type="text" name='host_ip' id="host_ip" value="<?php echo $list['host_ip'];?>"></td>
 				</tr>
 				<tr>
+					<td>外网IP</td>
+					<td><input type="text" name='outside_ip' id="outside_ip" value="<?php echo $list['outside_ip'];?>"></td>
+				</tr>
+				<tr>
 					<td>教师考勤机IP</td>
 					<td><input type="text" name='teacher_attendance_ip' id="teacher_attendance_ip" value="<?php echo $list['teacher_attendance_ip'];?>"></td>
 				</tr>
@@ -94,8 +98,9 @@ while($re = mysql_fetch_assoc($res))
 	{
 		var url = './function.php';
 		var host_ip = $("#host_ip").val();
+		var outside_ip = $("#outside_ip").val();
 		var teacher_attendance_ip = $("#teacher_attendance_ip").val();
-		var data = {host_ip:host_ip,teacher_attendance_ip:teacher_attendance_ip,act:'editIpConfig',typ:'json'};
+		var data = {host_ip:host_ip,outside_ip:outside_ip,teacher_attendance_ip:teacher_attendance_ip,act:'editIpConfig',typ:'json'};
 		var res = ajax(url,data);
 
 		if(res.status == 'success')
