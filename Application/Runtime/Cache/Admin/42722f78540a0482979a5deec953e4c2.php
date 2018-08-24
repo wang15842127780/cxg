@@ -132,84 +132,211 @@
 		<div id="home">
 			
 <style type="text/css">
-	table{
-		border-collapse:collapse;
-		margin-left:30px;
-		margin-top:10px;
-	}
-	#table{
-		margin-left:40px;
-	}
-	.new_table{
-		margin-top:20px;
-	}
-	.new_table th{
-		width:130px;
-		height:30px;
-		font-size:10pt;
-	}
-	.tb_tr_td td{
-		width:130px;
-		height:30px;
-		font-size:10pt;
-	}
-	input{
-		margin-top:10px;
-		width:100px;
+	p select{
+		width:70px;
+		padding-left:5px;
 	}
 </style>
 <br>
-<h1 class="tt_h1">位置：教师管理>今日出勤</h1>
-<p style="display:inline-block;width:45%;padding-left:30px;">
-	姓名：<input type="text" id="sname">&nbsp;&nbsp;
-	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
-</p>
-<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加学生信息</button></p>
+<h1 class="tt_h1">位置：课表管理>编辑课表信息</h1>
+<div id="cond">
+	<form method="post" id="form">
+		班级：<select name="sclass" id="sclass"  style='width:75px;padding-left:5px;'>
+			<?php if(is_array($clist)): foreach($clist as $k=>$clist): ?><option value="<?php echo ($clist["id"]); ?>" <?php if($clist["id"] == $class_id): ?>selected<?php endif; ?> ><?php echo ($clist["name"]); ?></option><?php endforeach; endif; ?>
+		</select>
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<input type="hidden" id="cid" value='<?php echo ($class_id); ?>'>
+<p style="text-align:left;padding-left:50px;margin-top:5px;color:rgba(255, 0, 0, 0.87);">双击可修改课表</p>
 <br>
-<div id="con_div" style="left:30px;">
-	<table id="table" class="new_table" style="overflow-x:auto;">
-		<tr style="display:none;">
-			<th>姓名</th>
-			<th>日期</th>
-			<th>签到</th>
-			<th>打卡时间</th>
-		</tr>
-	</table>
-</div>
-<div id="shell" class="zshow">
+<table id="table" <?php if($class_name == ''): ?>style="display:none;"<?php endif; ?> >
+	<tr class="tb_tr_th">
+		<th><?php echo ($class_name); ?>教室</th>
+		<th>星期一</th>
+		<th>星期二</th>
+		<th>星期三</th>
+		<th>星期四</th>
+		<th>星期五</th>
+		<th>星期六</th>
+		<th>星期日</th>
+	</tr>
+	<?php $__FOR_START_1924599355__=1;$__FOR_END_1924599355__=9;for($i=$__FOR_START_1924599355__;$i < $__FOR_END_1924599355__;$i+=1){ ?><tr class="tb_tr_td">
+			<td>第<?php echo ($i); ?>节</td>
+			<?php $__FOR_START_118647857__=1;$__FOR_END_118647857__=8;for($j=$__FOR_START_118647857__;$j < $__FOR_END_118647857__;$j+=1){ ?><td class="kebiao" week='<?php echo ($j); ?>' time='<?php echo ($i); ?>'>
+				<?php if(is_array($klist)): foreach($klist as $k=>$lists): if($lists["week"] == $j && $lists["time"] == $i): echo ($lists["subject_text"]); ?>/<?php echo ($lists["teacher_text"]); endif; endforeach; endif; ?>
+			</td><?php } ?>
+		</tr><?php } ?>
 
-</div>
-<div  id="shell_img" class="zshow">
-        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35" />
-        <p>加载中...</p>
+</table>
+<div class='edit1' style='position:absolute;left:0;top:0;right:0;bottom:-500px;z-index:999;background:#ccc;opacity:0.5;display:none;'></div>
+<div class='edit1' style="position:absolute;z-index:9999;width:100%;height:300px;text-align:center;left:0;top:0;display:none;">
+	<div style="width:300px;height:250px;display:inline-block;background:#fff;margin-top:220px;border-radius:5px;">
+		<p class="title" style="text-align:left;padding:3px;border-radius:5px;border-bottom:1px solid #ccc;background:#eee;"></p>
+		<p style="margin-top:30px;text-align:left;padding-left:30px;">课程：<select name="subject" id="subject"></select></p>
+		<p style="margin-top:20px;text-align:left;padding-left:30px;">教师：<select name="teacher" id="teacher"></select></p>
+		<p style="margin-top:100px;text-align:right;padding-right:10px;">
+			<button id='yes' style="background:#ff8d00;width:50px;height:25px;border-radius:8px;"></button>
+			<button id="no" style="width:50px;height:25px;border-radius:8px;">取消</button>
+		</p>
+	</div>
 </div>
 <script type="text/javascript">
-	window.getList = function(data={})
+	window.getSubject = function()
 	{
-		var url = "index.php?m=Admin&c=Teacher&a=getTodayAttend";
-		data.typ = 'json';
+		var url = 'index.php?m=Admin&c=Setting&a=getSubjectList';
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		return res;
+	}
+	window.getTeacher = function()
+	{
+		var url = 'index.php?m=Admin&c=Setting&a=getTeacher';
+		var data = {typ:'json'};
+		var res = ajax(url,data);
+		return res;
+	}
+	window.update = function(data)
+	{
+		var url = 'index.php?m=Admin&c=Setting&a=updateSyllabus';
+		var data = data;
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
-			$("#table").find('tr').show();
-			$(".zshow").hide();
-			var field = Array();
-			field[0] = 'name';
-			field[1] = 'date';
-			field[2] = 'sign';
-			field[3] = 'time';
-			var lists = res.content;
-			listPage(lists,1,15,field);
-			
+			$(".edit1").hide();
+			tips(res.content,1);
+			setTimeout('$("#submit").click();',1500);
 		}
 		else
 		{
 			tips(res.content,2);
-			$(".zshow").hide();
-			$(".new_table").hide();
 		}
 	}
-	setTimeout("getList();",500);
+	$(".kebiao").dblclick(function()
+	{
+		var week = $(this).attr('week');
+		var time = $(this).attr('time');
+		var room = $("#cid").val();
+		var data = {week:week,time:time,room:room};
+		var _this = $(this);
+		var con = $(this).html();
+		if($.trim(con) == "")
+		{
+			var sub_res = getSubject();
+			if(sub_res.status == 'success')
+			{
+				var sub_list = sub_res.content;
+				var sub_str = String();
+				$("#subject").html("");
+				for(var i in sub_list)
+				{
+					sub_str += "<option value='"+sub_list[i].id+"''>"+sub_list[i].name+"</option>";
+				}
+				$("#subject").append(sub_str);
+				$(".title").html("新增课表");
+				$("#yes").html("新增");
+			}
+			else
+			{
+				tips(sub_res.content,2);
+				return;
+			}
+
+			var teacher_res = getTeacher();
+			if(teacher_res.status == 'success')
+			{
+				var teacher_list = teacher_res.content;
+				var teacher_str = String();
+				$("#teacher").html("");
+				for(var i in teacher_list)
+				{
+					teacher_str += "<option value='"+teacher_list[i].id+"''>"+teacher_list[i].name+"</option>";
+				}
+				$("#teacher").append(teacher_str);
+			}
+			else
+			{
+				tips(teacher_res.content,2);
+				return;
+			}
+			$(".edit1").show();
+		}
+		else
+		{
+			var sub = $.trim(con.split("/")[0]);
+			var tea = $.trim(con.split("/")[1]);
+
+			var sub_res = getSubject();
+			if(sub_res.status == 'success')
+			{
+				var sub_list = sub_res.content;
+				var sub_str = String();
+				$("#subject").html("");
+				for(var i in sub_list)
+				{
+					if(sub_list[i].name == sub)
+					{
+						sub_str += "<option value='"+sub_list[i].id+"'' selected>"+sub_list[i].name+"</option>";
+					}
+					else
+					{
+						sub_str += "<option value='"+sub_list[i].id+"''>"+sub_list[i].name+"</option>";
+					}
+				}
+				$("#subject").append(sub_str);
+				$(".title").html("编辑课表");
+				$("#yes").html("修改");
+			}
+			else
+			{
+				tips(sub_res.content,2);
+				return;
+			}
+
+			var teacher_res = getTeacher();
+			if(teacher_res.status == 'success')
+			{
+				var teacher_list = teacher_res.content;
+				var teacher_str = String();
+				$("#teacher").html("");
+				for(var i in teacher_list)
+				{
+					if(teacher_list[i].name == tea)
+					{
+						teacher_str += "<option value='"+teacher_list[i].id+"' selected>"+teacher_list[i].name+"</option>";
+					}
+					else
+					{
+						teacher_str += "<option value='"+teacher_list[i].id+"'>"+teacher_list[i].name+"</option>";
+					}
+					
+				}
+				$("#teacher").append(teacher_str);
+			}
+			else
+			{
+				tips(teacher_res.content,2);
+				return;
+			}
+			$(".edit1").show();
+		}
+		window.aaa = function()
+		{
+			data.subject = $("#subject").val();
+			data.teacher = $("#teacher").val();
+			data.typ = 'json';
+			update(data);
+		}
+	})
+	$("#no").click(function()
+	{
+		$(".edit1").hide();
+	})
+	$("#yes").click(function()
+	{
+		aaa();
+	})
+	
 </script>
 
 		</div>

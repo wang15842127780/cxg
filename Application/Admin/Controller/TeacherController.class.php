@@ -30,13 +30,6 @@ class TeacherController extends Controller{
             header("Location:/cxg/index.php?m=Admin");
             break;
         }
-        // $menu = new MenuModel();
-        // // $main_menu = $menu->getMenu(array('parent_id'=>7));
-        // $menus = $menu->getMenuTree();
-        // $main_menu = $menus[0]['sub_menu'];
-        // $this->assign('main_menu',$main_menu);
-        // // $this->assign("menu",$menus);
-        // $this->display('index');
 	}
 
     public function teacherIndex()
@@ -56,6 +49,7 @@ class TeacherController extends Controller{
         $this->assign('main_menu',$main_menu);
         $this->display("todayAttend");
     }
+
     //获取今日出勤
     public function getTodayAttend()
     {
@@ -71,15 +65,38 @@ class TeacherController extends Controller{
             $member = new MemberModel();
             $member_list = $member->getMember(array(),array(),1,1000);
 
-            var_dump($teacher_ip_arr);
-            $time_start = date("Y-m-d 00:00:00",time()-3600*24);
-            $time_end = date("Y-m-d H:i:s",time());
+            $time_start = date("Y/m/d+00:00:00",time());
+            $time_end = date("Y/m/d+H:i:s",time());
             foreach($teacher_ip_arr as $key=>$val)
             {
-                $url = $val."/rtmonitor/alarm?alarm_type=1&time_start=".$time_start."&time_end=".$time_end;
+                $url = $val."/rtmonitor/alarm?alarm_type=1&time_start=".$time_start."&time_end=".$time_end."&skip=0&top=1000";
                 $return1 = $this->curl_request($url);
                 $return2 = json_decode($return1);
-                var_dump($return2);
+                // var_dump($return2);
+                if($return2->ret == 0)
+                {
+                    if($return2->alarm_list > 0)
+                    {
+                        foreach($member_list as $k=>$v)
+                        {
+                            $member_list[$k]['sign'] = '<span style="color:green;">已签到</span>';
+                            $member_list[$k]['date'] = "2018-08-10";
+                            $member_list[$k]['time'] = '14:13:59';
+                        }
+                        $return['status'] = 'success';
+                        $return['content']  = $member_list;
+                    }
+                    else
+                    {
+                        $return['status']   = 'failure';
+                        $return['content']  = '今日暂无签到信息';
+                    }
+                }
+                else
+                {
+                    $return['status']   = 'failure';
+                    $return['content']  = '配置信息错误！';
+                }
             }
         }
         else

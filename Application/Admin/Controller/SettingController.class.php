@@ -110,6 +110,9 @@ class SettingController extends Controller {
             case "71":
             $this->viewMember();
             break;
+            case "78":
+            $this->viewEntryRecord();
+            break;
             default:;
         }
         
@@ -2836,6 +2839,7 @@ class SettingController extends Controller {
     		$cond['year_id'] = $_POST['year'];
     		$cond['note'] = $_POST['note'];
             $cond['uname'] = $_POST['uname'];
+            $cond['photo'] = $_POST['photo'];
             $leader->startTrans();
     		$res = $leader->addLeader($cond);
     		$cond1 = array();
@@ -2936,6 +2940,10 @@ class SettingController extends Controller {
     			$cond['name'] = $_POST['name'];
     			$cond['year_id'] = $_POST['year'];
     			$cond['note'] = $_POST['note'];
+    			if(!empty($_POST['photo']))
+    			{
+    				$cond['photo'] = $_POST['photo'];
+    			}
     			$res = $leader->editLeader($id,$cond);
     			if($res)
     			{
@@ -3392,6 +3400,19 @@ class SettingController extends Controller {
             $return['content']  = '协议内容有误！';
         }
         $this->ajaxReturn($return);
+    }
+
+
+//================================================================
+    //访客记录
+    public function viewEntryRecord()
+    {
+    	$this->display("viewEntryRecord");
+    }
+
+    public function getEntryRecordList()
+    {
+    	$type = @$_POST['typ'];
     }
 
 }

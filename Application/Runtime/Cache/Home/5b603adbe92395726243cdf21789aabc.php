@@ -1,14 +1,14 @@
-<!doctype html>
+<?php if (!defined('THINK_PATH')) exit();?><!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>校园管理系统</title>
-  <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="__PUBLIC__/js/fun.js"></script>
-  <link rel="stylesheet" href="__PUBLIC__/css/index.css" type="text/css">
+  <script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+  <link rel="stylesheet" href="/cxg/Public/css/index.css" type="text/css">
   <style type="text/css">
     body{
-      background:url("__PUBLIC__/images/xingkong.jpg");
+      background:url("/cxg/Public/images/xingkong.jpg");
       background-repeat:no-repeat;
       background-size:100%;
     }

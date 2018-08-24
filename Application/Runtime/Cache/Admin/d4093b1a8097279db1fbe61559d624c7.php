@@ -132,6 +132,14 @@
 		<div id="home">
 			
 <style type="text/css">
+	.multi-add-btn{
+		background: #0eace0;
+	    width: auto;
+	    padding: 2px;
+	    height: 30px;
+	    border-radius: 5px;
+	    margin-right: 50px;
+	}
 	#shell{
 	    position: absolute;
 	    top: 0;
@@ -218,7 +226,7 @@
 	姓名：<input type="text" id="sname">&nbsp;&nbsp;
 	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
 </p>
-<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新增人脸信息</button></p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新增人脸信息</button><button class="multi-add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;批量添加</button></p>
 <div id="con_div">
 	<table id="table" style="margin-top:25px;">
 		<tr class="tb_tr_th">

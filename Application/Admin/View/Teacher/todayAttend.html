@@ -40,6 +40,7 @@
 		<tr style="display:none;">
 			<th>姓名</th>
 			<th>日期</th>
+			<th>签到</th>
 			<th>打卡时间</th>
 		</tr>
 	</table>
@@ -64,9 +65,10 @@
 			var field = Array();
 			field[0] = 'name';
 			field[1] = 'date';
-			field[2] = 'sign_time';
+			field[2] = 'sign';
+			field[3] = 'time';
 			var lists = res.content;
-			listPage(lists,1,15);
+			listPage(lists,1,15,field);
 			
 		}
 		else

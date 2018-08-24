@@ -105,6 +105,10 @@
 				<img src="/cxg/Public/iconfont/health.png" alt="宿舍卫生管理" height="25">
 				<p>宿舍卫生</p>
 			</a>
+			<a href="/cxg/index.php?m=Admin&c=Face&a=index&id=77.78" class="tmenu">
+				<img src="/cxg/Public/iconfont/face_manage.png" alt="人脸库管理" height="25">
+				<p>人脸库管理</p>
+			</a>
 			</div>
 			<span class="user" style='display:inline-block;height:20px;margin-right:30px;margin-top:10px;background:#b8ceda;padding:7px;color:#b8ceda;background:rgb(0,52,113) repeat-x;border-radius:30px;'>&nbsp;&nbsp;&nbsp;&nbsp;用户名：【<?php echo (cookie('auser')); ?>】&nbsp;&nbsp;&nbsp;&nbsp;<b id="editPass">修改密码</b>&nbsp;&nbsp;&nbsp;&nbsp;<b id="logout">退出</b></span>
 		</div>

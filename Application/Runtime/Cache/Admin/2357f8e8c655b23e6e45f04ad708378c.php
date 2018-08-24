@@ -155,6 +155,25 @@
 	.add_right{
 		display: inline-block;
 	}
+	.file{
+		position: absolute;
+	    display: inline-block;
+	    border: 1px solid #99D3F5;
+	    border-radius: 4px;
+	    padding: 4px 12px;
+	    overflow: hidden;
+	    color: #1E88C7;
+	    text-decoration: none;
+	    text-indent: 0;
+	    line-height: 20px;
+	}
+	.export-btn1{
+		background: #0eace0;
+	    width: auto;
+	    padding: 2px;
+	    height: 30px;
+	    border-radius: 5px;
+	}
 </style>
 <br>
 <h1 class="tt_h1">位置：教师管理>查看教师</h1>
@@ -165,7 +184,7 @@
 	</select> &nbsp;&nbsp;
 	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
 </p>
-<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加教师信息</button></p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加教师信息</button><button class="export-btn1"><i class="export-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;导出学生照片</button></p>
 <br>
 <div id="con_div">
 	<table id="table" class="new_table">
@@ -198,7 +217,13 @@
 		<p class="add_left">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</p><p class="add_right"><input type="text" name="note" id="note"></p><br>
 		<p class="add_left">用&nbsp;&nbsp;户&nbsp;&nbsp;名：</p><p class="add_right"><input type="text" name="uname" id="uname"></p><br>
 		<p class="add_left">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</p><p class="add_right"><input type="password" id="pass"></p><br>
-		<p class="add_left">确认密码：</p><p class="add_right"><input type="password" id="repass"></p><br><br>
+		<p class="add_left">确认密码：</p><p class="add_right"><input type="password" id="repass"></p>
+		<br><br>
+		<img src="" width="200" height="280" bbc_type="store_banner" alt="暂无图片">
+		<br>
+		<a href="javascript:void(0);" class='file'>上传图片
+			<input type="file" id="file" name='file' style="position:absolute;font-size:100px;right:0;top:-10px;opacity:0;width:74px;" bbc_type="change_store_banner">
+		</a><br><br>
 		<p><button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;
 		<button class="cancel-btn">取消</button><br><br></p>
 		
@@ -243,6 +268,70 @@
 			$(".zshow").hide();
 			$(".new_table").find('tr').hide();
 		}
+	}
+
+	$('input[bbc_type="change_store_banner"]').change(function(){
+	    console.info(22);
+        console.info($(this));
+        console.info($(this)[0]);
+		var src = getFullPath($(this)[0]);
+        console.info(src);
+		$('img[bbc_type="store_banner"]').attr('src', src);
+		change1 = 1;
+	});
+	function getFullPath(obj)
+	{
+	    if(obj)
+	    {
+	        //ie
+	        if (window.navigator.userAgent.indexOf("MSIE")>=1)
+	        {
+	            obj.select();
+	            if(window.navigator.userAgent.indexOf("MSIE") == 25){
+	                obj.blur();
+	            }
+	            return document.selection.createRange().text;
+	        }
+	        //firefox
+	        else if(window.navigator.userAgent.indexOf("Firefox")>=1)
+	        {
+	            if(obj.files)
+	            {
+	                //return obj.files.item(0).getAsDataURL();
+	                return window.URL.createObjectURL(obj.files.item(0));
+	            }
+	            return obj.value;
+	        }else if(window.navigator.userAgent.indexOf("Chrome")>=1){
+	            if(obj.files)
+	            {
+	                return window.URL.createObjectURL(obj.files[0]);
+	            }
+
+	        }
+	        return obj.value;
+	    }
+	}
+	function doUpload(formid) {  
+	     var formData = new FormData($( "#"+formid )[0]);
+	     $.ajax({  
+	          url: "/cxg/Public/function/upload.php",  
+	          type: 'POST',  
+	          data: formData,
+	          async: false,  
+	          cache: false,  
+	          contentType: false,  
+	          processData: false,  
+	          dataType:'json',
+	          success: function (returndata) {  
+	              // alert(returndata);  
+	              re = returndata;
+	          },  
+	          error: function (returndata) {  
+	              // alert(returndata); 
+	              re = returndata;
+	          }  
+	     });
+	     return re;
 	}
 
 	$(".search").click(function()
@@ -306,13 +395,49 @@
 				tips('两次密码输入不一致！',2);
 				return;
 			}
-			var url = "index.php?m=Admin&c=Setting&a=addTeacher";
-			var data = {year:year,name:name,note:note,uname:uname,pass:pass,typ:'json'};
+			if(typeof(change1) != 'undefined')
+			{
+				var res1 = doUpload('form');
+				if(res1.status == 'success')
+				{
+					var photo = res1.file_name;
+					var url = "index.php?m=Admin&c=Setting&a=addTeacher";
+					var data = {year:year,name:name,note:note,uname:uname,pass:pass,photo:photo,typ:'json'};
+				}
+				else
+				{
+					tips(res1.content,2);
+					return;
+				}
+			}
+			else
+			{
+				tips("教师图片不能为空",2);
+				return;
+			}
 		}
 		else
 		{
-			var url = "index.php?m=Admin&c=Setting&a=editTeacher";
-			var data = {id:id,year:year,name:name,note:note,typ:'json'};
+			if(typeof(change1) != 'undefined')
+			{
+				var res2 = doUpload('form');
+				if(res2.status == 'success')
+				{
+					var photo = res2.file_name;
+					var url = "index.php?m=Admin&c=Setting&a=editTeacher";
+					var data = {id:id,year:year,name:name,note:note,photo:photo,typ:'json'};
+				}
+				else
+				{
+					tips(res2.content,2);
+					return;
+				}
+			}
+			else
+			{
+				var url = "index.php?m=Admin&c=Setting&a=editTeacher";
+				var data = {id:id,year:year,name:name,note:note,typ:'json'};
+			}
 		}
 			
 		var res = ajax(url,data);
@@ -340,6 +465,7 @@
 		$("#uname").parent().prev().show();
 		$("#name").val("");
 		$("#note").val("");
+		$('img[bbc_type="store_banner"]').attr("src","");
 	})
 
 	$(".edit-btn").live("click",function()
@@ -362,6 +488,7 @@
 			var info = res.content;
 			$("#name").val(info.name);
 			$("#note").val(info.note);
+			$("img[bbc_type='store_banner']").attr('src',info.photo);
 			var ylist = <?php echo ($yearLists); ?>;
 			var str = "";
 			for(var i in ylist)
@@ -420,6 +547,12 @@
 		{
 			tips(res.content,2);
 		}
+	})
+
+	//导出按钮
+	$(".export-btn1").live("click",function()
+	{
+		window.open("/cxg/Public/function/exportStudentPhoto.php?w=3");
 	})
 	setTimeout("getList();",500);
 </script>

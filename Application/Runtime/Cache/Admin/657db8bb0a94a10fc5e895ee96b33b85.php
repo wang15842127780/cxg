@@ -5,6 +5,7 @@
 	<title>校园管理系统</title>
 	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
 	<link rel="stylesheet" href="/cxg/Public/css/admin.css" type="text/css">
 	<style type="text/css">
 		.hide{
@@ -121,8 +122,7 @@
 				<?php if(is_array($main_menu)): foreach($main_menu as $k=>$lists): ?><ul class="menu<?php echo ($lists["id"]); ?> sub">
 						<li class="main_menu"><span style="display:inline-block;"><img src="/cxg/Public/iconfont/sub_logo.png" width="16">
 						<?php echo ($lists["menu_name"]); ?></li>
-						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" <?php if($k > 0): ?>style="display:none;"<?php endif; ?> >
-								<!-- <p class='min_menu' style="font-size:15px;height:30px;line-height:30px;"><a href="javascript:void(0);" class="fun fun<?php echo ($min["id"]); ?>" title="<?php echo ($lists["id"]); ?>.<?php echo ($min["id"]); ?>"><?php echo ($min["menu_name"]); ?></a></p> -->
+						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" id="m<?php echo ($min["id"]); ?>">
 								><?php echo ($min["menu_name"]); ?>
 							</li><?php endforeach; endif; ?>
 					</ul><?php endforeach; endif; ?>
@@ -130,43 +130,100 @@
 		</div>
 		<!-- 主页内容  -->
 		<div id="home">
-			<div class="content" sign="index.php?m=Admin&c=Leave&a=index&id=60.62">
-				<img src="/cxg/Public/iconfont/leave_logo.png" class="img">
-				<div class="title">
-					学生请假信息
-				</div>
-				<div class="second">
-					<span class="number" id="leave">-</span>条消息待处理
-				</div>
-			</div>
+			
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：相机管理>查看相机信息</h1>
+<input type="hidden" id="cid">
+<br>
+<?php if($camera == ''): ?><p style="color:red;text-align:center">暂无相机信息</p>
+<?php else: ?>
+<table id="table" class="new_table">
+	<tr class="tb_tr_th">
+		<th>相机ID</th>
+		<th>名称</th>
+		<th>班级</th>
+		<th>操作</th>
+	</tr>
+	<?php if(is_array($camera)): foreach($camera as $key=>$list): ?><tr class="tb_tr_td">
+			<td><?php echo ($list["id"]); ?></td>
+			<td><?php echo ($list["name"]); ?></td>
+			<td><?php echo ($list["room_text"]); ?></td>
+			<td>
+				<?php if($list["room_text"] == "无"): ?><a href="javascript:void(0);" sign="<?php echo ($list["id"]); ?>" class="bindc">绑定班级</a>
+				<?php else: ?>
+					<a href="javascript:void(0);" sign="<?php echo ($list["id"]); ?>" class="editc">修改班级</a><?php endif; ?>
+			</td>
+		</tr><?php endforeach; endif; ?>
+</table><?php endif; ?>
+<div id="shell" style="display:none;"></div>
+<div id='shell_box' style="position:absolute;z-index:9999;width:100%;height:300px;text-align:center;left:0;top:0;display:none;">
+	<div style="width:300px;height:250px;display:inline-block;background:#fff;margin-top:220px;border-radius:5px;">
+		<p class="title" style="text-align:left;padding:3px;border-radius:5px;border-bottom:1px solid #ccc;background:#eee;"></p>
+		<p style="margin-top:62px;text-align:center;">班级：<select name="clist" id="clist" style="width:100px;padding-left:15px;">
+			<?php if(is_array($clist)): foreach($clist as $key=>$lists): ?><option value="<?php echo ($lists["id"]); ?>"><?php echo ($lists["name"]); ?></option><?php endforeach; endif; ?>
+		</select></p>
+		<p style="margin-top:100px;text-align:right;padding-right:10px;">
+			<button id='yes' style="background:#ff8d00;width:50px;height:25px;border-radius:8px;"></button>
+			<button id="no" style="width:50px;height:25px;border-radius:8px;">取消</button>
+		</p>
+	</div>
+</div>
+<script type="text/javascript">
+	$(".bindc").click(function()
+	{
+		$("#shell").show();
+		$("#show_box").show();
+		$(".title").html("绑定班绷");
+		$("#yes").html("确定");
+		var id = $(this).attr('sign');
+		$("#cid").val(id);
+	})
+	$(".editc").click(function()
+	{
+		$("#shell").show();
+		$("#shell_box").show();
+		$(".title").html('修改班级');
+		$("#yes").html('修改');
+		var id = $(this).attr("sign");
+		$("#cid").val(id);
+	})
+
+	$("#yes").click(function()
+	{
+		var cid = $("#cid").val();
+		var val = $("#clist").val();
+		var url = "index.php?m=Admin&c=Setting&a=editCamera";
+		var data = {cid:cid,room:val,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			window.location.reload();
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+	$("#no").click(function()
+	{
+		$("#shell").hide();
+		$("#shell_box").hide();
+	})
+</script>
+
 		</div>
-	</div>
-	<div id="shell" class="zshow">
-		
-	</div>
-	<div id="shell_img" class="zshow">
-        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35">
-        <p>加载中...</p>
 	</div>
 </body>
 </html>
 <script type="text/javascript">
-	window.getInfo = function()
-	{
-		var url = 'index.php?m=Admin&c=Index&a=getInfo';
-		var data = {typ:'json'};
-		var res = ajax(url,data);
-		if(res.status == 'success')
-		{
-			$(".zshow").hide();
-			$("#leave").html(res.content.leave);
-		}
-		else
-		{
-			$(".zshow").hide();
-			tips(res.content,2);
-		}
-	}
 	$("#logout").click(function()
 	{
 		window.location.href = "/cxg/index.php?m=Admin&c=Log&a=logout";
@@ -177,22 +234,6 @@
 		_this.siblings(".sub").find("li:gt(0)").slideUp();
 		_this.find('li').slideDown();
 	})
-	
-	function getCookie(cookieName)
-	{
-		var strCookie = document.cookie;
-		var arrCookie = strCookie.split("; ");
-		console.info(arrCookie);
-		for(var i=0;i<arrCookie.length;i++)
-		{
-			var arr = arrCookie[i].split("=");
-			if(cookieName == arr[0])
-			{
-				return arr[1];
-			}
-		}
-		return "";
-	}
 
 	$(".fun").click(function()
 	{
@@ -210,12 +251,33 @@
 		window.location.href = 'index.php?m=Admin&c=Setting&a=index&id=7.21';
 	})
 
-	$(".content").click(function()
+	var url = window.location.href;
+	var arr = url.split(".");
+	var count = arr.length;
+	var num = parseInt(count)-1;
+	var nn = arr[num];
+	if(parseInt(nn) == 32)
 	{
-		var url = $(this).attr('sign');
-		window.location.href = url;
-	})
-
-	setTimeout("getInfo();",500);
+		nn = 26;
+	}
+	if(parseInt(nn) == 33)
+	{
+		nn = 31;
+	}
+	if(parseInt(nn) == 62)
+	{
+		nn = 25;
+	}
+	if(parseInt(nn) == 73)
+	{
+		nn = 27;
+	}
+	if(parseInt(nn) == 76)
+	{
+		nn = 58;
+	}
+	$(".fun").hide();
+	$("#m"+nn).show();
+	$("#m"+nn).siblings().show();
 
 </script>

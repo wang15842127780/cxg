@@ -5,6 +5,7 @@
 	<title>校园管理系统</title>
 	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
 	<link rel="stylesheet" href="/cxg/Public/css/admin.css" type="text/css">
 	<style type="text/css">
 		.hide{
@@ -121,8 +122,7 @@
 				<?php if(is_array($main_menu)): foreach($main_menu as $k=>$lists): ?><ul class="menu<?php echo ($lists["id"]); ?> sub">
 						<li class="main_menu"><span style="display:inline-block;"><img src="/cxg/Public/iconfont/sub_logo.png" width="16">
 						<?php echo ($lists["menu_name"]); ?></li>
-						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" <?php if($k > 0): ?>style="display:none;"<?php endif; ?> >
-								<!-- <p class='min_menu' style="font-size:15px;height:30px;line-height:30px;"><a href="javascript:void(0);" class="fun fun<?php echo ($min["id"]); ?>" title="<?php echo ($lists["id"]); ?>.<?php echo ($min["id"]); ?>"><?php echo ($min["menu_name"]); ?></a></p> -->
+						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" id="m<?php echo ($min["id"]); ?>">
 								><?php echo ($min["menu_name"]); ?>
 							</li><?php endforeach; endif; ?>
 					</ul><?php endforeach; endif; ?>
@@ -130,43 +130,129 @@
 		</div>
 		<!-- 主页内容  -->
 		<div id="home">
-			<div class="content" sign="index.php?m=Admin&c=Leave&a=index&id=60.62">
-				<img src="/cxg/Public/iconfont/leave_logo.png" class="img">
-				<div class="title">
-					学生请假信息
-				</div>
-				<div class="second">
-					<span class="number" id="leave">-</span>条消息待处理
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="shell" class="zshow">
-		
-	</div>
-	<div id="shell_img" class="zshow">
-        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35">
+			
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+	.add_left{
+		display: inline-block;
+		width: 25%;
+		text-align: right;
+	}
+	.add_right{
+		display: inline-block;
+	}
+	.file{
+		position: absolute;
+	    display: inline-block;
+	    border: 1px solid #99D3F5;
+	    border-radius: 4px;
+	    padding: 4px 12px;
+	    overflow: hidden;
+	    color: #1E88C7;
+	    text-decoration: none;
+	    text-indent: 0;
+	    line-height: 20px;
+	}
+	.export-btn1{
+		background: #0eace0;
+	    width: auto;
+	    padding: 2px;
+	    height: 30px;
+	    border-radius: 5px;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：访客管理>访客记录</h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	教师姓名：<input type="text" id="sname">&nbsp;&nbsp;
+	访客电话：<input type="text" id="sphone"> &nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<br>
+<div id="con_div">
+	<table id="table" class="new_table">
+		<tr style="display:none;">
+			<th>ID</th>
+			<th>创建人</th>
+			<th>来访时间</th>
+			<th>实际时间</th>
+			<th>邀请方式</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35" />
         <p>加载中...</p>
+</div>
+
+<script type="text/javascript">
+	window.getList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getEntryRecordList";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").find('tr').show();
+			$(".zshow").hide();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'creator';
+			field[2] = 'entry_time';
+			field[3] = 'true_time';
+			field[4] = 'way';
+			var lists = res.content;
+			if(res.leader == 1)
+			{
+				listPage(lists,1,15,field);
+			}
+			else
+			{
+				field[5] = 'act_text';
+				$(".add-btn").hide();
+				listPage(lists,1,15,field);
+			}
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
+		}
+	}
+
+	$(".search").click(function()
+	{
+		var sname = $("#sname").val();
+		var syear = $("#syear").val();
+		var cond = {sname:sname,syear:syear};
+		getList(cond);
+	})
+	setTimeout("getList();",500);
+</script>
+
+		</div>
 	</div>
 </body>
 </html>
 <script type="text/javascript">
-	window.getInfo = function()
-	{
-		var url = 'index.php?m=Admin&c=Index&a=getInfo';
-		var data = {typ:'json'};
-		var res = ajax(url,data);
-		if(res.status == 'success')
-		{
-			$(".zshow").hide();
-			$("#leave").html(res.content.leave);
-		}
-		else
-		{
-			$(".zshow").hide();
-			tips(res.content,2);
-		}
-	}
 	$("#logout").click(function()
 	{
 		window.location.href = "/cxg/index.php?m=Admin&c=Log&a=logout";
@@ -177,22 +263,6 @@
 		_this.siblings(".sub").find("li:gt(0)").slideUp();
 		_this.find('li').slideDown();
 	})
-	
-	function getCookie(cookieName)
-	{
-		var strCookie = document.cookie;
-		var arrCookie = strCookie.split("; ");
-		console.info(arrCookie);
-		for(var i=0;i<arrCookie.length;i++)
-		{
-			var arr = arrCookie[i].split("=");
-			if(cookieName == arr[0])
-			{
-				return arr[1];
-			}
-		}
-		return "";
-	}
 
 	$(".fun").click(function()
 	{
@@ -210,12 +280,33 @@
 		window.location.href = 'index.php?m=Admin&c=Setting&a=index&id=7.21';
 	})
 
-	$(".content").click(function()
+	var url = window.location.href;
+	var arr = url.split(".");
+	var count = arr.length;
+	var num = parseInt(count)-1;
+	var nn = arr[num];
+	if(parseInt(nn) == 32)
 	{
-		var url = $(this).attr('sign');
-		window.location.href = url;
-	})
-
-	setTimeout("getInfo();",500);
+		nn = 26;
+	}
+	if(parseInt(nn) == 33)
+	{
+		nn = 31;
+	}
+	if(parseInt(nn) == 62)
+	{
+		nn = 25;
+	}
+	if(parseInt(nn) == 73)
+	{
+		nn = 27;
+	}
+	if(parseInt(nn) == 76)
+	{
+		nn = 58;
+	}
+	$(".fun").hide();
+	$("#m"+nn).show();
+	$("#m"+nn).siblings().show();
 
 </script>

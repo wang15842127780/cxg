@@ -5,6 +5,7 @@
 	<title>校园管理系统</title>
 	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
 	<link rel="stylesheet" href="/cxg/Public/css/admin.css" type="text/css">
 	<style type="text/css">
 		.hide{
@@ -121,8 +122,7 @@
 				<?php if(is_array($main_menu)): foreach($main_menu as $k=>$lists): ?><ul class="menu<?php echo ($lists["id"]); ?> sub">
 						<li class="main_menu"><span style="display:inline-block;"><img src="/cxg/Public/iconfont/sub_logo.png" width="16">
 						<?php echo ($lists["menu_name"]); ?></li>
-						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" <?php if($k > 0): ?>style="display:none;"<?php endif; ?> >
-								<!-- <p class='min_menu' style="font-size:15px;height:30px;line-height:30px;"><a href="javascript:void(0);" class="fun fun<?php echo ($min["id"]); ?>" title="<?php echo ($lists["id"]); ?>.<?php echo ($min["id"]); ?>"><?php echo ($min["menu_name"]); ?></a></p> -->
+						<?php if(is_array($lists["sub_menu"])): foreach($lists["sub_menu"] as $key=>$min): ?><li class="fun" title="7.<?php echo ($min["id"]); ?>" id="m<?php echo ($min["id"]); ?>">
 								><?php echo ($min["menu_name"]); ?>
 							</li><?php endforeach; endif; ?>
 					</ul><?php endforeach; endif; ?>
@@ -130,43 +130,58 @@
 		</div>
 		<!-- 主页内容  -->
 		<div id="home">
-			<div class="content" sign="index.php?m=Admin&c=Leave&a=index&id=60.62">
-				<img src="/cxg/Public/iconfont/leave_logo.png" class="img">
-				<div class="title">
-					学生请假信息
-				</div>
-				<div class="second">
-					<span class="number" id="leave">-</span>条消息待处理
-				</div>
-			</div>
+			
+<br>
+<h1 class="tt_h1">位置：课表管理>今日课程</h1>
+<div id="cond">
+	<form method="post" id="form">
+		星期：<select name="week" id="week"  style='width:75px;padding-left:5px;'>
+			<option value="1" <?php if($_POST['week']== 1): ?>selected<?php endif; ?> >星期一</option>
+			<option value="2" <?php if($_POST['week']== 2): ?>selected<?php endif; ?> >星期二</option>
+			<option value="3" <?php if($_POST['week']== 3): ?>selected<?php endif; ?> >星期三</option>
+			<option value="4" <?php if($_POST['week']== 4): ?>selected<?php endif; ?> >星期四</option>
+			<option value="5" <?php if($_POST['week']== 5): ?>selected<?php endif; ?> >星期五</option>
+			<option value="6" <?php if($_POST['week']== 6): ?>selected<?php endif; ?> >星期六</option>
+			<option value="7" <?php if($_POST['week']== 7): ?>selected<?php endif; ?> >星期日</option>
+		</select>
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+	</form>
+</div>
+<br>
+<table id="table">
+	<tr class="tb_tr_th">
+		<th>教室</th>
+		<?php if(is_array($clist)): foreach($clist as $key=>$list): ?><th>
+				<?php echo ($list["name"]); ?>
+			</th><?php endforeach; endif; ?>
+	</tr>
+	<?php $__FOR_START_1062666611__=1;$__FOR_END_1062666611__=9;for($i=$__FOR_START_1062666611__;$i < $__FOR_END_1062666611__;$i+=1){ ?><tr class="tb_tr_td">
+			<td>第<?php echo ($i); ?>节</td>
+			<?php if(is_array($clist)): foreach($clist as $k=>$lists): ?><td class="syllabus">
+					<?php echo ($syllabus["$k"]["$i"]["subject_text"]); ?>/<?php echo ($syllabus["$k"]["$i"]["teacher_text"]); ?>
+				</td><?php endforeach; endif; ?>
+		</tr><?php } ?>
+</table>
+<script type="text/javascript">
+	$(function()
+	{
+		$(".syllabus").each(function()
+		{
+			var _this = $(this);
+			var html = $(this).html();
+			if($.trim(html) == "/")
+			{
+				_this.html("");
+			}
+		})
+	})
+</script>
+
 		</div>
-	</div>
-	<div id="shell" class="zshow">
-		
-	</div>
-	<div id="shell_img" class="zshow">
-        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35">
-        <p>加载中...</p>
 	</div>
 </body>
 </html>
 <script type="text/javascript">
-	window.getInfo = function()
-	{
-		var url = 'index.php?m=Admin&c=Index&a=getInfo';
-		var data = {typ:'json'};
-		var res = ajax(url,data);
-		if(res.status == 'success')
-		{
-			$(".zshow").hide();
-			$("#leave").html(res.content.leave);
-		}
-		else
-		{
-			$(".zshow").hide();
-			tips(res.content,2);
-		}
-	}
 	$("#logout").click(function()
 	{
 		window.location.href = "/cxg/index.php?m=Admin&c=Log&a=logout";
@@ -177,22 +192,6 @@
 		_this.siblings(".sub").find("li:gt(0)").slideUp();
 		_this.find('li').slideDown();
 	})
-	
-	function getCookie(cookieName)
-	{
-		var strCookie = document.cookie;
-		var arrCookie = strCookie.split("; ");
-		console.info(arrCookie);
-		for(var i=0;i<arrCookie.length;i++)
-		{
-			var arr = arrCookie[i].split("=");
-			if(cookieName == arr[0])
-			{
-				return arr[1];
-			}
-		}
-		return "";
-	}
 
 	$(".fun").click(function()
 	{
@@ -210,12 +209,33 @@
 		window.location.href = 'index.php?m=Admin&c=Setting&a=index&id=7.21';
 	})
 
-	$(".content").click(function()
+	var url = window.location.href;
+	var arr = url.split(".");
+	var count = arr.length;
+	var num = parseInt(count)-1;
+	var nn = arr[num];
+	if(parseInt(nn) == 32)
 	{
-		var url = $(this).attr('sign');
-		window.location.href = url;
-	})
-
-	setTimeout("getInfo();",500);
+		nn = 26;
+	}
+	if(parseInt(nn) == 33)
+	{
+		nn = 31;
+	}
+	if(parseInt(nn) == 62)
+	{
+		nn = 25;
+	}
+	if(parseInt(nn) == 73)
+	{
+		nn = 27;
+	}
+	if(parseInt(nn) == 76)
+	{
+		nn = 58;
+	}
+	$(".fun").hide();
+	$("#m"+nn).show();
+	$("#m"+nn).siblings().show();
 
 </script>
