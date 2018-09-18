@@ -193,9 +193,9 @@
 		开始时间：<input class="sang_Calender" type="text" name="stime" value="<?php echo ($_POST['stime']); ?>" id="stime" placeholder="请选择"  readonly style="width:130px;">&nbsp;
 		结束时间：<input class="sang_Calender" type="text" name="etime" value="<?php echo ($_POST['etime']); ?>" id="etime" placeholder="请选择"  readonly style="width:130px;">&nbsp;
 		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
-		<button id="receive_all">
+		<!-- <button id="receive_all">
 			全部签收
-		</button>
+		</button> -->
 	</form>
 	
 </div>
@@ -605,6 +605,10 @@
 	if(parseInt(nn) == 62)
 	{
 		nn = 25;
+	}
+	if(parseInt(nn) == 80)
+	{
+		nn = 58;
 	}
 	if(parseInt(nn) == 73)
 	{

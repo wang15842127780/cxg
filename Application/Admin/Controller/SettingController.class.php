@@ -11,10 +11,13 @@ use Home\Model\MemberModel;
 use Home\Model\SubjectModel;
 use Home\Model\SyllabusModel;
 use Home\Model\CameraModel;
+
 use Admin\Model\BuildTypeModel;
 use Admin\Model\RoleModel;
 use Admin\Model\ClassYearModel;
 use Admin\Model\LeaderModel;
+use Admin\Model\EntryRecordModel;
+use Admin\Model\MainEntranceRecordModel;
 class SettingController extends Controller {
     public function index(){
         //身份判断
@@ -112,6 +115,9 @@ class SettingController extends Controller {
             break;
             case "78":
             $this->viewEntryRecord();
+            break;
+            case "79":
+            $this->viewInsideRecord();
             break;
             default:;
         }
@@ -3413,6 +3419,124 @@ class SettingController extends Controller {
     public function getEntryRecordList()
     {
     	$type = @$_POST['typ'];
+    	$return = array();
+    	if($type == 'json')
+    	{
+    		$record = new EntryRecordModel();
+    		$cond = array();
+    		$member = new MemberModel();
+    		$member_list = $member->getAssocMember();
+    		if(!empty($_POST['sphone']))
+    		{
+    			$cond['phone'] = $_POST['sphone'];
+    		}
+    		if(!empty($_POST['sname']))
+    		{
+    			$member_info = $member->getMember(array("name"=>$_POST['sname']));
+    			$ids = array();
+    			foreach($member_info as $k=>$v)
+    			{
+    				$ids[] = $v['id'];
+    			}
+    			$cond['creator_id'] = array("IN",$ids);
+    		}
+    		$order = array();
+    		$order['id'] = 'DESC';
+    		$record_list = $record->getEntryRecord($cond,$order);
+
+    		if(!empty($record_list))
+    		{
+    			foreach($record_list as $key=>$val)
+    			{
+    				$record_list[$key]['creator'] = $member_list[$val['creator_id']]['name'];
+    				$aa = @explode(",",$val['true_time']);
+    				$record_list[$key]['true_time'] = implode("<br>", $aa);
+    				if($val['phone'] !== '微信好友')
+    				{
+    					$record_list[$key]['way'] = "电话邀请：".$val['phone'];
+    				}
+    				else
+    				{
+    					$record_list[$key]['way'] = "微信好友";
+    				}
+    			}
+    			$return['status']	= 'success';
+    			$return['content']	= $record_list;
+    		}
+    		else
+    		{
+    			$return['status']	= 'failure';
+    			$return['content']	= '暂无数据！';
+    		}
+    	}
+    	else
+    	{
+    		$return['status']	= 'failure';
+    		$return['content']	= '协议内容有误！';
+    	}
+    	$this->ajaxReturn($return);
+    }
+
+    //校内人员通行记录
+    public function viewInsideRecord()
+    {
+    	$this->display("viewInsideRecord");
+    }
+
+    public function getMainEntranceRecordList()
+    {
+    	$type = @$_POST['typ'];
+    	$return = array();
+    	if($type == 'json')
+    	{
+    		$cond = array();
+    		$member = new MemberModel();
+    		$member_list = $member->getAssocMember();
+    		if(!empty($_POST['sname']))
+    		{
+    			$cond_row = array();
+    			$cond_row['nick'] = $_POST['name'];
+    			$member_info = $member->getMember($cond_row);
+    			$ids = array();
+    			foreach($member_info as $k=>$v)
+    			{
+    				$ids[] = $v['id'];
+    			}
+    			$cond['alarm_id'] = array("IN",$ids);
+    		}
+
+    		$main_record = new MainEntranceRecordModel();
+    		$main_record_list = $main_record->getMainEntranceRecord($cond,array("id"=>"DESC"));
+    		if(!empty($main_record_list))
+    		{
+    			foreach($main_record_list as $key=>$val)
+    			{
+    				$main_record_list[$key]['person_name'] = $member_list[$val['alarm_id']]['nick'];
+    				if($val['type'] == 'in')
+    				{
+    					$main_record_list[$key]['way'] = '进入';
+    				}
+    				else
+    				{
+    					$main_record_list[$key]['way'] = '离开';
+    				}
+    			}
+
+    			$return['status']	= 'success';
+    			$return['content']	= $main_record_list;
+    		}
+    		else
+    		{
+    			$return['status']	= 'failure';
+    			$return['content']	= '暂无数据！';
+    		}
+    	}
+    	else
+    	{
+    		$return['status']	= 'failure';
+    		$return['content']	= '协议内容有误！';
+    	}
+    	$this->ajaxReturn($return);
     }
 
 }

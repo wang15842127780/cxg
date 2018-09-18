@@ -29,7 +29,7 @@ class LeaderModel extends Model{
 
 	public function getAssocList()
 	{
-		$res = $this->select();
+		$res = $this->field("id,name,year_id,note,uname")->select();
 		$list = array();
 		foreach($res as $key=>$val)
 		{

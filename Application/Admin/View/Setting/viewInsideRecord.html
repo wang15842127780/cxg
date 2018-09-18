@@ -1,0 +1,108 @@
+<extend name="index" />
+<block name="menu">
+<style type="text/css">
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:10px;
+	}
+	#table{
+		margin-left:40px;
+	}
+	.new_table{
+		margin-top:20px;
+	}
+	input{
+		margin-top:10px;
+		width:100px;
+	}
+	.add_left{
+		display: inline-block;
+		width: 25%;
+		text-align: right;
+	}
+	.add_right{
+		display: inline-block;
+	}
+	.file{
+		position: absolute;
+	    display: inline-block;
+	    border: 1px solid #99D3F5;
+	    border-radius: 4px;
+	    padding: 4px 12px;
+	    overflow: hidden;
+	    color: #1E88C7;
+	    text-decoration: none;
+	    text-indent: 0;
+	    line-height: 20px;
+	}
+	.export-btn1{
+		background: #0eace0;
+	    width: auto;
+	    padding: 2px;
+	    height: 30px;
+	    border-radius: 5px;
+	}
+</style>
+<br>
+<h1 class="tt_h1">位置：访客管理>校内人员通行记录</h1>
+<p style="display:inline-block;width:45%;padding-left:30px;">
+	姓名：<input type="text" id="sname">&nbsp;&nbsp;
+	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
+</p>
+<br>
+<div id="con_div">
+	<table id="table" class="new_table">
+		<tr style="display:none;">
+			<th>ID</th>
+			<th>设备名</th>
+			<th>人员信息</th>
+			<th>时间</th>
+			<th>类型</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+
+</div>
+<div  id="shell_img" class="zshow">
+        <img src="__PUBLIC__/iconfont/loading.gif" width="35" height="35" />
+        <p>加载中...</p>
+</div>
+
+<script type="text/javascript">
+	window.getList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Setting&a=getMainEntranceRecordList";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			$("#table").find('tr').show();
+			$(".zshow").hide();
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'device_name';
+			field[2] = 'person_name';
+			field[3] = 'alarm_time';
+			field[4] = 'way';
+			var lists = res.content;
+			listPage(lists,1,15,field);
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+			$(".new_table").find('tr').hide();
+		}
+	}
+
+	$(".search").click(function()
+	{
+		var sname = $("#sname").val();
+		var cond = {sname:sname};
+		getList(cond);
+	})
+	setTimeout("getList();",500);
+</script>
+</block>

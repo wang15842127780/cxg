@@ -1,5 +1,6 @@
 <?php
 namespace Home\Controller;
+use Think\Cache\Driver\Redis;
 use Think\Controller;
 use Home\Model\MenuModel;
 use Home\Model\ClassModel;
@@ -436,16 +437,58 @@ class MessController extends Controller {
     {
     	$this->display("message");
     }
-    public function testaaa()
+    public function getRedisInfo()
     {
-        if (version_compare(phpversion(), "5.4.0", "lt")) {
-            exit('php version must greater than 5.4.0');
+        $type = @$_POST['typ'];
+        $return = array();
+        if($type == 'json')
+        {
+            $redis = new \Redis();
+            $con = $redis->connect("127.0.0.1",6379);
+            $redis->setOption(\Redis::OPT_READ_TIMEOUT, -1);
+            $startTime = time();
+            while(true)
+            {
+                $time = time();
+                $tt = $time-$startTime;
+                if($tt >= 60)
+                {
+                    $return['status']   = 'failure';
+                    $return['content']  = 'TimeOut';
+                    $this->ajaxReturn($return);
+                    die;
+                }
+                else
+                {
+                        $id = $redis->get("messStudentId");
+                        if(!empty($id))
+                        {
+                        	$return['content'] = $this->getStudentInfoById($id);
+                        	$return['status']	= 'success';
+                            $redis->set("messStudentId","");
+                            $this->ajaxReturn($return);
+                            die;
+                        }
+                }
+            }
         }
-        ob_implicit_flush();
-
-        //run server
-        $port = 80;
-        new SocketChatModel( $port );
+        else
+        {
+            $return['status']   = 'failure';
+            $return['content']  = '协议内容有误！';
+            $this->ajaxReturn($return);
+        }
+        
+    }
+    public function getStudentInfoById($id)
+    {
+    	$student = new StudentModel();
+    	$class = new ClassModel();
+    	$student_info = $student->getStudent(array("id"=>$id));
+    	$class_list = $class->getAssocClass();
+    	$class_id = $student_info[0]['class_id'];
+    	$student_info[0]['class_text'] = $class_list[$class_id]['name'];
+    	return $student_info[0];
     }
 
     public function viewMessage()
@@ -486,10 +529,10 @@ class MessController extends Controller {
     		$id = $_POST['sid'];
     		$num = $_POST['num'];
     		$student = new StudentModel();
-    		$student_list = $student->getAssocStudent();
-    		$name = $student_list[$id]['name'];
+    		$student_list = $student->getStudent(array("id"=>$id));
+    		$name = $student_list[0]['name'];
     		//查找余额
-    		$money = $student_list[$id]['money'];
+    		$money = $student_list[0]['money'];
     		$now_money = (float)$money + (float)$num;
     		$cond_row = array();
     		$cond_row['money'] = $now_money;
@@ -505,6 +548,7 @@ class MessController extends Controller {
                 $cond['month']		= date("Y-m",time());
 	    		$cond['date']		= date('Y-m-d',time());
 	    		$cond['datetime']	= date('Y-m-d H:i:s',time());
+                $cond['remain']     = $now_money;
 	    		$res = $log->addCashLog($cond);
 	    		if($res)
 	    		{

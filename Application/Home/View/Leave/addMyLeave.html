@@ -50,7 +50,7 @@
 	<button class="confirm-btn">提交</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<button class="cancel-btn">取消</button>
 </p>
-<if condition="$Think.cookie.leader eq 1">
+<!-- <if condition="$Think.cookie.leader eq 1">
 	<div style="position:fixed;border:1px solid #ccc;right:0;top:200px;width:210px;height:140px;color:#0070ff;">
 		<p style="text-align:left;padding-left:5px;">提示：<button class="close">X</button></p><br>
 		1.请假5天以内由主任审批。<br><br>
@@ -63,7 +63,7 @@
 		2.请假5天以为由主任审批。<br><br>
 		3.请假5天以上同校长审批。
 	</div>
-</if>
+</if> -->
 
 <script type="text/javascript" src="__PUBLIC__/js/datetime.js"></script>
 <script type="text/javascript">
@@ -87,7 +87,12 @@
 			tips('请假原因不能为空！',2);
 			return;
 		}
-		var url = "index.php?m=Home&c=Leave&a=addMyLeave";
+		if(stime > etime)
+		{
+			tips("开始时间不能大于结束时间！");
+			return;
+		}
+		var url = "index.php?m=Home&c=Leave&a=addMyselfLeave";
 		var data = {stime:stime,etime:etime,reason:reason,typ:'json'};
 		var res = ajax(url,data);
 		if(res.status == 'success')

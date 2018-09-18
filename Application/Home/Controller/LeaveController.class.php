@@ -11,6 +11,7 @@ use Home\Model\SubjectModel;
 use Home\Model\MemberModel;
 use Home\Model\ManageModel;
 use Home\Model\StudentLeaveModel;
+use Home\Model\TeacherLeaveModel;
 use Admin\Model\ClassYearModel;
 use Admin\Model\LeaderModel;
 require("/home/wwwroot/cxg/Public/broadMessage.php");
@@ -831,6 +832,125 @@ class LeaveController extends Controller{
         }
         $this->ajaxReturn($return);
 
+    }
+
+    //===================================================
+    //本人请假（教师请教部分）
+    public function myself()
+    {
+    	$user_type = $_COOKIE['type'];
+    	$this->assign("user_type",$user_type);
+    	$this->display("myself");
+    }
+
+    public function getMyselfLeaveRecord()
+    {
+    	$type = @$_POST['typ'];
+    	$return = array();
+    	if($type == 'json')
+    	{
+    		$tleave = new TeacherLeaveModel();
+    		$tcond = array();
+    		$user_type = $_COOKIE['type']; //1为后台人员
+    		$mid = $_COOKIE['id'];
+    		if($user_type != 1)
+    		{
+    			$tcond['teacher_id'] = $this->getLidByMid($mid);
+    		}
+    		$tleave_list = $tleave->getTeacherLeave($tcond,array("id"=>"DESC"));
+
+    		$leader = new LeaderModel();
+    		$leader_list = $leader->getAssocList();
+
+    		$status_array = array(
+    				"1"=>"待提交",
+    				"3"=>"待签收",
+    				"4"=>"待审核",
+    				"5"=>"<span style='color:green;'>已通过</span>",
+    				"7"=>"<span style='color:red'>已退回</span>"
+    			);
+    		foreach($tleave_list as $key=>$val)
+    		{
+    			$tleave_list[$key]['teacher_name'] = $leader_list[$val['teacher_id']]['name'];
+    			$tleave_list[$key]['status_text'] = $status_array[$val['status']];
+    			if(empty($val['auditby']))
+    			{
+    				$tleave_list[$key]['auditby'] = "";
+    			}
+    			if(empty($val['auditby_note']))
+    			{
+    				$tleave_list[$key]['auditby_note'] = "";
+    			}
+    		}
+    		if(!empty($tleave_list))
+    		{
+    			$return['status']	= 'success';
+    			$return['content']	= $tleave_list;
+    		}
+    		else
+    		{
+    			$return['status']	= 'failure';
+    			$return['content']	= '暂无数据！';
+    		}
+    	}
+    	else
+    	{
+    		$return['status']	= 'failure';
+    		$return['content']	= '协议内容错误！';
+    	}
+    	$this->ajaxReturn($return);
+    }
+
+    public function addMyLeave()
+    {
+    	$this->display("addMyLeave");
+    }
+    public function addMyselfLeave()
+    {
+    	$type = @$_POST['typ'];
+    	$return = array();
+    	if($type == 'json')
+    	{
+    		$mid = $_COOKIE['id'];
+    		$add_row = array();
+    		$add_row['teacher_id']	= $this->getLidByMid($mid);
+    		$add_row['begin_date']	= $_POST['stime'];
+    		$add_row['end_date']	= $_POST['etime'];
+    		$add_row['reason']		= $_POST['reason'];
+    		$add_row['status']		= 4;
+    		$tleave = new TeacherLeaveModel();
+    		$res = $tleave->addTeacherLeave($add_row);
+    		if($res)
+    		{
+    			$return['status']	= 'success';
+    			$return['content']	= '创建成功！';
+    		}
+    		else
+    		{
+    			$return['status']	= 'failure';
+    			$return['content']	= '创建失败！';
+    		}
+    	}
+    	else
+    	{
+    		$return['status']	= 'failure';
+    		$return['content']	= '协议内容错误！';
+    	}
+    	$this->ajaxReturn($return);
+    }
+
+    //根据成员表里的ID获取教师表里的ID
+    public function getLidByMid($id)
+    {
+    	$member = new MemberModel();
+    	$leader = new LeaderModel();
+
+    	$member_info = $member->getMember(array("id"=>$id));
+    	$uname = $member_info[0]['name'];
+
+    	$leader_info = $leader->getLeader(array("uname"=>$uname));
+    	$lid = $leader_info[0]['id'];
+    	return $lid;
     }
 
 }

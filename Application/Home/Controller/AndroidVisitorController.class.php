@@ -54,9 +54,6 @@ class AndroidVisitorController extends Controller{
                 $response = curl_exec($ch);
                 // 4. 释放cURL句柄,关闭一个cURL会话
                 curl_close($ch);
-                var_dump($res1);
-                var_dump($r);
-                var_dump($response);
                 if($res1 && $r=='OK' && $response=='success')
                 {
                 	$visitor->commit();

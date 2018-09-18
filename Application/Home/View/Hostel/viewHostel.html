@@ -1,178 +1,104 @@
 <extend name="index" />
 <block name="menu">
 <style type="text/css">
-	/*table{
-		border-collapse:collapse;
+	.tip_box{
+		width:100px;
+		height:40px;
+		float:left;
+	}
+	#box{
+		width:1300px;
+		border:1px solid #000;
+		border-radius:5px;
+		background:#eee;
 		margin-left:30px;
-		margin-top:10px;
-	}*/
-	/*td{
-		min-width:140px;
-		height:45px;
-		font-size:18px;
-		border:1px solid black;
-		line-height:45px;
-	}*/
-	/*.del-btn{
-		width:30px;
-		height:100%;
-		float:right;
-		cursor:pointer;
-		border-left:1px solid #aaa;
-		background:#00ff66;
-	}*/
-	/*#cond{
-		padding-left:50px;
-		background:#ccc;
-		width:100%;
+		margin-top:20px;
+		padding-left:15px;
+	}
+	.line{
+		max-width: 1300px;
+		/*background:#fff;*/
 		text-align:left;
+		margin-top:20px;
+		margin-bottom:10px;
+		padding:10px;
+	}
+	.demo_box{
+		width:80px;
+		height:60px;
+		border:1px solid #aaa;
+		border-radius:3px;
+		display:inline-block;
+		margin-left: 20px;
+		cursor:pointer;
+	}
+	.left{
+		background:#0f0;
+		display:inline-block;
+		color:#fff;
+		width:40px;
 		height:35px;
-		line-height:35px;
-	}*/
+		line-height: 35px;
+		text-align:center;
+		font-size:15px;
+	}
+	.right{
+		color:#fff;
+		/*display:inline-block;*/
+		position: absolute;
+		width:40px;
+		height:35px;
+		text-align:center;
+		background:red;
+		font-size:30px;
+		line-height: 35px;
+	}
+	h3{
+		font-size:18px;
+	}
+	h4{
+		width:79px;
+		height:25px;
+		border-bottom:1px solid black;
+		line-height: 25px;
+		text-align: center
+	}
 </style>
 <br>
-<h1 class="tt_h1">查看宿舍</h1>
+<h1 class="tt_h1">查看回舍信息</h1>
 <div id="cond">
 	<form id="form" method='post'>
-		楼号：<select name="build" id=""  style='width:50px;padding-left:5px;'>
+		楼号：<select name="build" id=""  style='width:70px;padding-left:5px;'>
 			<foreach item='hostel' key='k' name='hostel'>
 				<option value="{$k}" <if condition="$k eq $bb">selected</if> >{$k}</option>
 			</foreach>
 		</select>
-		<input type="hidden" name="hostel_id" id="hid">
 		<input type="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
 	</form>
 </div>
 <br>
-<table id="table">
-	{$state}
-	<if condition="$hlist.l1 neq ''">
-		<tr id="l1">
-			<td class="tb_tr_tt">一楼</td>
-			<foreach item='list' from='' name="hlist.l1">
-				<td title="{$list.id}" class='croom'>
-					{$list.name}
-					<span class='del-btn'>
-						<if condition="$list.count neq ''">{$list.count}<else />0</if>
-					</span>
-				</td>
+	<h1><div style="float:left;color:red;margin-left:20px;">提示：</div><div class='tip_box'><span style="background:#0f0;display:inline-block;width:49px;height:30px;color:#fff;">已回</span><span style="background:#f00;display:inline-block;width:49px;height:30px;color:#fff;">未回</span></div>{$bb}</h1>
+<div id="box" <if condition="$bb eq ''">style="display:none;"</if> >
+	<foreach item="list" key="key" name="hostel_list">
+		<div class="line">
+			<h3>第{$key}层</h3>
+			<foreach item="lists" name="list">
+				<div class="demo_box" sign="{$lists.id}" signs="{$bb}">
+					<h4>{$lists.no}</h4>
+					<span class='left'>{$lists.in_num}</span>
+					<span class='right'>{$lists.out_num}</span>
+				</div>
 			</foreach>
-		</tr>
-	</if>
-	<if condition="$hlist.l2 neq ''">
-		<tr id="l2">
-			<td class="tb_tr_tt">二楼</td>
-			<foreach item='list' from='' name="hlist.l2">
-				<td title="{$list.id}" class='croom'>
-					{$list.name}
-					<span class='del-btn'>
-						<if condition="$list.count neq ''">{$list.count}<else />0</if>
-					</span>
-				</td>
-			</foreach>
-		</tr>
-	</if>
-	<if condition="$hlist.l3 neq ''">
-		<tr id="l3">
-			<td class="tb_tr_tt">三楼</td>
-			<foreach item='list' from='' name="hlist.l3">
-				<td title="{$list.id}" class='croom'>
-					{$list.name}
-					<span class='del-btn'>
-						<if condition="$list.count neq ''">{$list.count}<else />0</if>
-					</span>
-				</td>
-
-			</foreach>
-		</tr>
-	</if>
-	<if condition="$hlist.l4 neq ''">
-		<tr id="l4">
-			<td class="tb_tr_tt">四楼</td>
-			<foreach item='list' from='' name="hlist.l4">
-				<td title="{$list.id}" class='croom'>
-					{$list.name}
-					<span class='del-btn'>
-						<if condition="$list.count neq ''">{$list.count}<else />0</if>
-					</span>
-				</td>
-			</foreach>
-		</tr>
-	</if>
-	<if condition="$hlist.l5 neq ''">
-		<tr id="l5">
-			<td class="tb_tr_tt">五楼</td>
-			<foreach item='list' from='' name="hlist.l5">
-				<td title="{$list.id}" class='croom'>
-					{$list.name}
-					<span class='del-btn'>
-						<if condition="$list.count neq ''">{$list.count}<else />0</if>
-					</span>
-				</td>
-			</foreach>
-		</tr>
-	</if>
-	<if condition="$hlist.l6 neq ''">
-		<tr id="l6">
-			<td class="tb_tr_tt">六楼</td>
-			<foreach item='list' from='' name="hlist.l6">
-				<td title="{$list.id}" class='croom'>
-					{$list.name}
-					<span class='del-btn'>
-						<if condition="$list.count neq ''">{$list.count}<else />0</if>
-					</span>
-				</td>
-			</foreach>
-		</tr>
-	</if>
-	<if condition="$hlist.l7 neq ''">
-		<tr id="l7">
-			<td class="tb_tr_tt">七楼</td>
-			<foreach item='list' from='' name="hlist.l7">
-				<td title="{$list.id}" class='croom'>
-					{$list.name}
-					<span class='del-btn'>
-						<if condition="$list.count neq ''">{$list.count}<else />0</if>
-					</span>
-				</td>
-			</foreach>
-		</tr>
-	</if>
-	<if condition="$hlist.l8 neq ''">
-		<tr id="l8">
-			<td class="tb_tr_tt">八楼</td>
-			<foreach item='list' from='' name="hlist.l8">
-				<td title="{$list.id}" class='croom'>
-					{$list.name}
-					<span class='del-btn'>
-						<if condition="$list.count neq ''">{$list.count}<else />0</if>
-					</span>
-				</td>
-			</foreach>
-		</tr>
-	</if>
-	<if condition="$hlist.other neq ''">
-		<tr id="l1">
-			<td class="tb_tr_tt">其它</td>
-			<foreach item='list' from='' name="hlist.other">
-				<td title="{$list.id}" class='croom'>
-					{$list.name}
-					<span class='del-btn'>
-						<if condition="$list.count neq ''">{$list.count}<else />0</if>
-					</span>
-				</td>
-			</foreach>
-		</tr>
-	</if>
-</table>
+		</div>
+	</foreach>
+</div>
 
 <script type="text/javascript">
-	$(".del-btn").click(function()
+	$(".demo_box").live("click",function()
 	{
-		var hid = $(this).parent().attr("title");
-		$("#form").attr("action","index.php?m=Home&c=Hostel&a=index&id=2.50");
-		$("#hid").val(hid);
-		$("#form").submit();
+		var id = $(this).attr("sign");
+		var build = $(this).attr("signs");
+		window.location.href = "/cxg/index.php?m=Home&c=Hostel&a=index&id=2.50&shostel="+id+"&sbuild="+build;
 	})
 </script>
 </block>

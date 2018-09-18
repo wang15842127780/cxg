@@ -1,0 +1,196 @@
+[ 2018-09-15T16:06:02+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000098s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000217s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000024s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000066s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.002362s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.002424s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000845s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000876s ]
+
+[ 2018-09-15T16:06:10+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin&c=Log&a=dolog
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000040s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000083s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+NOTIC: [2] mysql_connect(): No such file or directory /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+ERR: No such file or directory
+
+[ 2018-09-15T16:06:13+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin&c=Log&a=dolog
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000085s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000161s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+NOTIC: [2] mysql_connect(): No such file or directory /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+ERR: No such file or directory
+
+[ 2018-09-15T16:06:20+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin&c=Log&a=dolog
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000050s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000113s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+NOTIC: [2] mysql_connect(): No such file or directory /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+ERR: No such file or directory
+
+[ 2018-09-15T16:06:49+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000104s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000230s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000033s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000094s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.002252s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.002305s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000080s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000110s ]
+
+[ 2018-09-15T16:06:52+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin&c=Log&a=dolog
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000041s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000113s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+NOTIC: [2] mysql_connect(): No such file or directory /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+ERR: No such file or directory
+
+[ 2018-09-15T16:10:14+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000075s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000176s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000033s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000094s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.001578s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.001625s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000088s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000109s ]
+
+[ 2018-09-15T16:10:20+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin&c=Log&a=dolog
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000041s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000085s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+NOTIC: [2] mysql_connect(): No such file or directory /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+ERR: No such file or directory
+
+[ 2018-09-15T16:37:49+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000641s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001268s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000076s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000116s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.009563s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.009597s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000487s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000511s ]
+
+[ 2018-09-15T16:37:53+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin&c=Log&a=dolog
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000317s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000495s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `manage` [ RunTime:0.004861s ]
+SQL: SELECT * FROM `manage` WHERE ( `name` = 'admin' ) AND ( `password` = '21232f297a57a5a743894a0e4a801fc3' ) LIMIT 0,100   [ RunTime:0.000922s ]
+
+[ 2018-09-15T16:37:53+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000055s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000171s ]
+NOTIC: [8] Undefined index: act /home/wwwroot/cxg/Application/Admin/Controller/IndexController.class.php 第 18 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `menu` [ RunTime:0.003138s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 0 ) AND ( `show` = 1 ) AND ( `type` = 2 ) ORDER BY `id` ASC  [ RunTime:0.001189s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 7 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000602s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 14 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000243s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 15 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000116s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 16 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000107s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 17 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000106s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 18 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000105s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 19 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000144s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 20 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000108s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 40 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000105s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 77 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000106s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 60 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000105s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 61 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000127s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 75 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000106s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000032s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000068s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.004701s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.004733s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000049s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000065s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000848s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000876s ]
+
+[ 2018-09-15T16:37:53+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin&c=Index&a=getInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000084s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000172s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `manage` [ RunTime:0.000728s ]
+SQL: SELECT * FROM `manage` WHERE ( `id` = 1 ) LIMIT 0,100   [ RunTime:0.000534s ]
+SQL: SHOW COLUMNS FROM `class_year` [ RunTime:0.002365s ]
+SQL: SELECT * FROM `class_year` WHERE ( `director_id` = 1 ) LIMIT 0,100   [ RunTime:0.000236s ]
+SQL: SHOW COLUMNS FROM `student_leave` [ RunTime:0.003211s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `student_leave` WHERE ( `status` IN (3,4) ) LIMIT 1   [ RunTime:0.000981s ]
+
+[ 2018-09-15T17:01:33+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000064s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000149s ]
+NOTIC: [8] Undefined index: act /home/wwwroot/cxg/Application/Admin/Controller/IndexController.class.php 第 18 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `menu` [ RunTime:0.000697s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 0 ) AND ( `show` = 1 ) AND ( `type` = 2 ) ORDER BY `id` ASC  [ RunTime:0.000291s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 7 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000156s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 14 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000185s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 15 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000191s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 16 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000233s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 17 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000310s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 18 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000192s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 19 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000134s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 20 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000166s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 40 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000137s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 77 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000110s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 60 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000123s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 61 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000113s ]
+SQL: SELECT * FROM `menu` WHERE ( `parent_id` = 75 ) AND ( `show` = 1 ) ORDER BY `id` ASC  [ RunTime:0.000192s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000584s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000725s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.006779s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.006813s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.000058s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000076s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000054s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000074s ]
+
+[ 2018-09-15T17:01:34+08:00 ] 192.168.1.107 /cxg/index.php?m=Admin&c=Index&a=getInfo
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000087s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000176s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `manage` [ RunTime:0.000585s ]
+SQL: SELECT * FROM `manage` WHERE ( `id` = 1 ) LIMIT 0,100   [ RunTime:0.000183s ]
+SQL: SHOW COLUMNS FROM `class_year` [ RunTime:0.000477s ]
+SQL: SELECT * FROM `class_year` WHERE ( `director_id` = 1 ) LIMIT 0,100   [ RunTime:0.000290s ]
+SQL: SHOW COLUMNS FROM `student_leave` [ RunTime:0.000799s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `student_leave` WHERE ( `status` IN (3,4) ) LIMIT 1   [ RunTime:0.000358s ]
+

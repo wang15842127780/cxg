@@ -13,9 +13,15 @@
 	}
 </style>
 <br>
-<h1 class="tt_h1">我的请假记录</h1>
+<if condition="$user_type neq 1">
+	<h1 class="tt_h1">我的请假记录</h1>
+<else />
+	<h1 class="tt_h1">教师请假记录</h1>
+</if>
 <br>
-<button id="add-btn" style="background:orange;width:75px;height:25px;border-radius:5px;display:block;margin-top:-20px;margin-left:50px;">+请假申请</button>
+<if condition='$user_type neq 1'>
+	<button id="add-btn" style="background:orange;width:75px;height:25px;border-radius:5px;display:block;margin-top:-20px;margin-left:50px;">+请假申请</button>
+</if>
 <if condition="$Think.cookie.leader eq 1">
 <button id="group-btn" style="background:orange;width:75px;height:25px;border-radius:5px;display:block;margin-top:-25px;margin-left:150px;">组员管理</button>
 </if>
@@ -24,12 +30,12 @@
 	<tr class="tb_tr_th">
 		<th>ID</th>
 		<th>姓名</th>
+		<th>请假理由</th>
 		<th>开始时间</th>
 		<th>结束时间</th>
-		<th>请假理由</th>
-		<th>状态</th>
-		<th>拒绝理由</th>
 		<th>审批人</th>
+		<th>审批意见</th>
+		<th>状态</th>
 	</tr>
 	</foreach>
 </table>
@@ -51,7 +57,7 @@
 <script type="text/javascript">
 	window.getRecord = function()
 	{
-		var url = "index.php?m=Home&c=Leave&a=myself";
+		var url = "index.php?m=Home&c=Leave&a=getMyselfLeaveRecord";
 		var data = {typ:'json'};
 		var res = ajax(url,data);
 		if(res.status == 'success')
@@ -59,13 +65,13 @@
 			$("#table").show();
 			var field = Array();
 			field[0] = 'id';
-			field[1] = 'name';
-			field[2] = 'start_time';
-			field[3] = 'end_time';
-			field[4] = 'reason';
-			field[5] = 'status_text';
-			field[6] = 'refuse';
-			field[7] = 'agree';
+			field[1] = 'teacher_name';
+			field[2] = 'reason';
+			field[3] = 'begin_date';
+			field[4] = 'end_date';
+			field[5] = 'auditby';
+			field[6] = 'auditby_note';
+			field[7] = 'status_text';
 			listPage(res.content,1,10,field);
 		}
 		else

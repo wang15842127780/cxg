@@ -1,0 +1,254 @@
+<extend name="index" />
+<block name="menu">
+<br>
+<h1 class="tt_h1">位置：请假管理>查看教师请假记录</h1>
+<style type="text/css">
+	#show_box{
+		position:absolute;
+		height:280px;
+		width:300px;
+		text-align:center;
+		background:#fff;
+		left:450px;
+		top:160px;
+		border-radius:10px;
+	}
+	.tb_tr_th th{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	.tb_tr_td td{
+		width:130px;
+		height:30px;
+		font-size:10pt;
+	}
+	#receive_all{
+		float:right;
+		margin-right:150px;
+		margin-top:4px;
+		padding:2px;
+		border-radius:5px;
+		background:orange;
+		color:#fff;
+	}
+	.p{
+		width:100%;
+		margin-top:30px;
+		font-size:18px;
+	}
+	.left{
+		display:inline-block;
+		width:50%;
+		text-align:right;
+		padding-right:5px;
+	}
+	.right{
+		display:inline-block;
+		text-align: center;
+	}
+	.lp{
+		text-align:left;
+		font-size:16px;
+		padding:8px 0;
+		border: 1px solid #ccc;
+		border-top:0;
+	}
+</style>
+<div id="cond">
+	<form onsubmit="return false;">
+		姓名：<input type="text" name="uname" id="uname" style="width:60px;">
+		&nbsp;
+		开始时间：<input class="sang_Calender" type="text" name="stime" value="{$Think.post.stime}" id="stime" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		结束时间：<input class="sang_Calender" type="text" name="etime" value="{$Think.post.etime}" id="etime" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
+		<!-- <button id="receive_all">
+			全部签收
+		</button> -->
+	</form>
+	
+</div>
+<br>
+<div style="position:absolute;left:0;top:111px;right:0;bottom:0;overflow:auto;">
+	<table id="table" class="new_table" style="display:none;margin-left:10px;margin-top:15px;">
+		<tr class="tb_tr_th">
+			<th>ID</th>
+			<th>姓名</th>
+			<th>原因</th>
+			<th>开始时间</th>
+			<th>结束时间</th>
+			<th>审批人</th>
+			<th>审批意见</th>
+			<th>操作</th>
+		</tr>
+	</table>
+</div>
+<div id="shell" class="zshow">
+	
+</div>
+<div id="shell_img" class="zshow">
+        <img src="/cxg/Public/iconfont/loading.gif" width="35" height="35">
+        <p>加载中...</p>
+</div>
+<div id="check_box" style="position:absolute;left:0;top:0;right:0;bottom:0;text-align:center;display:none;">
+	<div style="width:400px;height:410px;border:1px solid #ccc;border-radius:5px;background:#fff;margin-top:50px;display:inline-block;">
+		<p style="height:50px;margin-top:5px;font-size:20px;">详细信息</p>
+		<p style="height:50px;margin-top:5px;">
+			<span style="display:inline-block;width:200px;text-align:right;font-size:18px;">姓名：</span>
+			<span style="display:inline-block;width:196px;text-align:left;font-size:18px;" id="tname"></span>
+		</p>
+		<p style="height:50px;margin-top:5px;">
+			<span style="display:inline-block;width:200px;text-align:right;font-size:18px;">事由：</span>
+			<span style="display:inline-block;width:196px;text-align:left;font-size:18px;" id="treason"></span>
+		</p>
+		<p style="height:50px;margin-top:5px;">
+			<span style="display:inline-block;width:200px;text-align:right;font-size:18px;">开始时间：</span>
+			<span style="display:inline-block;width:196px;text-align:left;font-size:18px;" id="tstime"></span>
+		</p>
+		<p style="height:50px;margin-top:5px;">
+			<span style="display:inline-block;width:200px;text-align:right;font-size:18px;">结束时间：</span>
+			<span style="display:inline-block;width:196px;text-align:left;font-size:18px;" id="tetime"></span>
+		</p>
+		<p style="height:50px;margin-top:5px;">
+			<span style="display:inline-block;width:200px;text-align:right;font-size:18px;">审核意见：</span>
+			<span style="display:inline-block;width:192px;text-align:left;font-size:16px;">
+				<input type="text" id="tnote" style="width:100px;background:#eee;">
+			</span>
+		</p>
+		<p style="height:50px;margin-top:5px;text-align:center;">
+			<button class="confirm-btn">同意</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button class="cancel-btn">退回</button>
+		</p>
+		<p style="height:50px;margin-top:5px;">
+			
+		</p>
+	</div>
+</div>
+<input type="hidden" id="hid">
+<script type="text/javascript" src="__PUBLIC__/js/admindate.js"></script>
+<script type="text/javascript">
+	window.getLeaveList = function(data={})
+	{
+		var url = "index.php?m=Admin&c=Leave&a=getTeacherLeaveList";
+		data.typ = 'json';
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			if(res.leader != 1)
+			{
+				$("#receive_all").hide();
+			}
+			$("#table").show();
+			$(".zshow").hide();
+			var list = res.content;
+			var field = Array();
+			field[0] = 'id';
+			field[1] = 'teacher_name';
+			field[2] = 'reason';
+			field[3] = 'begin_date';
+			field[4] = 'end_date';
+			field[5] = 'auditby';
+			field[6] = 'auditby_note';
+			field[7] = 'status_text';
+			listPage(list,1,30,field);
+		}
+		else
+		{
+			tips(res.content,2);
+			$(".zshow").hide();
+		}
+	}
+
+
+	$(".check").live("click",function()
+	{
+		var id = $(this).parents("tr").find("td:eq(0)").html();
+		$("#hid").val(id);
+		var name = $(this).parents("tr").find("td:eq(1)").html();
+		var reason = $(this).parents("tr").find("td:eq(2)").html();
+		var stime = $(this).parents("tr").find("td:eq(3)").html();
+		var etime = $(this).parents("tr").find("td:eq(4)").html();
+
+		$("#tname").html(name);
+		$("#treason").html(reason);
+		$("#tstime").html(stime);
+		$("#tetime").html(etime);
+		// $("#ee").html(ee);
+		$("#check_box").show();
+		$(".zshow").show();
+	})
+
+	$(".confirm-btn").live("click",function()
+	{
+		var id = $("#hid").val();
+		var tnote = $("#tnote").val();
+		if($.trim(tnote) == "")
+		{
+			tips('请填写您的意见！',2);
+			return;
+		}
+		var url = "index.php?m=Admin&c=Leave&a=agreeTeacherLeave";
+		var data = {id:id,reason:tnote,status:5,typ:'json'};
+		// var res = ajax(url,data);
+		$("#show_box").hide();
+		$(".zshow").show();
+			// var url1 = "index.php?m=Admin&c=Leave&a=person_register";
+		$.ajax({
+			url:url,
+			type:'post',
+			async:true,
+			data:data,
+			dataType:'json',
+			success:function(res)
+			{
+				if(res.status == 'success')
+				{
+					tips("操作成功！",1);
+					setTimeout("window.location.reload();",500);
+				}
+				else
+				{
+					tips(res.content,2);
+				}
+			}
+		});
+		
+			
+	})
+
+	$(".cancel-btn").live("click",function()
+	{
+		var id = $("#hid").val();
+		var tnote = $("#tnote").val();
+		if($.trim(tnote) == "")
+		{
+			tips('请填写您的意见！',2);
+			return;
+		}
+		var url = "index.php?m=Admin&c=Leave&a=disagreeTeacherLeave";
+		var data = {id:id,reason:tnote,status:7,typ:'json'};
+		var res = ajax(url,data);
+		if(res.status == 'success')
+		{
+			tips(res.content,1);
+			setTimeout("window.location.reload();",500);
+		}
+		else
+		{
+			tips(res.content,2);
+		}
+	})
+
+	$("#submit").click(function()
+	{
+		var uname = $("#uname").val();
+		var stime = $("#stime").val();
+		var etime = $("#etime").val();
+		var status = $("#status").val();
+		var data = {uname:uname,stime:stime,etime:etime,status:status};
+		getLeaveList(data);
+	})
+	
+	setTimeout("getLeaveList();",500);
+</script>
+</block>

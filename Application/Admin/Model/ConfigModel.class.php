@@ -6,7 +6,6 @@ class ConfigModel extends Model{
 
 	public function getConfig($cond=array(),$order=array(),$page=1,$limit=100)
 	{
-		$cond['type']	= 2;   //后台管理菜单
 		return $this->where($cond)->order($order)->page($page,$limit)->select();
 	}
 

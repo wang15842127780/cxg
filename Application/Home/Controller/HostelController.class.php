@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+use Think\Cache\Driver\Redis;
 use Home\Model\ManageModel;
 use Home\Model\MenuModel;
 use Home\Model\ClassModel;
@@ -8,6 +9,7 @@ use Home\Model\StudentModel;
 use Home\Model\HostelModel;
 use Home\Model\HostelRecordModel;
 use Admin\Model\StudentLeaveModel;
+use Admin\Model\HostelEntranceRecordModel;
 use Home\Model\MemberModel;
 class HostelController extends Controller{
 	public function index(){
@@ -419,139 +421,219 @@ class HostelController extends Controller{
         $build = $_POST['build'];
         if(!empty($build))
         {
+        	$this->assign("bb",$build);
             $cond = array();
             $cond['build'] = $build;
-            $lists = $hostel->getAssocHostel($cond,array('name'=>"ASC"));
-            $record = new HostelRecordModel();
-            $cond = array();
-            $cond['time'] = array("gt",date("Y-m-d 00:00:00",time()));
-            $record_list = $record->getHostelRecord($cond,array('time'=>"DESC"));
-            //去除重复记录
-            $new = array();
-            $new_id = array();
-            foreach($record_list as $k=>$v)
+            $order = array();
+            $order['floor'] = "DESC";
+            $order['no'] = "ASC";
+            $hostel_listss = $hostel->getHostel($cond,$order);
+            $hostel_lists = array();
+            foreach($hostel_listss as $aaa=>$bbb)
             {
-                if(!in_array($v['stu_id'],$new_id))
-                {
-                    $new[$v['stu_id']] = $v;
-                    $new_id[] = $v['stu_id'];
-                }
+            	$hostel_lists[$bbb['id']] = $bbb;
             }
-            $student = new StudentModel();
-            $stu_list = $student->getAssocStudent();
-            //根据学生记录查找学生宿舍，有就加1
-            foreach($new as $k=>$v)
-            {
-                if($v['type'] == "in")
-                {
-                    $hid = $stu_list[$v['stu_id']]['hostel'];
-                    $lists[$hid]['count'] += 1;
-                }
-            }
+
             // echo "<pre>";
-            // var_dump($lists);
-            $shell = array();
-            for($i=1;$i<=9;$i++)
+            // var_dump($hostel_lists);
+
+            //将宿舍的ID整出来
+            $hostel_ids = array();
+            foreach($hostel_lists as $k=>$v)
             {
-                $shell[] = $i;
+            	//回舍情况   人数归0
+            	$hostel_lists[$k]['in_num'] = 0;
+            	$hostel_lists[$k]['out_num'] = 0;
+            	$hostel_ids[] = $v['id'];
             }
-            foreach($lists as $k=>$v)
+            // var_dump($hostel_ids);
+
+            //将这些宿舍里面的学生信息提取出来
+            $student = new StudentModel();
+            $cond_stu = array();
+            $cond_stu['dormitory_id'] = array('IN',$hostel_ids);
+            $student_list = $student->getStudent($cond_stu);
+
+            //将学生ID提取出来
+            $student_ids = array();
+            foreach($student_list as $kk=>$vv)
             {
-                $n = (int)$v['name'];
-                if(in_array($n,$shell))
-                {
-                    $list['l'.$n][] = $v;
-                }
+            	$student_ids[] = $vv['id'];
             }
-            $this->assign("bb",$build);
-            $this->assign('state',$build.'号楼');
-            $this->assign('hlist',$list);
+
+            //将今天回舍的并为该宿舍的整合到一起
+            $hostel_record = new HostelEntranceRecordModel();
+            $cond_hostel = array();
+            $order_hostel = array();
+            $cond_hostel['alarm_id'] = array("IN",$student_ids);
+            $tt = date("Y-m-d 00:00:00",time()-3600*24);
+            $cond_hostel['alarm_time'] = array("gt",$tt);
+            $con_hostel['ptype'] = 's';
+            $order_hostel['id'] = "DESC";
+            $hostel_record_list = $hostel_record->getHostelEntranceRecord($cond_hostel,$order_hostel,1,50000);
+            //去重   获取最后的一条数据
+            $new_record_list = array();
+            $act_ids = array();  //判断的数组
+            foreach($hostel_record_list as $kkk=>$vvv)
+            {
+            	if(!in_array($vvv['alarm_id'],$act_ids))
+            	{
+            		$act_ids[] = $vvv['alarm_id'];
+            		$new_record_list[$vvv['alarm_id']] = $vvv;
+            	}
+            }
+            // var_dump($new_record_list);
+
+            //将学生的回舍信息整合的学生信息里面
+            foreach($student_list as $kkkk=>$vvvv)
+            {
+            	$sid = $vvvv['id'];
+            	if(!empty($new_record_list[$sid]) && $new_record_list[$sid]['type']=='in')
+            	{
+            		$student_list[$kkkk]['inout'] = 'in';
+            	}
+            	else
+            	{
+            		$student_list[$kkkk]['inout'] = 'out';
+            	}
+            }
+            // var_dump($student_list);
+
+            //将学生分配到宿舍。 并记下出回来的数目
+            foreach($student_list as $key=>$val)
+            {
+            	if($val['inout'] == 'in')
+            	{
+            		$hostel_lists[$val['dormitory_id']]['in_num'] += 1;
+            	}
+            	else
+            	{
+            		$hostel_lists[$val['dormitory_id']]['out_num'] += 1;
+            	}
+            }
+             // var_dump($hostel_lists);
+
+           	//将宿舍按楼层分组
+           	$final_arr = array();
+           	foreach($hostel_lists as $keys=>$vals)
+           	{
+           		$final_arr[$vals['floor']][] = $vals;
+           	}
+
+            // var_dump($final_arr);
+            $this->assign("hostel_list",$final_arr);
+            
         }
         $this->display('viewHostel');
     }
 
     public function hostelRecord()
     {
-        $class = new ClassModel();
-        $class_list = $class->getAssocClass();
-        $this->assign('clist',$class_list);
-        $cond = array();
-        $str = 1;
-        $hostel_id = $_POST['hostel_id'];
-        if(!empty($hostel_id))
-        {
-        	// $str .= " AND hostel=".$hostel_id;
-        	$this->getOneHostelInfo();
-        	die;
-        }
-        $croom = $_POST['croom'];
-        if($croom != 0)
-        {
-            $str .= " AND class=".$croom;
-        }
-        
-
-        $cname = $_POST['cname'];
-        if(!empty($cname))
-        {
-        	$str .= " AND name like '%".$cname."%'";
-        }
-        $student = new StudentModel();
-        $stu_list = $student->getStudent($str);
-        $ids = array();
-        foreach($stu_list as $k=>$v)
-        {
-        	$ids[] = $v['id'];
-        }
-
-        $str1 = 1;
-        $stime = $_POST['stime'] ? $_POST['stime'] : date("Y-m-d 00:00:00",time());
-        if(!empty($stime))
-        {
-            $str1 .= " AND time>'".$stime."'";
-        }
-        $etime = $_POST['etime'];
-        if(!empty($etime))
-        {
-            $str1 .= " AND time<'".$etime."'";
-        }
-        if(!empty($ids))
-        {
-        	$id_row = implode(",",$ids);
-        	$str1 .= " AND stu_id in (".$id_row.")";
-        }
-        else
-        {
-        	$str1 .= "AND stu_id='0'";
-        }
-        $hostel = new HostelRecordModel();
-        $hostel_list = $hostel->getHostelRecord($str1,array('time'=>'DESC'));
-        $hhh = new HostelModel();
-        $hhh_list = $hhh->getAssocHostel();
-        $stu_lists = $student->getAssocStudent();
-        foreach($hostel_list as $k=>$v)
-        {
-        	$hostel_list[$k]['stu_name'] = $stu_lists[$v['stu_id']]['name'];
-        	$cid = $stu_lists[$v['stu_id']]['class'];
-        	$hostel_list[$k]['stu_class'] = $class_list[$cid]['name'];
-            $hid = $stu_lists[$v['stu_id']]['hostel'];
-            $hostel_list[$k]['hostel_text'] = $hhh_list[$hid]['name'];
-        	if($v['type'] == "in")
-        	{
-        		$hostel_list[$k]['type_text'] = "进入宿舍";
-        	}
-        	else
-        	{
-        		$hostel_list[$k]['type_text'] = "离开宿舍";
-        	}
-        }
-        // echo "<pre>";
-        // var_dump($hostel_list);
-
-        
-       
+       //班级列表信息
+    	$class = new ClassModel();
+    	$class_list = $class->getAssocClass();
+    	$this->assign("clist",$class_list);
+    	//楼号列表
+    	$hostel = new HostelModel();
+        $hostel_list = $hostel->getHostelList();
         $this->assign('hostel',$hostel_list);
-        $this->assign('croom',$_POST['croom']);
+
+    	//首先是根据条件来获取学生信息
+    	$stu_cond = array();
+    	if(!empty($_POST['croom']))
+    	{
+    		$this->assign("aa",$_POST['croom']);
+    		$stu_cond['class_id'] = $_POST['croom'];
+    	}
+    	if(!empty($_POST['sbuild']) || !empty($_GET['sbuild']))
+    	{
+    		$sbuild = !empty($_POST['sbuild']) ? $_POST['sbuild']:$_GET['sbuild'];
+    		$this->assign("bb",$sbuild);
+    		$hostel_info = $hostel->getHostel(array("build"=>$sbuild));
+    		$hostel_ids = array();
+    		foreach($hostel_info as $k=>$v)
+    		{
+    			$hostel_ids[] = $v['id'];
+    		}
+    		$stu_cond['dormitory_id'] = array("IN",$hostel_ids);
+    	}
+    	if(!empty($_GET['shostel']))
+    	{
+    		$stu_cond['dormitory_id'] = $_GET['shostel'];
+    	}
+    	if(!empty($_POST['cname']))
+    	{
+    		$this->assign("cc",$_POST['cname']);
+    		$stu_cond['name'] = $_POST['cname'];
+    	}
+    	//获取符合条件的学生信息
+    	$stu_order = array();    //学生信息排序，   班级   宿舍
+    	$stu_order['class_id'] = "ASC";
+    	$stu_order['dormitory_id'] = "ASC";
+    	$student = new StudentModel();
+    	$student_list = $student->getStudent($stu_cond,$stu_order,1,500);
+    	// echo "<pre>";
+    	// var_dump($student_list);
+    	$student_ids = array();
+    	foreach($student_list as $kk=>$vv)
+    	{
+    		$student_ids[] = $vv['id'];
+    	}
+
+    	//获取回舍信息
+    	$hostel_cond = array();
+    	$hostel_cond['alarm_id'] = array("IN",$student_ids);
+    	$hostel_cond['ptype'] = 's';
+    	if(empty($_POST['stime']))
+    	{
+    		$tt = date("Y-m-d 00:00:00",time());
+    		$hostel_cond['alarm_time'] = array("gt",$tt);
+    		$this->assign("dd",$tt);
+    	}
+    	else
+    	{
+    		$hostel_cond['alarm_time'] = array("gt",$_POST['stime']);
+    		$this->assign("dd",$_POST['stime']);
+    	}
+    	if(!empty($_POST['etime']))
+    	{
+    		$hostel_cond['alarm_time'] = array(array('egt',$_POST['stime']),array('elt',$_POST['etime']),'AND');
+    		$this->assign("ee",$_POST['etime']);
+    	}
+    	$hostel_record = new HostelEntranceRecordModel();
+    	$hostel_record_list = $hostel_record->getHostelEntranceRecord($hostel_cond,array("id"=>"DESC"),1,10000);
+    	//去掉重复的数据
+    	$new_record_list = array();
+    	$true_ids = array();
+    	foreach($hostel_record_list as $kkk=>$vvv)
+    	{
+    		if(!in_array($vvv['alarm_id'],$true_ids))
+    		{
+    			$new_record_list[$vvv['alarm_id']] = $vvv;
+    		}
+    	}
+    	// var_dump($new_record_list);
+
+    	//将学生数据和回舍信息整合到一起
+    	$type_array = array("in"=>"进入宿舍","out"=>"离开宿舍");
+    	foreach($student_list as $key=>$val)
+    	{
+    		$student_list[$key]['class_text'] = $class_list[$val['class_id']]['name'];
+    		$student_list[$key]['photo'] = '';
+    		if(!empty($new_record_list[$val['id']]))
+    		{
+    			$student_list[$key]['time_text'] = $new_record_list[$val['id']]['alarm_time'];
+    			$ff = $new_record_list[$val['id']]['type'];
+    			$student_list[$key]['type_text'] = $type_array[$ff];
+    		}
+    		else
+    		{
+    			$student_list[$key]['time_text'] = '无';
+    			$student_list[$key]['type_text'] = '此时间段内暂无通行记录！';
+    		}
+    	}
+    	// var_dump($student_list);
+    	$this->assign("student_list",$student_list);
         $this->display('hostelRecord');
     }
 
@@ -629,9 +711,164 @@ class HostelController extends Controller{
 
     public function video()
     {
+        $hostel_record = new HostelEntranceRecordModel();
+        $student = new StudentModel();
+        $class = new ClassModel();
+        $class_list = $class->getAssocClass();
+        $hostel_record_list = $hostel_record->getHostelEntranceRecord(array(),array("id"=>"DESC"),1,8);
+        //获取学生ID
+        $student_ids = array();
+        foreach($hostel_record_list as $k=>$v)
+        {
+            if(!in_array($v['alarm_id'],$student_ids))
+            {
+                $student_ids[] = $v['alarm_id'];
+            }
+        }
+        $stu_cond = array();
+        $stu_cond['id'] = array("IN",$student_ids);
+        $student_list = $student->getStudent($stu_cond);
+        $new_student_list = array();
+        foreach($student_list as $kkk=>$vvv)
+        {
+            $new_student_list[$vvv['id']] = $vvv;
+            $new_student_list[$vvv['id']]['class_text'] = $class_list[$vvv['class_id']]['name'];
+        }
+        // echo "<pre>";
+        $type_array = array("in"=>"进入宿舍","out"=>"离开宿舍");
+        //将学生姓名，班级添加到记录表
+        foreach($hostel_record_list as $kkkk=>$vvvv)
+        {
+            $hostel_record_list[$kkkk]['class_text'] = $new_student_list[$vvvv['alarm_id']]['class_text'];
+            $hostel_record_list[$kkkk]['name_text'] = $new_student_list[$vvvv['alarm_id']]['name'];
+            $hostel_record_list[$kkkk]['photo_text'] = $new_student_list[$vvvv['alarm_id']]['photo'];
+            $hostel_record_list[$kkkk]['inout'] = $type_array[$vvvv['type']];
+        }
+        //获取记录的ID，更新数据库
+        $this->updateHostelRecord();
+        $this->assign("record_list",$hostel_record_list);
         $this->display("video");
     }
 
+    //清空redis里的宿舍信息
+    public function unsetHostelEntranceRedis()
+    {
+        $type = @$_POST['typ'];
+        $return = array();
+        if($type == 'json')
+        {
+            $redis = new \Redis();
+            $res = $redis->connect("127.0.0.1",6379);
+            $redis->set("hostelInfo","");
+            if($res)
+            {
+                $return['status']	= 'success';
+                $return['content']	= '成功！';
+            }
+            else
+            {
+            	$return['status']	= 'failure';
+            	$return['content']	= '失败！';
+            }
+        }
+        else
+        {
+            $return['status']   = 'failure';
+            $return['content']  = '协议内容有误！';
+        }
+        $this->ajaxReturn($return);
+    }
+
+
+    //获取新得到的数据
+    public function getNewHostelInfo()
+    {
+        $type = @$_POST['typ'];
+        $return = array();
+        if($type == 'json')
+        {
+        	$startTime = time();
+        	$redis = new \Redis();
+		    $redis->connect("127.0.0.1",6379);
+		    $redis->setOption(\Redis::OPT_READ_TIMEOUT, -1);
+        	while(true)
+        	{
+        		$time = time();
+        		$tt = $time-$startTime;
+        		if($tt <= 30)
+        		{
+		            $res = $redis->get("hostelInfo");
+		            $info = json_decode($res);
+		            $id = $info->id;
+		            $inout = $info->inout;
+		            $inout_array = array("in"=>"进入宿舍","out"=>"离开宿舍");
+
+		            $class = new ClassModel();
+		            $student = new StudentModel();
+		            $class_list = $class->getAssocClass();
+		            $student_info = $student->getStudent(array("id"=>$id));
+		            $class_id = $student_info[0]['class_id'];
+
+		            $new_array = array();
+		            $new_array['name_text'] = $student_info[0]['name'];
+		            $new_array['inout'] = $inout_array[$inout];
+		            $new_array['alarm_time'] = date("Y-m-d H:i:s",time());
+		            $new_array['class_text'] = $class_list[$class_id]['name'];
+		            $new_array['photo_text'] = $student_info[0]['photo'];
+
+		            //获取新的信息
+
+		            if(!empty($res))
+		            {
+		                $return['status']   = 'success';
+		                $return['content']  = $new_array;
+		                $redis->set("hostelInfo","");
+		                $this->ajaxReturn($return);
+		                die;
+		            }
+        		}
+        		else
+        		{
+        			$return['status']	= 'failure';
+        			$return['content']	= 'TimeOut';
+        			$this->ajaxReturn($return);
+        			die;
+        		}
+	        		
+        	}
+        }
+        else
+        {
+            $return['status']   = 'failure';
+            $return['content']  = '协议内容有误！';
+            $this->ajaxReturn($return);
+        }
+        
+    }
+
+    //将数据库的最新数据更改为已读
+    public function updateHostelRecord($record_id = array())
+    {
+        $hostel_record = new HostelEntranceRecordModel();
+        $cond = array();
+        $cond['record_type'] = 'old';
+        if(!empty($record_id))
+        {
+            foreach($record_id as $key=>$val)
+            {
+                $hostel_record->editHostelEntranceRecord($val,$cond);
+            }
+        }
+        else
+        {
+            $w = array();
+            $w['id'] = array("egt",1);
+            M('HostelEntranceRecord')->where($w)->setField('record_type','old');
+        }
+    }
+
+
+    //
     public function getInfo()
     {
         $type = @$_POST['typ'];

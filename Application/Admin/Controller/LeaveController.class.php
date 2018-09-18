@@ -1,12 +1,16 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
+use Think\Cache\Driver\Redis;
 use Admin\Model\MenuModel;
 use Admin\Model\StudentLeaveModel;
 use Home\Model\StudentModel;
 use Home\Model\ClassModel;
 use Admin\Model\ClassYearModel;
+use Admin\Model\ConfigModel;
 use Home\Model\ManageModel;
+use Home\Model\TeacherLeaveModel;
+use Admin\Model\LeaderModel;
 require_once(COMMON_PATH."/Common/function.php");
 
 class LeaveController extends Controller{
@@ -27,6 +31,9 @@ class LeaveController extends Controller{
         	case "62":
         	$this->viewRecord();
         	break;
+            case "80":
+            $this->viewTeacherRecord();
+            break;
             default:
             header("Location:/cxg/index.php?m=Admin");
             break;
@@ -449,7 +456,7 @@ class LeaveController extends Controller{
                 //人脸检测
                 $arr = "";
                 $db_id = 1;
-                $site= "http://192.168.1.234:8000";
+                $site= "http://192.168.1.240:8000";
  
                 $cmd = "/faceops/image_detection";
     
@@ -563,6 +570,172 @@ class LeaveController extends Controller{
             $return['content']  = '协议内容错误！';
         }
         $this->ajaxReturn($return);
+    }
+
+
+    //========================================================================================================
+    //教师请假部分
+    public function viewTeacherRecord()
+    {
+        $menu = new MenuModel();
+        $menus = $menu->getMenuTree();
+        $main_menu = $menus[0]['sub_menu'];
+        $this->assign('main_menu',$main_menu);
+        $this->display("viewTeacherRecord");
+    }
+
+    public function getTeacherLeaveList()
+    {
+        $type = @$_POST['typ'];
+        $return = array();
+        if($type == 'json')
+        {
+            $tleave = new TeacherLeaveModel();
+            $tleave_list = $tleave->getTeacherLeave(array(),array("id"=>"DESC"));
+
+            $leader = new LeaderModel();
+            $leader_list = $leader->getAssocList();
+
+            $status_array = array(
+                    "4"=>"<a href='javascript:void(0);' class='check'>审核</a>",
+                    "5"=>"<span style='color:green;'>已完成</span>",
+                    "7"=>"<span style='color:red;'>已退回</span>"
+                );
+            foreach($tleave_list as $key=>$val)
+            {
+                $tleave_list[$key]['teacher_name'] = $leader_list[$val['teacher_id']]['name'];
+                $tleave_list[$key]['status_text'] = $status_array[$val['status']];
+                if(empty($val['auditby']))
+                {
+                    $tleave_list[$key]['auditby'] = "";
+                }
+                if(empty($val['auditby_note']))
+                {
+                    $tleave_list[$key]['auditby_note'] = "";
+                }
+            }
+            if(!empty($tleave_list))
+            {
+                $return['status']   = 'success';
+                $return['content']  = $tleave_list;
+            }
+            else
+            {
+                $return['status']   = 'failure';
+                $return['content']  = '暂无数据！';
+            }
+        }
+        else
+        {
+            $return['status']   = 'failure';
+            $return['content']  = '协议内容错误！';
+        }
+        $this->ajaxReturn($return);
+    }
+
+
+    public function agreeTeacherLeave()
+    {
+    	$type = @$_POST['typ'];
+    	$return = array();
+    	if($type == 'json')
+    	{
+    		$tleave = new TeacherLeaveModel();
+    		$id = $_POST['id'];
+    		if(empty($id))
+    		{
+    			$return['status']	= 'failure';
+    			$return['content']	= '传值错误！';
+    		}
+    		else
+    		{
+    			$edit_row = array();
+    			$edit_row['auditby']		= $_COOKIE['auser'];
+    			$edit_row['auditby_note']	= $_POST['reason'];
+    			$edit_row['status']			= $_POST['status'];
+    			$tleave->startTrans();
+    			$res = $tleave->editTeacherLeave($id,$edit_row);
+
+    			$tleave_info = $tleave->getTeacherLeave(array("id"=>$id));
+                $leader = new LeaderModel();
+                $lid = $tleave_info[0]['teacher_id'];
+                $leader_info = $leader->getLeader(array("id"=>$lid));
+                $photo = $leader_info[0]['photo'];
+                $img = explode(",",$photo)[1];
+                $img1 = str_replace(array("\r\n", "\r", "\n"), "", $img);
+
+    			$fff = array();
+                $fff['content']['name'] = $leader_info[0]['name'];
+                $fff['fin'] = 1;
+                $fff['action'] = "person_add";
+                $fff['content']['bdate'] = $tleave_info[0]['begin_date']."至".$tleave_info[0]['end_date'];
+                $fff['content']['img'] = $img1;
+                $ddd = json_encode($fff);
+
+                $redis = new \Redis();
+                $res0 = $redis->connect("192.168.1.234",6379);
+                $res1 = $redis->publish("face_door",$ddd);
+                if($res && $res1)
+                {
+                	$tleave->commit();
+                	$return['status']	= 'success';
+                	$return['content']	= '操作成功！';
+                }
+                else
+                {
+                	$tleave->rollback();
+                	$return['status']	= 'failure';
+                	$return['content']	= '操作失败！';
+                }
+    		}
+    	}
+    	else
+    	{
+    		$return['status']	= 'failure';
+    		$return['content']	= '协议内容错误！';
+    	}
+    	$this->ajaxReturn($return);
+    }
+
+    public function disagreeTeacherLeave()
+    {
+    	$type = @$_POST['typ'];
+    	$return = array();
+    	if($type == 'json')
+    	{
+    		$id = $_POST['id'];
+    		if(empty($id))
+    		{
+    			$return['status']	= 'failure';
+    			$return['content']	= '传值错误！';
+    		}
+    		else
+    		{
+    			$tleave = new TeacherLeaveModel();
+    			$edit_row = array();
+    			$edit_row['auditby_note']	= $_POST['reason'];
+    			$edit_row['auditby']		= $_COOKIE['auser'];
+    			$edit_row['status']			= $_POST['status'];
+
+    			$res = $tleave->editTeacherLeave($id,$edit_row);
+    			if($res)
+    			{
+    				$return['status']	= 'success';
+    				$return['content']	= '操作成功！';
+    			}
+    			else
+    			{
+    				$return['status']	= 'failure';
+    				$return['content']	= '操作失败！';
+    			}
+    		}
+    	}
+    	else
+    	{
+    		$return['status']	= 'failure';
+    		$return['content']	= '协议内容错误！';
+    	}
+    	$this->ajaxReturn($return);
     }
    
 }
