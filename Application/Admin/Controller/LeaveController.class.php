@@ -9,6 +9,7 @@ use Home\Model\ClassModel;
 use Admin\Model\ClassYearModel;
 use Admin\Model\ConfigModel;
 use Home\Model\ManageModel;
+use Home\Model\MemberModel;
 use Home\Model\TeacherLeaveModel;
 use Admin\Model\LeaderModel;
 require_once(COMMON_PATH."/Common/function.php");
@@ -583,6 +584,13 @@ class LeaveController extends Controller{
         $this->assign('main_menu',$main_menu);
         $this->display("viewTeacherRecord");
     }
+    public function getHostIp()
+    {
+        $config = new ConfigModel();
+        $config_info = $config->getConfig(array("name"=>"host_ip"));
+        $host_ip = $config_info[0]['value'];
+        return $host_ip;
+    }
 
     public function getTeacherLeaveList()
     {
@@ -669,11 +677,12 @@ class LeaveController extends Controller{
                 $fff['fin'] = 1;
                 $fff['action'] = "person_add";
                 $fff['content']['bdate'] = $tleave_info[0]['begin_date']."至".$tleave_info[0]['end_date'];
+                $fff['content']['classes'] = "无";
                 $fff['content']['img'] = $img1;
                 $ddd = json_encode($fff);
-
+                $host_ip = $this->getHostIp();
                 $redis = new \Redis();
-                $res0 = $redis->connect("192.168.1.234",6379);
+                $res0 = $redis->connect($host_ip,6379);
                 $res1 = $redis->publish("face_door",$ddd);
                 if($res && $res1)
                 {

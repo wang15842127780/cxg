@@ -35,168 +35,121 @@
 		<div id="home" style='overflow:auto;'>
 			
 <style type="text/css">
-	#show_box{
-		position:absolute;
-		height:250px;
-		width:300px;
+	table{
+		border-collapse:collapse;
+		margin-left:30px;
+		margin-top:20px;
+	}
+	td{
+		min-width:140px;
+		height:45px;
+		font-size:18px;
+		border:1px solid black;
+		line-height:45px;
 		text-align:center;
-		background:#fff;
-		left:600px;
-		top:230px;
-		display:none;
+	}
+	th{
+		border:1px solid black;
+		height:46px;
+	}
+	#cond{
+		padding-left:50px;
+		background:#ccc;
+		width:100%;
+		text-align:left;
+		height:35px;
+		line-height:35px;
+	}
+	th{
+		min-width:140px;
+	}
+	.p{
+		font-size:17px;
+		margin-top:20px;
+		color:#3dff00;
+	}
+	.close{
+		float:right;
+		width:19px;
 	}
 </style>
+<span id="add_manage">
 <br>
-<?php if($user_type != 1): ?><h1 class="tt_h1">我的请假记录</h1>
+<h1 class="tt_h1">新增请假信息</h1>
+<p class="p">开始时间：<input class="sang_Calender" type="text" name="stime" value="" placeholder="请选择" readonly="" style="width:130px;"></p>
+<p class="p">结束时间：<input class="sang_Calender" type="text" name="etime" value="" placeholder="请选择" readonly="" style="width:130px;"></p>
+<p class="p" style="vertical-align:top;"><textarea name="" id="reason" cols="30" rows="10" placeHolder="请输入请假原因"></textarea> </p>
+<br>
+<p>
+	<button class="confirm-btn">提交</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<button class="cancel-btn">取消</button>
+</p>
+<!-- <?php if($_COOKIE['leader']== 1): ?><div style="position:fixed;border:1px solid #ccc;right:0;top:200px;width:210px;height:140px;color:#0070ff;">
+		<p style="text-align:left;padding-left:5px;">提示：<button class="close">X</button></p><br>
+		1.请假5天以内由主任审批。<br><br>
+		2.请假5天以上由校长审批。
+	</div>
 <?php else: ?>
-	<h1 class="tt_h1">教师请假记录</h1><?php endif; ?>
-<br>
-<?php if($user_type != 1): ?><button id="add-btn" style="background:orange;width:75px;height:25px;border-radius:5px;display:block;margin-top:-20px;margin-left:50px;">+请假申请</button><?php endif; ?>
-<?php if($_COOKIE['leader']== 1): ?><button id="group-btn" style="background:orange;width:75px;height:25px;border-radius:5px;display:block;margin-top:-25px;margin-left:150px;">组员管理</button><?php endif; ?>
-<br>
-<table id="table" style="display:none;">
-	<tr class="tb_tr_th">
-		<th>ID</th>
-		<th>姓名</th>
-		<th>请假理由</th>
-		<th>开始时间</th>
-		<th>结束时间</th>
-		<th>审批人</th>
-		<th>审批意见</th>
-		<th>状态</th>
-	</tr>
-	</foreach>
-</table>
-<div id="shell" style="position:absolute;top:0;left:0;right:0;bottom:-200px;background:#ccc;opacity:0.7;display:none;">
-	
-</div>
-<div id="show_box">
-	<p style="margin-top:10px;margin-bottom:20px;">请假人：<span id="pp"></span></p>
-	<textarea name="" id="refuse" cols="30" rows="8"></textarea>
-	<br>
-	<br>
-	<p>
-		<button class="confirm-btn">同意</button>&nbsp;&nbsp;&nbsp;&nbsp;
-		<button class="cancel-btn">拒绝</button>
-	</p>
-</div>
-<input type="hidden" id="hid">
+	<div style="position:fixed;border:1px solid #ccc;right:0;top:200px;width:210px;height:170px;color:#0070ff;">
+		<p style="text-align:left;padding-left:5px;">提示：<button class="close">X</button></p><br>
+		1.请假1天以内由组长审批。<br><br>
+		2.请假5天以为由主任审批。<br><br>
+		3.请假5天以上同校长审批。
+	</div><?php endif; ?> -->
+
 <script type="text/javascript" src="/cxg/Public/js/datetime.js"></script>
 <script type="text/javascript">
-	window.getRecord = function()
-	{
-		var url = "index.php?m=Home&c=Leave&a=getMyselfLeaveRecord";
-		var data = {typ:'json'};
-		var res = ajax(url,data);
-		if(res.status == 'success')
-		{
-			$("#table").show();
-			var field = Array();
-			field[0] = 'id';
-			field[1] = 'teacher_name';
-			field[2] = 'reason';
-			field[3] = 'begin_date';
-			field[4] = 'end_date';
-			field[5] = 'auditby';
-			field[6] = 'auditby_note';
-			field[7] = 'status_text';
-			listPage(res.content,1,10,field);
-		}
-		else
-		{
-			tips(res.content,2);
-		}
-	}
-	setTimeout("getRecord();",300);
-	$("#add-btn").click(function()
-	{
-		window.location.href = "index.php?m=Home&c=Leave&a=index&id=64.68";
-	})
-
-	$("#group-btn").click(function()
-	{
-		var url = "index.php?m=Home&c=Leave&a=getGroupLeave";
-		var data = {typ:'json'};
-		var res = ajax(url,data);
-		if(res.status == 'success')
-		{
-			$("#table").show();
-			var field = Array();
-			field[0] = 'id';
-			field[1] = 'name';
-			field[2] = 'start_time';
-			field[3] = 'end_time';
-			field[4] = 'reason';
-			field[5] = 'status_text';
-			field[6] = 'refuse';
-			field[7] = 'agree';
-			listPage(res.content,1,10,field);
-		}
-		else
-		{
-			tips(res.content,2);
-		}
-	})
-
-	$(".verify").live("click",function()
-	{
-		var id = $(this).attr('sign');
-		$("#hid").val(id);
-		var name = $(this).parents("tr").find("td:eq(1)").html();
-		$("#pp").val(name);
-		$("#shell").show();
-		$("#show_box").show();
-	})
-
 	$(".confirm-btn").click(function()
 	{
-		var url = 'index.php?m=Home&c=Leave&a=agreeLeave';
-		var id = $("#hid").val();
-		if($.trim(id) == '')
+		var stime = $("input[name='stime']").val();
+		if($.trim(stime) == '')
 		{
-			window.location.reload();
+			tips('开始时间不能为空！',2);
+			return;
 		}
-		var data = {id:id,typ:'json'};
+		var etime = $("input[name='etime']").val();
+		if($.trim(etime) == '')
+		{
+			tips('结束时间不能为空！',2);
+			return;
+		}
+		var reason = $("#reason").val();
+		if($.trim(reason) == '')
+		{
+			tips('请假原因不能为空！',2);
+			return;
+		}
+		if(stime > etime)
+		{
+			tips("开始时间不能大于结束时间！");
+			return;
+		}
+		var url = "index.php?m=Home&c=Leave&a=addMyselfLeave";
+		var data = {stime:stime,etime:etime,reason:reason,typ:'json'};
 		var res = ajax(url,data);
 		if(res.status == 'success')
 		{
 			tips(res.content,1);
-			setTimeout('window.location.reload();',500);
+			setTimeout("window.location.href='index.php?m=Home&c=Leave&a=index&id=64.66'",500);
 		}
 		else
 		{
 			tips(res.content,2);
 		}
 	})
+
 
 	$(".cancel-btn").click(function()
 	{
-		var id = $("#hid").val();
-		if($.trim(id) == '')
-		{
-			window.location.reload();
-		}
-		var refuse = $("#refuse").val();
-		if($.trim(refuse) == '')
-		{
-			tips('拒绝理由不能为空！');
-			return;
-		}
-		var url = 'index.php?m=Home&c=Leave&a=refuseLeave';
-		var data = {id:id,refuse:refuse,typ:'json'};
-		var res = ajax(url,data);
-		if(res.status == 'success')
-		{
-			tips(res.content,1);
-			setTimeout("window.location.reload();",500);
-		}
-		else
-		{
-			tips(res.content,2);
-		}
+		window.location.href = 'index.php?m=Home&c=Leave&a=index&id=64.66';
 	})
-</script>
 
+	$(".close").click(function()
+	{
+		$(this).parent().parent().remove();
+	})
+
+</script>
 
 		</div>
 

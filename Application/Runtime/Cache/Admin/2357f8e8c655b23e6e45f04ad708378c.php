@@ -184,7 +184,7 @@
 	</select> &nbsp;&nbsp;
 	<button class="search"><i class="search-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查找</button>
 </p>
-<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加教师信息</button><button class="export-btn1"><i class="export-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;导出学生照片</button></p>
+<p style="text-align:right;display:inline-block;width:50%;"><button class="add-btn"><i class="add-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加教师信息</button><button class="export-btn1"><i class="export-btn-img"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;导出教师照片</button></p>
 <br>
 <div id="con_div">
 	<table id="table" class="new_table">

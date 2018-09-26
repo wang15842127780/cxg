@@ -1,11 +1,15 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+use Think\Cache\Driver\Redis;
 use Home\Model\MemberModel;
 use Home\Model\ManageModel;
 use Home\Model\ClassModel;
 use Home\Model\StudentModel;
 use Home\Model\StudentLeaveModel;
+use Home\Model\TeacherLeaveModel;
+
+use Admin\Model\ConfigModel;
 use Admin\Model\ClassYearModel;
 use Admin\Model\LeaderModel;
 
@@ -35,6 +39,7 @@ class AndroidController extends Controller{
 			$res = $member->getMember($cond);
 			if($res)
 			{
+				$ptype = $res[0]['type'];
 				//1是否年级主任
 				$manage = new ManageModel();
 				$manage_info = $manage->getManage(array("name"=>$name));
@@ -50,16 +55,28 @@ class AndroidController extends Controller{
 				$admin_id = $manage_info[0]['id'];
 				$year = new ClassYearModel();
 				$year_info = $year->getClassYear(array("director_id"=>$admin_id));
-				if(!empty($year_info)){
+				// if(!empty($year_info)){
+				// 	$power = 0;
+				// }else if(in_array(6,$power_arr)){
+				// 	$power = 2;
+				// }else if(!empty($class_info)){
+				// 	$power = 1;
+				// }else{
+				// 	$power = 10;
+				// }
+				if($ptype == 1)
+				{
 					$power = 0;
-				}else if(in_array(6,$power_arr)){
-					$power = 2;
-				}else if(!empty($class_info)){
+				}
+				else if($ptype == 2)
+				{
 					$power = 1;
-				}else{
+				}
+				else
+				{
 					$power = 10;
 				}
-				$ret = "success".",".$res[0]['id'].",".$power;
+				$ret = "success".",".$res[0]['id'].",".$power.",".$res[0]['nick'];
 			}
 			else
 			{
@@ -106,6 +123,7 @@ class AndroidController extends Controller{
 				$mid = $manage_info[0]['id'];
 				$year = new ClassYearModel();
 				$year_info = $year->getClassYear(array("director_id"=>$mid));
+				$page = $_GET['page'];
 				if(!empty($class_info))
 				{
 					$class_id = $class_info[0]['id'];
@@ -117,7 +135,7 @@ class AndroidController extends Controller{
 					$cond = array();
 					$cond['student_id'] = array("IN",$ids);
 					$leave = new StudentLeaveModel();
-					$leave_list = $leave->getStudentLeave($cond,array("id"=>"desc"));
+					$leave_list = $leave->getStudentLeave($cond,array("id"=>"desc"),$page,20);
 				}
 				elseif(!empty($leader_info) || !empty($year_info))
 				{
@@ -131,12 +149,12 @@ class AndroidController extends Controller{
 						$cond['year_id'] = $year_info[0]['id'];
 					}
 					$leave = new StudentLeaveModel();
-					$leave_list = $leave->getStudentLeave($cond,array("id"=>"desc"));
+					$leave_list = $leave->getStudentLeave($cond,array("id"=>"desc"),$page,20);
 				}
 				else
 				{
 					$leave = new StudentLeaveModel();
-					$leave_list = $leave->getStudentLeave(array(),array("id"=>"desc"));
+					$leave_list = $leave->getStudentLeave(array(),array("id"=>"desc"),$page,20);
 				}
 				$student = new StudentModel();
 				// $student_assoc_list = $student->getAssocStudent();
@@ -571,6 +589,7 @@ class AndroidController extends Controller{
 			else
 			{
 				$leave = new StudentLeaveModel();
+				$leave->startTrans();
 				$cond = array();
 				$cond['student_id'] = $sid;
 				$cond['reason']		= $_GET['reason'];
@@ -578,11 +597,38 @@ class AndroidController extends Controller{
 				$cond['end_date']	= $_GET['etime'];
 				$cond['director_note'] = $_GET['leaderNote'];
 				$cond['createby']	= $this->getLeaderNameByLeaderId($uid);
-				$cond['status']		= 3;
+				$cond['status']		= 5;
 				$cond['leader']		= $this->getTeacherNameByStudentId($sid);
 				$cond['year_id']	= $this->getClassIdByStudentId($sid);
 				$res = $leave->addStudentLeave($cond);
-				if($res)
+
+				//拼接数据
+				$student = new StudentModel();
+				$student_info = $student->getStudent(array("id"=>$sid));
+				$photo = $student_info[0]['photo'];
+                $img = explode(",",$photo)[1];
+                $img1 = str_replace(array("\r\n", "\r", "\n"), "", $img);
+                $cid = $student_info[0]['class_id'];
+                $date = $cond['begin_date']."至".$cond['end_date'];
+                $class = new ClassModel();
+                $class_list = $class->getAssocClass();
+                $fff = array();
+	            $fff['content']['name'] = $student_info[0]['name'];
+	            $fff['fin'] = 1;
+	            $fff['action'] = "person_add";
+	            $fff['content']['classes'] = $class_list[$cid]['name'];
+	            $fff['content']['bdate'] = $date;
+	            $fff['content']['img'] = $img1;
+	            $ddd = json_encode($fff);
+
+				//redis发送数据
+				$config = new ConfigModel();
+				$config_info = $config->getConfig(array("name"=>"host_ip"));
+				$host_ip = $config_info[0]['value'];
+				$redis = new \Redis();
+				$redis->connect($host_ip,6379);
+				$res1 = $redis->publish("face_door",$ddd);
+				if($res && $res1)
 				{
 					$return['status']	= 'success';
 					$return['content']	= '添加成功！';
@@ -630,6 +676,320 @@ class AndroidController extends Controller{
 		$member_info = $member->getMember(array("id"=>$id));
 		$name = $member_info[0]['nick'];
 		return $name;
+	}
+
+//===================================================================================================================
+	//根据member_id获取leader_id
+	public function getLidByMid($id)
+	{
+		$member = new MemberModel();
+		$leader = new LeaderModel();
+		$member_info = $member->getMember(array("id"=>$id));
+		$uname = $member_info[0]['name'];
+		$leader_info = $leader->getLeader(array("uname"=>$uname));
+		$lid = $leader_info[0]['id'];
+		return $lid;
+	}
+
+	public function getHostIp()
+	{
+		$config = new ConfigModel();
+		$config_info = $config->getConfig(array("name"=>"host_ip"));
+		$host_ip = $config_info[0]['value'];
+		return $host_ip;
+	}
+
+	//教师请假部分   获取教师请假信息
+	public function getTeacherLeaveList()
+	{
+		$type = $_GET['types'];
+		$return = array();
+		if($type == 'json')
+		{
+			$id = $_GET['userId'];
+			if(empty($id))
+			{
+				$return['status']	= 'failure';
+				$return['content']	= '传值错误！';
+			}
+			else
+			{
+				$member = new MemberModel();
+				$leader = new LeaderModel();
+				$year = new ClassYearModel();
+				$tleave = new TeacherLeaveModel();
+				$member_info = $member->getMember(array("id"=>$id));
+				$ptype = $member_info[0]['type'];
+				$status_array = array(
+					"4"=>"待审核",
+					"5"=>"已通过",
+					"7"=>"已退回"
+				);
+				if($ptype == 1)
+				{
+					//获取最新的请假信息   所有教师的   未审核优先
+					$order = array();
+					$order['status'] = "ASC";
+					$order['id'] = "DESC";
+					$tleave_list = $tleave->getTeacherLeave(array(),$order,1,20);
+					if(!empty($tleave_list))
+					{
+						//查找教师的信息
+						$lids = array();
+						foreach($tleave_list as $key=>$val)
+						{
+							//去掉前20条的重复数据
+							if(!in_array($val['teacher_id'],$lids))
+							{
+								$lids[] = $val['teacher_id'];
+							}
+						}
+						//获取教师的信息
+						$lcond = array();
+						$lcond['id'] = array("IN",$lids);
+						$leader_list = $leader->getLeader($lcond);
+						$new_leader_list = array();
+						foreach($leader_list as $k=>$v)
+						{
+							$new_leader_list[$v['id']] = $v;
+						}
+
+						//拼接数据
+						foreach($tleave_list as $kk=>$vv)
+						{
+							$tleave_list[$kk]['name_text'] = $new_leader_list[$vv['teacher_id']]['name'];
+							$img = $new_leader_list[$vv['teacher_id']]['photo'];
+							$img1 = explode(",",$img)[1];
+							$tleave_list[$kk]['photo_text'] = $img1;
+							$tleave_list[$kk]['status_text'] = $status_array[$vv['status']];
+						}
+
+						$return['status']	= 'success';
+						$return['content']	= $tleave_list;
+					}
+					else
+					{
+						$return['status']	= 'failure';
+						$return['content']	= '暂无请假数据！';
+					}
+				}
+				else if($ptype == 2)
+				{
+					$lid = $this->getLidByMid($id);
+					$leader_info = $leader->getLeader(array("id"=>$lid));
+					$img = $leader_info[0]['photo'];
+					$img1 = explode(",",$img)[1];
+					//获取最新的20条请假信息
+					$cond = array();
+					$cond['teacher_id'] = $lid;
+					$tleave_list = $tleave->getTeacherLeave($cond,array("id"=>"DESC"),1,20);
+					if(!empty($tleave_list))
+					{
+						foreach($tleave_list as $key=>$val)
+						{
+							$tleave_list[$key]['status_text'] = $status_array[$val['status']];
+						}
+						$return['status']	= 'success';
+						$return['content']['list']	= $tleave_list;
+						$return['content']['name_text'] = $leader_info[0]['name'];
+						$return['content']['photo_text'] = $img1;
+					}
+					else
+					{
+						$return['status']	= 'success';
+						$return['content']['list'] = array();
+						$return['content']['name_text'] = $leader_info[0]['name'];
+						$return['content']['photo_text'] = $img1;
+					}
+				}
+				else
+				{
+					// var_dump("其他人员");
+					$return['status']	= 'failure';
+					$return['content']	= '暂未开通请假功能！';
+				}
+			}
+		}
+		else
+		{
+			$return['status']	= 'failure';
+			$return['content']	= '协议内容有误！';
+		}
+		echo json_encode($return);
+	}
+
+	//教师请假
+	public function addMyLeave()
+	{
+		$type = @$_GET['types'];
+		$return = array();
+		if($type == 'json')
+		{
+			$mid = $_GET['userId'];
+			if(empty($mid))
+			{
+				$return['status']	= 'failure';
+				$return['content']	= '传值错误！';
+			}
+			else
+			{
+				$tleave = new TeacherLeaveModel();
+				$leader = new LeaderModel();
+				$lid = $this->getLidByMid($mid);
+				$leader_info = $leader->getLeader(array("id"=>$lid));
+				$add_row = array();
+				$add_row['teacher_id']	= $lid;
+				$add_row['reason']		= $_GET['reason'];
+				$add_row['begin_date']	= $_GET['stime'];
+				$add_row['end_date']	= $_GET['etime'];
+				$add_row['status']		= 4;
+				$res = $tleave->addTeacherLeave($add_row);
+				if($res)
+				{
+					$return['status']	= 'success';
+					$return['content']	= '操作成功！';
+				}
+				else
+				{
+					$return['status']	= 'failure';
+					$return['content']	= '操作失败！';
+				}
+
+			}
+		}
+		else
+		{
+			$return['status']	= 'failure';
+			$return['content']	= '协议内容有误！';
+		}
+		echo json_encode($return);
+	}
+
+	public function agreeTeacherLeave()
+	{
+		$type = @$_GET['types'];
+		$return = array();
+		if($type == 'json')
+		{
+			$uid = $_GET['userId'];
+			$tlid = $_GET['tlid'];
+			if(empty($uid) || empty($tlid))
+			{
+				$return['status']	= 'failure';
+				$return['content']	= '传值错误！';
+			}
+			else
+			{
+				$tleave = new TeacherLeaveModel();
+				$member = new MemberModel();
+				$leader = new Leadermodel();
+
+				//获取审批人信息
+				$member_info = $member->getMember(array("id"=>$uid));
+				$nick = $member_info[0]['nick'];
+
+				//获取受审人的信息
+				$tleave_info = $tleave->getTeacherLeave(array("id"=>$tlid));
+				$linfo = $leader->getLeader(array("id"=>$tlid));
+
+				//开启事务，更新数据库以及发送redis
+				$tleave->startTrans();
+				$edit_row = array();
+				$edit_row['auditby']		= $nick;
+				$edit_row['auditby_note']	= "同意";
+				$edit_row['status']			= 5;
+				$res = $tleave->editTeacherLeave($tlid,$edit_row);
+
+				$host_ip = $this->getHostIp();
+				$img = $linfo[0]['photo'];
+				$img1 = explode(",",$img)[1];
+				$img2 = str_replace(array("\r\n", "\r", "\n"), "", $img1);
+				$fff = array();
+				$fff['fin'] = 1;
+				$fff['action']	= 'person_add';
+				$fff['content']['name']	= $linfo[0]['name'];
+				$fff['content']['classes'] = '无';
+				$fff['content']['bdate'] = $tleave_info[0]['begin_date']."至".$tleave_info[0]['end_date'];
+				$fff['content']['img'] = $img1;
+				$aaa = json_encode($fff);
+				$redis = new \Redis();
+				$redis->connect($host_ip,6379);
+				$res1 = $redis->publish("face_door",$aaa);
+				if($res && $res1)
+				{
+					$tleave->commit();
+					$return['status']	= 'success';
+					$return['content']	= '操作成功！';
+				}
+				else
+				{
+					$tleave->rollback();
+					$return['status']	= 'failure';
+					$return['content']	= '操作失败！';
+				}
+
+			}
+		}
+		else
+		{
+			$return['status']	= 'failure';
+			$return['content']	= '协议内容有误！';
+		}
+		echo json_encode($return);
+	}
+
+	public function disagreeTeacherLeave()
+	{
+		$type = @$_GET['types'];
+		$return = array();
+		if($type == 'json')
+		{
+			$uid = $_GET['userId'];
+			$tlid = $_GET['tlid'];
+			if(empty($uid) || empty($tlid))
+			{
+				$return['status']	= 'failure';
+				$return['content']	= '传值错误！';
+			}
+			else
+			{
+				$tleave = new TeacherLeaveModel();
+				$member = new MemberModel();
+				$leader = new Leadermodel();
+
+				//获取审批人信息
+				$member_info = $member->getMember(array("id"=>$uid));
+				$nick = $member_info[0]['nick'];
+
+				//获取受审人的信息
+				$tleave_info = $tleave->getTeacherLeave(array("id"=>$tlid));
+				$linfo = $leader->getLeader(array("id"=>$tlid));
+
+				//更新数据库
+				$edit_row = array();
+				$edit_row['auditby']		= $nick;
+				$edit_row['auditby_note']	= "拒绝";
+				$edit_row['status']			= 7;
+				$res = $tleave->editTeacherLeave($tlid,$edit_row);
+				if($res)
+				{
+					$return['status']	= 'success';
+					$return['content']	= '操作成功！';
+				}
+				else
+				{
+					$return['status']	= 'failure';
+					$return['content']	= '操作失败！';
+				}
+
+			}
+		}
+		else
+		{
+			$return['status']	= 'failure';
+			$return['content']	= '协议内容有误！';
+		}
+		echo json_encode($return);
 	}
 
 }

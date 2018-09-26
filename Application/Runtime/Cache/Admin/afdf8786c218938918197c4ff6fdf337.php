@@ -176,7 +176,7 @@
 	}
 </style>
 <br>
-<h1 class="tt_h1">位置：访客管理>访客记录</h1>
+<h1 class="tt_h1">位置：访客管理>校外人员来访记录</h1>
 <p style="display:inline-block;width:45%;padding-left:30px;">
 	教师姓名：<input type="text" id="sname">&nbsp;&nbsp;
 	访客电话：<input type="text" id="sphone"> &nbsp;&nbsp;
@@ -189,8 +189,8 @@
 			<th>ID</th>
 			<th>创建人</th>
 			<th>来访时间</th>
-			<th>实际时间</th>
-			<th>邀请方式</th>
+			<th style="width:210px;">实际时间</th>
+			<th style="width:200px;">邀请方式</th>
 		</tr>
 	</table>
 </div>
@@ -219,16 +219,7 @@
 			field[3] = 'true_time';
 			field[4] = 'way';
 			var lists = res.content;
-			if(res.leader == 1)
-			{
-				listPage(lists,1,15,field);
-			}
-			else
-			{
-				field[5] = 'act_text';
-				$(".add-btn").hide();
-				listPage(lists,1,15,field);
-			}
+			listPage(lists,1,15,field);
 		}
 		else
 		{
@@ -241,8 +232,8 @@
 	$(".search").click(function()
 	{
 		var sname = $("#sname").val();
-		var syear = $("#syear").val();
-		var cond = {sname:sname,syear:syear};
+		var sphone = $("#sphone").val();
+		var cond = {sname:sname,sphone:sphone};
 		getList(cond);
 	})
 	setTimeout("getList();",500);

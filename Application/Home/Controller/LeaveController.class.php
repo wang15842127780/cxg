@@ -12,6 +12,7 @@ use Home\Model\MemberModel;
 use Home\Model\ManageModel;
 use Home\Model\StudentLeaveModel;
 use Home\Model\TeacherLeaveModel;
+use Admin\Model\ConfigModel;
 use Admin\Model\ClassYearModel;
 use Admin\Model\LeaderModel;
 require("/home/wwwroot/cxg/Public/broadMessage.php");
@@ -410,12 +411,13 @@ class LeaveController extends Controller{
                         $fff['content']['img'] = $img1;
                         $ddd = json_encode($fff);
 
+                        $config = new ConfigModel();
+                        $config_info = $config->getConfig(array("name"=>"host_ip"));
+                        $host_ip = $config_info[0]['value'];
                         $redis = new \Redis();
-                        $res0 = $redis->connect("192.168.1.234",6379);
+                        $redis->connect($host_ip,6379);
                         $res1 = $redis->publish("face_door",$ddd);
-                        // var_dump($res);
-                        // var_dump($res1);
-                        if($res1>=0 && $res)
+                        if($res1 && $res)
                         {
                             $leave->commit();
                             $return['status']   = 'success';
@@ -489,13 +491,13 @@ class LeaveController extends Controller{
 
                         //redis发送数据
                         // var_dump(111);
+                        $config = new ConfigModel();
+                        $config_info = $config->getConfig(array("name"=>"host_ip"));
+                        $host_ip = $config_info[0]['value'];
                         $redis = new \Redis();
-                        $res0 = $redis->connect("192.168.1.234",6379);
+                        $res0 = $redis->connect($host_ip,6379);
                         $res1 = $redis->publish("face_door",$ddd);
-                        // var_dump($res0);
-                        // var_dump($res1);
-                        // die;
-                        if($res1>=0 && $res)
+                        if($res1 && $res)
                         {
                             $leave->commit();
                             $return['status']   = 'success';
@@ -939,18 +941,16 @@ class LeaveController extends Controller{
     	$this->ajaxReturn($return);
     }
 
-    //根据成员表里的ID获取教师表里的ID
+    //根据member_id获取leader_id
     public function getLidByMid($id)
     {
-    	$member = new MemberModel();
-    	$leader = new LeaderModel();
-
-    	$member_info = $member->getMember(array("id"=>$id));
-    	$uname = $member_info[0]['name'];
-
-    	$leader_info = $leader->getLeader(array("uname"=>$uname));
-    	$lid = $leader_info[0]['id'];
-    	return $lid;
+        $member = new MemberModel();
+        $leader = new LeaderModel();
+        $member_info = $member->getMember(array("id"=>$id));
+        $uname = $member_info[0]['name'];
+        $leader_info = $leader->getLeader(array("uname"=>$uname));
+        $lid = $leader_info[0]['id'];
+        return $lid;
     }
 
 }
