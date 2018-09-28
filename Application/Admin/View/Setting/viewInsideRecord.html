@@ -57,6 +57,7 @@
 			<th>ID</th>
 			<th>设备名</th>
 			<th>人员信息</th>
+			<th>身份</th>
 			<th>时间</th>
 			<th>类型</th>
 		</tr>
@@ -84,8 +85,9 @@
 			field[0] = 'id';
 			field[1] = 'device_name';
 			field[2] = 'person_name';
-			field[3] = 'alarm_time';
-			field[4] = 'way';
+			field[3] = 'iden';
+			field[4] = 'alarm_time';
+			field[5] = 'way';
 			var lists = res.content;
 			listPage(lists,1,15,field);
 		}

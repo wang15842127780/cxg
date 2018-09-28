@@ -3490,28 +3490,28 @@ class SettingController extends Controller {
     	if($type == 'json')
     	{
     		$cond = array();
-    		$member = new MemberModel();
-    		$member_list = $member->getAssocMember();
-    		if(!empty($_POST['sname']))
-    		{
-    			$cond_row = array();
-    			$cond_row['nick'] = $_POST['name'];
-    			$member_info = $member->getMember($cond_row);
-    			$ids = array();
-    			foreach($member_info as $k=>$v)
-    			{
-    				$ids[] = $v['id'];
-    			}
-    			$cond['alarm_id'] = array("IN",$ids);
-    		}
+    		$leader = new LeaderModel();
+            $student = new StudentModel();
+            $student_list = $student->getAssocStudent();
+            $leader_list = $leader->getAssocList();
 
     		$main_record = new MainEntranceRecordModel();
-    		$main_record_list = $main_record->getMainEntranceRecord($cond,array("id"=>"DESC"));
+    		$main_record_list = $main_record->getMainEntranceRecord(array(),array("id"=>"DESC"),1,2000);
+            $iden = array("s"=>"学生","t"=>"教师");
     		if(!empty($main_record_list))
     		{
     			foreach($main_record_list as $key=>$val)
     			{
-    				$main_record_list[$key]['person_name'] = $member_list[$val['alarm_id']]['nick'];
+                    if($val['ptype'] == 't')
+                    {
+                        $main_record_list[$key]['person_name'] = $leader_list[$val['alarm_id']]['name'];
+                    }
+                    else
+                    {
+                        $main_record_list[$key]['person_name'] = $student_list[$val['alarm_id']]['name'];
+                    }
+    				// $main_record_list[$key]['person_name'] = $member_list[$val['alarm_id']]['nick'];
+                    $main_record_list[$key]['iden'] = $iden[$val['ptype']];
     				if($val['type'] == 'in')
     				{
     					$main_record_list[$key]['way'] = '进入';

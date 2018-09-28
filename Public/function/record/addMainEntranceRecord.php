@@ -21,10 +21,18 @@ if($type == 'json')
 		$device_name = $_GET['device_name'];
 		$t = $_GET['inout'];
 
-		$pid = @explode("_",$name)[1];
+		$aa = explode("_", $name);
+		$pid = $aa[1];
+		if($aa[2] == 't'){
+			$p = "t";
+		}else
+		{
+			$p = "s";
+		}
 
-		$sql = "INSERT INTO main_entrance_record(alarm_id,device_name,alarm_time,type) VALUES('".$pid."','".$device_name."','".date("Y-m-d H:i:s",time())."','".$t."')";
-		mysql_query($sql);
+		$sql = "INSERT INTO main_entrance_record(alarm_id,device_name,alarm_time,type,ptype) VALUES('".$pid."','".$device_name."','".date("Y-m-d H:i:s",time())."','".$t."','".$p."')";
+		$res = mysql_query($sql);
+		// echo "成功！";
 	}
 }
 else
