@@ -1,0 +1,14 @@
+[ 2018-10-16T11:39:35+08:00 ] 192.168.1.101 /cxg/
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.002420s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004659s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplace [ RunTime:0.000177s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000284s ]
+INFO: Run Behavior\ParseTemplate [ RunTime:0.025231s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.025360s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCache [ RunTime:0.001483s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001577s ]
+

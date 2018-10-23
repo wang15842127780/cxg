@@ -50,6 +50,7 @@
 		<th>ID</th>
 		<th>姓名</th>
 		<th>操作</th>
+		<th>设备名</th>
 		<th>时间</th>
 	</tr> 
 	<foreach item="lists" name="log">
@@ -57,6 +58,7 @@
 			<td>{$lists.id}</td>
 			<td>{$lists.stu_name}</td>
 			<td>{$lists.operate}</td>
+			<td>{$lists.device_name}</td>
 			<td>{$lists.datetime}</td>
 		</tr>
 	</foreach>

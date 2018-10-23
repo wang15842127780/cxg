@@ -155,7 +155,7 @@
 				<?php echo ($list["name"]); ?>
 			</th><?php endforeach; endif; ?>
 	</tr>
-	<?php $__FOR_START_1062666611__=1;$__FOR_END_1062666611__=9;for($i=$__FOR_START_1062666611__;$i < $__FOR_END_1062666611__;$i+=1){ ?><tr class="tb_tr_td">
+	<?php $__FOR_START_1472488032__=1;$__FOR_END_1472488032__=9;for($i=$__FOR_START_1472488032__;$i < $__FOR_END_1472488032__;$i+=1){ ?><tr class="tb_tr_td">
 			<td>第<?php echo ($i); ?>节</td>
 			<?php if(is_array($clist)): foreach($clist as $k=>$lists): ?><td class="syllabus">
 					<?php echo ($syllabus["$k"]["$i"]["subject_text"]); ?>/<?php echo ($syllabus["$k"]["$i"]["teacher_text"]); ?>

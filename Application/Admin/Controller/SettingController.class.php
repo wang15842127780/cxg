@@ -18,6 +18,7 @@ use Admin\Model\ClassYearModel;
 use Admin\Model\LeaderModel;
 use Admin\Model\EntryRecordModel;
 use Admin\Model\MainEntranceRecordModel;
+use Admin\Model\TeacherAttendModel;
 class SettingController extends Controller {
     public function index(){
         //身份判断
@@ -118,6 +119,9 @@ class SettingController extends Controller {
             break;
             case "79":
             $this->viewInsideRecord();
+            break;
+            case "81":
+            $this->viewTeacherAttendRecord();
             break;
             default:;
         }
@@ -3537,6 +3541,77 @@ class SettingController extends Controller {
     		$return['content']	= '协议内容有误！';
     	}
     	$this->ajaxReturn($return);
+    }
+
+    //==============================================================================================
+    //教师出勤记录
+    public function viewTeacherAttendRecord()
+    {
+        $this->display("viewTeacherAttendRecord");
+    }
+
+    public function getTeacherAttendRecord()
+    {
+        $type = @$_POST['typ'];
+        $return = array();
+        if($type == 'json')
+        {
+            $leader = new LeaderModel();
+            $attend = new TeacherAttendModel();
+
+            //获取所有的教师信息
+            $leader_list = $leader->getAssocList();
+
+            //获取今天签到的教师信息  
+            $cond = array();
+            $cond['attend_date'] = date("Y-m-d",time());
+            $attend_list = $attend->getTeacherAttend($cond);
+
+            //去重  记录下最早的签到时间    并且记下签到的人员ID
+            $newList = array();
+            $newIds = array();
+            foreach($attend_list as $k=>$v)
+            {
+                if(!in_array($v['teacher_id'],$newIds))
+                {
+                    $tid = $v['teacher_id'];
+                    $newList[$tid] = $v;
+                    $newIds[] = $tid;
+                }
+            }
+
+            //判断教师是否在签到的信息里
+            foreach($leader_list as $key=>$val)
+            {
+                if(in_array($val['id'],$newIds))
+                {
+                    $leader_list[$key]['status_text']   = '已签到';
+                    $leader_list[$key]['sign_time']     = $newList[$val['id']]['attend_time'];
+                }
+                else
+                {
+                    $leader_list[$key]['status_text']   = '未签到';
+                    $leader_list[$key]['sign_time']     = "无";
+                }
+            }
+
+            if(true)
+            {
+                $return['status']   = 'success';
+                $return['content']  = array_values($leader_list);
+            }
+            else
+            {
+                $return['status']   = 'failure';
+                $return['content']  = '无记录';
+            }
+        }
+        else
+        {
+            $return['status']   = 'failure';
+            $return['content']  = '协议内容有误！';
+        }
+        $this->ajaxReturn($return);
     }
 
 }

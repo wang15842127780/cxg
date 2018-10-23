@@ -5,6 +5,7 @@
 	<title>校园管理系统</title>
 	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
 	<link rel="stylesheet" href="/cxg/Public/css/index.css" type="text/css">
 	<style type="text/css">
 		.hide{
@@ -37,43 +38,38 @@
 <h1 class="tt_h1">查看学生信息</h1>
 <div id="cond">
 	<form action="index.php?m=Home&c=Hostel&a=index&id=2.50" method="post">
-		班级：<select name="croom" id="sclass"  style='width:60px;padding-left:5px;'>
+		楼号：<select name="sbuild"  style='width:70px;padding-left:5px;'>
+			<?php if(is_array($hostel)): foreach($hostel as $k=>$hostel): ?><option value="<?php echo ($k); ?>" <?php if($k == $bb): ?>selected<?php endif; ?> ><?php echo ($k); ?></option><?php endforeach; endif; ?>
+		</select>
+		班级：<select name="croom" id="sclass"  style='width:90px;padding-left:5px;'>
 			<option value="0">全部</option>
-			<?php if(is_array($clist)): foreach($clist as $k=>$clist): ?><option value="<?php echo ($clist["id"]); ?>" <?php if($clist["id"] == $croom): ?>selected<?php endif; ?> ><?php echo ($clist["name"]); ?></option><?php endforeach; endif; ?>
+			<?php if(is_array($clist)): foreach($clist as $k=>$clist): ?><option value="<?php echo ($clist["id"]); ?>" <?php if($clist["id"] == $aa): ?>selected<?php endif; ?> ><?php echo ($clist["name"]); ?></option><?php endforeach; endif; ?>
 		</select>
 		&nbsp;
-		姓名：<input type="text" name="cname" style="width:50px;" value="<?php echo ($_POST['cname']); ?>">
-		开始时间：<input class="sang_Calender" type="text" name="stime" value="<?php echo ($_POST['stime']); ?>" placeholder="请选择"  readonly style="width:130px;">&nbsp;
-		结束时间：<input class="sang_Calender" type="text" name="etime" value="<?php echo ($_POST['etime']); ?>" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		姓名：<input type="text" name="cname" style="width:50px;" value="<?php echo ($cc); ?>">
+		开始时间：<input class="sang_Calender" type="text" name="stime" value="<?php echo ($dd); ?>" placeholder="请选择"  readonly style="width:130px;">&nbsp;
+		结束时间：<input class="sang_Calender" type="text" name="etime" value="<?php echo ($ee); ?>" placeholder="请选择"  readonly style="width:130px;">&nbsp;
 		<input type="submit" id="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
 	</form>
 </div>
 <br>
-<?php if($hostel == ''): ?><p style="color:red;font-size:20px;">暂无统计数据</p>
-<?php else: ?>
 <table id="table">
 	<tr class="tb_tr_th">
 		<th>ID</th>
 		<th>姓名</th>
 		<th>班级</th>
 		<th>时间</th>
-		<th>类型</th>
+		<th style='width:170px;'>类型</th>
 	</tr>
-	<?php if(is_array($hostel)): foreach($hostel as $key=>$lists): ?><tr class="tb_tr_td">
+	<?php if(is_array($student_list)): foreach($student_list as $key=>$lists): ?><tr class="tb_tr_td">
 			<td><?php echo ($lists["id"]); ?></td>
-			<td><?php echo ($lists["stu_name"]); ?></td>
-			<td><?php echo ($lists["stu_class"]); ?></td>
-			<td><?php echo ($lists["time"]); ?></td>
+			<td><?php echo ($lists["name"]); ?></td>
+			<td><?php echo ($lists["class_text"]); ?></td>
+			<td><?php echo ($lists["time_text"]); ?></td>
 			<td><?php echo ($lists["type_text"]); ?></td>
 		</tr><?php endforeach; endif; ?>
-	<?php if($dlist != ''): if(is_array($dlist)): foreach($dlist as $key=>$list): ?><tr class="tb_tr_td">
-				<td><?php echo ($list["id"]); ?></td>
-				<td><?php echo ($list["stu_name"]); ?></td>
-				<td><?php echo ($list["stu_class"]); ?></td>
-				<td><?php echo ($list["time"]); ?></td>
-				<td><?php echo ($list["type_text"]); ?></td>
-			</tr><?php endforeach; endif; endif; ?>
-</table><?php endif; ?>
+</table>
+</if>
 <script type="text/javascript" src="/cxg/Public/js/datetime.js"></script>
 <script type="text/javascript">
 

@@ -99,17 +99,20 @@ class AndroidMessController extends Controller{
             $add_row['month'] = date("Y-m",time());
             $add_row['date'] = date("Y-m-d",time());
             $add_row['datetime'] = date("Y-m-d H:i:s",time());
+            $add_row['device_name'] = $_GET['deviceName'];
             $add_row['remain'] = $left;
             $res2 = $log->addCashLog($add_row);
             if($res1 && $res2)
             {
                 $student->commit();
                 $return['status']   = 'success';
+                $return['content']	= '';
             }
             else
             {
                 $student->rollBack();
                 $return['status']   = 'failure';
+                $return['content']	= '';
             }
         }
         else

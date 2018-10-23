@@ -1,0 +1,1446 @@
+[ 2018-10-12T09:58:26+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.004998s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.009260s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.040456s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.034182s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.046565s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.002489s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.013326s ]
+INFO: [ app_end ] --END-- [ RunTime:0.013460s ]
+
+[ 2018-10-12T09:58:41+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=23&deviceName=打饭设备1&cost=7
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000295s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000733s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001459s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.005827s ]
+SQL: UPDATE `student` SET `money`=915 WHERE ( id=23 ) [ RunTime:0.021982s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.028027s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (23,'孙','食堂消费7元',-7,'2018-10','2018-10-12','2018-10-12 09:58:41','打饭设备1',915) [ RunTime:0.013753s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000286s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000435s ]
+
+[ 2018-10-12T10:01:40+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000346s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000570s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002533s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.002051s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.052280s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000698s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000316s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000447s ]
+
+[ 2018-10-12T10:01:45+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=7
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000213s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000394s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002326s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.001084s ]
+SQL: UPDATE `student` SET `money`=992.99 WHERE ( id=22 ) [ RunTime:0.000930s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001726s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费7元',-7,'2018-10','2018-10-12','2018-10-12 10:01:45','打饭设备1',992.99) [ RunTime:0.000507s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000239s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000466s ]
+
+[ 2018-10-12T10:02:16+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000318s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000505s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002303s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001825s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.004571s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000720s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000227s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000335s ]
+
+[ 2018-10-12T10:10:29+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=23&deviceName=打饭设备1&cost=78
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000345s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000574s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002824s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.004693s ]
+SQL: UPDATE `student` SET `money`=837 WHERE ( id=23 ) [ RunTime:0.001303s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.000951s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (23,'孙','食堂消费78元',-78,'2018-10','2018-10-12','2018-10-12 10:10:29','打饭设备1',837) [ RunTime:0.000232s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000153s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000232s ]
+
+[ 2018-10-12T10:18:26+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000247s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000478s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002244s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001886s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.002502s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000459s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000186s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000357s ]
+
+[ 2018-10-12T11:02:36+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=23&deviceName=打饭设备1&cost=-200
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000255s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000569s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002528s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.005655s ]
+SQL: UPDATE `student` SET `money`=1037 WHERE ( id=23 ) [ RunTime:0.001490s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001297s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (23,'孙','食堂消费-200元',-0,'2018-10','2018-10-12','2018-10-12 11:02:36','打饭设备1',1037) [ RunTime:0.000385s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000230s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000334s ]
+
+[ 2018-10-12T11:02:37+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000252s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000416s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001911s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001471s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000632s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000610s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000217s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000325s ]
+
+[ 2018-10-12T11:02:43+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-200
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000194s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000544s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002030s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000823s ]
+SQL: UPDATE `student` SET `money`=1192.99 WHERE ( id=22 ) [ RunTime:0.000688s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001664s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-200元',-0,'2018-10','2018-10-12','2018-10-12 11:02:43','打饭设备1',1192.99) [ RunTime:0.000500s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000239s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000376s ]
+
+[ 2018-10-12T11:02:44+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000186s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000344s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002002s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001717s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000857s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000830s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000233s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000422s ]
+
+[ 2018-10-12T11:02:50+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-200
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000264s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000423s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002393s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.001235s ]
+SQL: UPDATE `student` SET `money`=1392.99 WHERE ( id=22 ) [ RunTime:0.000780s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001786s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-200元',-0,'2018-10','2018-10-12','2018-10-12 11:02:50','打饭设备1',1392.99) [ RunTime:0.000425s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000336s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000491s ]
+
+[ 2018-10-12T11:02:50+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000183s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000339s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002022s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001548s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000749s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000610s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000305s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000414s ]
+
+[ 2018-10-12T11:02:51+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-200
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000216s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000399s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002078s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000666s ]
+SQL: UPDATE `student` SET `money`=1592.99 WHERE ( id=22 ) [ RunTime:0.000594s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001751s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-200元',-0,'2018-10','2018-10-12','2018-10-12 11:02:51','打饭设备1',1592.99) [ RunTime:0.000420s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000319s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000465s ]
+
+[ 2018-10-12T11:02:52+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000215s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000394s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002293s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001874s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000872s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000798s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000355s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000495s ]
+
+[ 2018-10-12T11:02:53+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-200
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000307s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000491s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.003217s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000975s ]
+SQL: UPDATE `student` SET `money`=1792.99 WHERE ( id=22 ) [ RunTime:0.000807s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.002033s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-200元',-0,'2018-10','2018-10-12','2018-10-12 11:02:53','打饭设备1',1792.99) [ RunTime:0.002322s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000280s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000440s ]
+
+[ 2018-10-12T11:02:53+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000189s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000348s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001841s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001577s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000694s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000623s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000222s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000333s ]
+
+[ 2018-10-12T11:02:55+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-200
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000181s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000334s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002273s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000832s ]
+SQL: UPDATE `student` SET `money`=1992.99 WHERE ( id=22 ) [ RunTime:0.000688s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001827s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-200元',-0,'2018-10','2018-10-12','2018-10-12 11:02:55','打饭设备1',1992.99) [ RunTime:0.000505s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000376s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000532s ]
+
+[ 2018-10-12T11:02:56+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000222s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000413s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002848s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001886s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000845s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.001194s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000266s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000544s ]
+
+[ 2018-10-12T11:02:58+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-200
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000214s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000394s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002489s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000863s ]
+SQL: UPDATE `student` SET `money`=2192.99 WHERE ( id=22 ) [ RunTime:0.000786s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.002100s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-200元',-0,'2018-10','2018-10-12','2018-10-12 11:02:58','打饭设备1',2192.99) [ RunTime:0.000505s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000238s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000375s ]
+
+[ 2018-10-12T11:02:59+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000262s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000480s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002445s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001913s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000918s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000879s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000260s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000373s ]
+
+[ 2018-10-12T11:03:00+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-200
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000212s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000390s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002347s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000719s ]
+SQL: UPDATE `student` SET `money`=2392.99 WHERE ( id=22 ) [ RunTime:0.000769s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.002349s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-200元',-0,'2018-10','2018-10-12','2018-10-12 11:03:00','打饭设备1',2392.99) [ RunTime:0.000548s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000240s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000385s ]
+
+[ 2018-10-12T11:03:01+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000261s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000422s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001892s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001780s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000850s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000688s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000335s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000443s ]
+
+[ 2018-10-12T11:03:01+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-200
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000338s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000480s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001819s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000560s ]
+SQL: UPDATE `student` SET `money`=2592.99 WHERE ( id=22 ) [ RunTime:0.000621s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001570s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-200元',-0,'2018-10','2018-10-12','2018-10-12 11:03:01','打饭设备1',2592.99) [ RunTime:0.000494s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000206s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000333s ]
+
+[ 2018-10-12T11:03:02+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000213s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000392s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002119s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001674s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000840s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000973s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000234s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000461s ]
+
+[ 2018-10-12T11:03:13+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-2000
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000214s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000401s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002416s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000796s ]
+SQL: UPDATE `student` SET `money`=4592.99 WHERE ( id=22 ) [ RunTime:0.000829s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001852s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-2000元',-0,'2018-10','2018-10-12','2018-10-12 11:03:13','打饭设备1',4592.99) [ RunTime:0.000449s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000241s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000378s ]
+
+[ 2018-10-12T11:03:14+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000223s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000418s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002561s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001714s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000780s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000772s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000346s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000455s ]
+
+[ 2018-10-12T11:03:15+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-2000
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000242s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000466s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002494s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000998s ]
+SQL: UPDATE `student` SET `money`=6592.99 WHERE ( id=22 ) [ RunTime:0.000894s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001715s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-2000元',-0,'2018-10','2018-10-12','2018-10-12 11:03:15','打饭设备1',6592.99) [ RunTime:0.000553s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000237s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000431s ]
+
+[ 2018-10-12T11:03:15+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000164s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000327s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001709s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001587s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000635s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000600s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000196s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000282s ]
+
+[ 2018-10-12T11:03:16+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-2000
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000214s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000395s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002283s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000623s ]
+SQL: UPDATE `student` SET `money`=8592.99 WHERE ( id=22 ) [ RunTime:0.000580s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001818s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-2000元',-0,'2018-10','2018-10-12','2018-10-12 11:03:16','打饭设备1',8592.99) [ RunTime:0.000433s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000208s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000335s ]
+
+[ 2018-10-12T11:03:17+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000224s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000423s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002477s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001886s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000773s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.001087s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000223s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000336s ]
+
+[ 2018-10-12T11:03:17+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=2000
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000261s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000492s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002601s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000888s ]
+SQL: UPDATE `student` SET `money`=6592.99 WHERE ( id=22 ) [ RunTime:0.000418s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001216s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费2000元',-2000,'2018-10','2018-10-12','2018-10-12 11:03:17','打饭设备1',6592.99) [ RunTime:0.000309s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000172s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000273s ]
+
+[ 2018-10-12T11:03:17+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000162s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000376s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001692s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001347s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000609s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000584s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000235s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000358s ]
+
+[ 2018-10-12T11:03:18+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-2000
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000355s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000570s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001971s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000664s ]
+SQL: UPDATE `student` SET `money`=8592.99 WHERE ( id=22 ) [ RunTime:0.000587s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001607s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-2000元',-0,'2018-10','2018-10-12','2018-10-12 11:03:18','打饭设备1',8592.99) [ RunTime:0.000697s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000240s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000601s ]
+
+[ 2018-10-12T11:03:19+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000187s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000346s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002029s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001721s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000851s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000725s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000270s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000538s ]
+
+[ 2018-10-12T11:03:19+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-2000
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000188s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000344s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001993s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000738s ]
+SQL: UPDATE `student` SET `money`=10592.99 WHERE ( id=22 ) [ RunTime:0.000674s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001778s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-2000元',-0,'2018-10','2018-10-12','2018-10-12 11:03:19','打饭设备1',10592.99) [ RunTime:0.000545s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000306s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000458s ]
+
+[ 2018-10-12T11:03:21+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000258s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000476s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002371s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001824s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000930s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000786s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000379s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000504s ]
+
+[ 2018-10-12T11:03:21+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-2000
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000295s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000483s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002377s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000781s ]
+SQL: UPDATE `student` SET `money`=11999.99 WHERE ( id=22 ) [ RunTime:0.000806s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.002123s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-2000元',-0,'2018-10','2018-10-12','2018-10-12 11:03:21','打饭设备1',11999.99) [ RunTime:0.000599s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000258s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000392s ]
+
+[ 2018-10-12T11:03:21+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000213s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000393s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001993s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001520s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000830s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000730s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000220s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000317s ]
+
+[ 2018-10-12T11:03:22+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=-2000
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000187s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000374s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001988s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000727s ]
+SQL: UPDATE `student` SET `money`=11999.99 WHERE ( id=22 ) [ RunTime:0.000794s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001724s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费-2000元',-0,'2018-10','2018-10-12','2018-10-12 11:03:22','打饭设备1',11999.99) [ RunTime:0.000430s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000222s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000338s ]
+
+[ 2018-10-12T11:03:23+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000270s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000604s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002326s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001867s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000867s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000933s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000367s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000494s ]
+
+[ 2018-10-12T11:03:35+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=8
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000214s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000392s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002474s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000833s ]
+SQL: UPDATE `student` SET `money`=9991.99 WHERE ( id=22 ) [ RunTime:0.000713s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.002038s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费8元',-8,'2018-10','2018-10-12','2018-10-12 11:03:35','打饭设备1',9991.99) [ RunTime:0.000561s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000157s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000249s ]
+
+[ 2018-10-12T11:03:37+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000258s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000491s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002051s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001541s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003552s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000696s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000259s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000368s ]
+
+[ 2018-10-12T11:03:45+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=23&deviceName=打饭设备1&cost=88555
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000315s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000507s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002352s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.005050s ]
+SQL: UPDATE `student` SET `money`=-87518 WHERE ( id=23 ) [ RunTime:0.002234s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001912s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (23,'孙','食堂消费88555元',-88555,'2018-10','2018-10-12','2018-10-12 11:03:45','打饭设备1',-87518) [ RunTime:0.000527s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000163s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000267s ]
+
+[ 2018-10-12T11:03:46+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000383s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000565s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002053s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001616s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003600s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000729s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000231s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000463s ]
+
+[ 2018-10-12T11:03:47+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000367s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000543s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001924s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001525s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003368s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000637s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000226s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000334s ]
+
+[ 2018-10-12T11:03:48+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000202s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000388s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001952s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001959s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003938s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000695s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000229s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000346s ]
+
+[ 2018-10-12T11:03:50+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000307s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000491s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002192s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001687s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.004051s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000682s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000359s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000477s ]
+
+[ 2018-10-12T11:03:53+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000260s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000480s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002768s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001872s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.002504s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000435s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000201s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000369s ]
+
+[ 2018-10-12T11:03:54+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000214s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000395s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002315s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001765s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.004522s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000498s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000131s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000192s ]
+
+[ 2018-10-12T11:03:54+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000389s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000580s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001961s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001552s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003856s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000807s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000319s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000434s ]
+
+[ 2018-10-12T11:03:56+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000216s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000402s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002081s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001598s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003520s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000652s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000313s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000425s ]
+
+[ 2018-10-12T11:03:56+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000258s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000474s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002824s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001868s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.004334s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000845s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000264s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000392s ]
+
+[ 2018-10-12T11:03:57+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000253s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000413s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002029s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001479s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003851s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000706s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000235s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000349s ]
+
+[ 2018-10-12T11:04:00+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000311s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000497s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002503s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001909s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.004057s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000721s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000223s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000329s ]
+
+[ 2018-10-12T11:04:01+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000184s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000336s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001978s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001483s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003563s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000682s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000200s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000298s ]
+
+[ 2018-10-12T11:04:02+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000263s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000609s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002459s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001820s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003555s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000855s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000230s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000341s ]
+
+[ 2018-10-12T11:04:03+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000313s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000473s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002058s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001479s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003459s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000693s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000224s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000331s ]
+
+[ 2018-10-12T11:04:03+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000328s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000496s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002130s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001606s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003560s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000403s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000192s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000360s ]
+
+[ 2018-10-12T11:04:04+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000215s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000398s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001948s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001583s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003424s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000606s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000227s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000338s ]
+
+[ 2018-10-12T11:04:05+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000183s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000340s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001978s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001553s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003543s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000598s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000226s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000335s ]
+
+[ 2018-10-12T11:04:05+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000185s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000344s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.004668s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001918s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003725s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000776s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000444s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000564s ]
+
+[ 2018-10-12T11:04:06+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000211s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000390s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002097s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001502s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003444s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000672s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000228s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000336s ]
+
+[ 2018-10-12T11:04:07+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000215s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000397s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002231s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001651s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003405s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000587s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000226s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000335s ]
+
+[ 2018-10-12T11:04:18+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000181s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000334s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001931s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001655s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000785s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000945s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000217s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000316s ]
+
+[ 2018-10-12T11:04:26+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=696
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000211s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000475s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002356s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000733s ]
+SQL: UPDATE `student` SET `money`=9295.99 WHERE ( id=22 ) [ RunTime:0.000607s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001848s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费696元',-696,'2018-10','2018-10-12','2018-10-12 11:04:26','打饭设备1',9295.99) [ RunTime:0.000430s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000239s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000381s ]
+
+[ 2018-10-12T11:04:35+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000259s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000485s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002303s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001891s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003475s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000668s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000226s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000332s ]
+
+[ 2018-10-12T11:04:36+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000270s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000431s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001994s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001565s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003457s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000900s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000236s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000395s ]
+
+[ 2018-10-12T11:04:37+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000184s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000338s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002099s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001999s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003839s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000779s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000357s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000476s ]
+
+[ 2018-10-12T11:10:18+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000248s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000472s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002504s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001638s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000780s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000707s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000353s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000461s ]
+
+[ 2018-10-12T11:22:45+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=9
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000249s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000478s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002259s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000695s ]
+SQL: UPDATE `student` SET `money`=9286.99 WHERE ( id=22 ) [ RunTime:0.000587s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001770s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费9元',-9,'2018-10','2018-10-12','2018-10-12 11:22:45','打饭设备1',9286.99) [ RunTime:0.000448s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000265s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000393s ]
+
+[ 2018-10-12T11:22:46+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000199s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000422s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001947s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001525s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003410s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000668s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000224s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000329s ]
+
+[ 2018-10-12T11:22:47+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000267s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000433s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002236s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001642s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003032s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000581s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000153s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000223s ]
+
+[ 2018-10-12T11:22:47+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000213s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000392s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002205s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001748s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003421s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000593s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000234s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000346s ]
+
+[ 2018-10-12T11:22:48+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000215s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000398s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002307s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001883s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.004026s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000875s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000273s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000409s ]
+
+[ 2018-10-12T11:22:49+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000307s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000489s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002484s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001500s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003616s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000744s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000360s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000473s ]
+
+[ 2018-10-12T11:22:50+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000182s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000336s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002057s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001631s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003619s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000674s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000230s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000461s ]
+
+[ 2018-10-12T11:22:50+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000271s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000432s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002152s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001576s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003737s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000678s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000354s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000465s ]
+
+[ 2018-10-12T11:23:02+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000292s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000457s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002648s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001616s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003509s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000596s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000228s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000339s ]
+
+[ 2018-10-12T11:23:03+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000186s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000367s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002241s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001668s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003514s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000424s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000230s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000311s ]
+
+[ 2018-10-12T11:23:04+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000263s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000422s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001924s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001523s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003444s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000591s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000224s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000332s ]
+
+[ 2018-10-12T11:23:04+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000187s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000344s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001970s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001620s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003554s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000640s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000349s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000435s ]
+
+[ 2018-10-12T11:23:05+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000223s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000491s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002264s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001932s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.002988s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000437s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000163s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000242s ]
+
+[ 2018-10-12T11:23:06+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000312s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000498s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002431s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001497s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003535s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000616s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000225s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000335s ]
+
+[ 2018-10-12T11:23:07+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000265s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000425s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002105s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001557s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003333s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000729s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000224s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000333s ]
+
+[ 2018-10-12T11:23:07+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000182s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000335s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001992s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001668s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003674s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000711s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000359s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000475s ]
+
+[ 2018-10-12T11:23:08+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000187s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000345s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002084s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001702s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003798s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000795s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000230s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000342s ]
+
+[ 2018-10-12T11:23:09+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000093s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000174s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001037s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.000796s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.001793s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000319s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000122s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000178s ]
+
+[ 2018-10-12T11:23:10+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000213s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000392s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002253s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001803s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003850s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000664s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000073s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000125s ]
+
+[ 2018-10-12T11:23:11+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000183s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000414s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002047s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001538s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003585s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000718s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000359s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000475s ]
+
+[ 2018-10-12T11:23:13+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000182s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000432s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001993s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001551s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003593s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000727s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000227s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000462s ]
+
+[ 2018-10-12T11:23:14+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000305s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000486s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002241s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001494s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003644s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000757s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000314s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000418s ]
+
+[ 2018-10-12T11:23:15+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000225s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000424s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002898s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001865s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.004005s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000815s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000420s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000553s ]
+
+[ 2018-10-12T11:23:15+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000293s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000479s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002428s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001630s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003613s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000717s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000343s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000467s ]
+
+[ 2018-10-12T11:23:16+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000322s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000581s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002100s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001805s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003575s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000698s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000228s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000339s ]
+
+[ 2018-10-12T11:23:19+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000223s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000486s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002421s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.002009s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000776s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000621s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000220s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000321s ]
+
+[ 2018-10-12T11:23:25+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=8
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000162s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000324s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001797s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000579s ]
+SQL: UPDATE `student` SET `money`=9278.99 WHERE ( id=22 ) [ RunTime:0.000534s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001529s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费8元',-8,'2018-10','2018-10-12','2018-10-12 11:23:25','打饭设备1',9278.99) [ RunTime:0.000453s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000211s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000333s ]
+
+[ 2018-10-12T11:23:27+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000419s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000637s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002100s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001679s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000943s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000981s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000236s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000654s ]
+
+[ 2018-10-12T11:23:33+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=8
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000086s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000162s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.000939s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000390s ]
+SQL: UPDATE `student` SET `money`=9270.99 WHERE ( id=22 ) [ RunTime:0.000341s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.000895s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费8元',-8,'2018-10','2018-10-12','2018-10-12 11:23:33','打饭设备1',9270.99) [ RunTime:0.000218s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000119s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000187s ]
+
+[ 2018-10-12T11:23:34+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000218s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000400s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.003560s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001952s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000905s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000989s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000259s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000378s ]
+
+[ 2018-10-12T11:23:41+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=8
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000213s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000486s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002154s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000772s ]
+SQL: UPDATE `student` SET `money`=9262.99 WHERE ( id=22 ) [ RunTime:0.000767s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001851s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费8元',-8,'2018-10','2018-10-12','2018-10-12 11:23:41','打饭设备1',9262.99) [ RunTime:0.001399s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000332s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000477s ]
+
+[ 2018-10-12T11:23:41+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000183s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000336s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002018s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001582s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000751s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.001568s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000227s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000330s ]
+
+[ 2018-10-12T11:23:52+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=8
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000249s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000473s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002051s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000767s ]
+SQL: UPDATE `student` SET `money`=9254.99 WHERE ( id=22 ) [ RunTime:0.000679s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001671s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费8元',-8,'2018-10','2018-10-12','2018-10-12 11:23:52','打饭设备1',9254.99) [ RunTime:0.000492s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000278s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000427s ]
+
+[ 2018-10-12T11:23:55+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=22
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000184s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000338s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001919s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001557s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000783s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000616s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000219s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000406s ]
+
+[ 2018-10-12T11:23:57+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=studentConsumeInMess&uid=22&deviceName=打饭设备1&cost=8
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000264s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000420s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.001975s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 22 ) LIMIT 0,100   [ RunTime:0.000726s ]
+SQL: UPDATE `student` SET `money`=9246.99 WHERE ( id=22 ) [ RunTime:0.000668s ]
+SQL: SHOW COLUMNS FROM `cash_log` [ RunTime:0.001662s ]
+SQL: INSERT INTO `cash_log` (`stu_id`,`stu_name`,`operate`,`cash`,`month`,`date`,`datetime`,`device_name`,`remain`) VALUES (22,'刘','食堂消费8元',-8,'2018-10','2018-10-12','2018-10-12 11:23:57','打饭设备1',9246.99) [ RunTime:0.000582s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000393s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000551s ]
+
+[ 2018-10-12T11:24:02+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000214s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000397s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002365s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001801s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003514s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000726s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000231s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000340s ]
+
+[ 2018-10-12T11:24:03+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000231s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000495s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002006s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001561s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003146s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000492s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000152s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000221s ]
+
+[ 2018-10-12T11:24:04+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000185s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000346s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002037s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001587s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003650s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000727s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000226s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000461s ]
+
+[ 2018-10-12T11:24:09+08:00 ] 192.168.1.100 /cxg/index.php?types=json&m=Home&c=AndroidMess&a=getStudentInfoById&uid=23
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCache [ RunTime:0.000223s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000487s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead /home/wwwroot/cxg/ThinkPHP/Library/Think/Db/Driver/Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `student` [ RunTime:0.002645s ]
+SQL: SHOW COLUMNS FROM `class` [ RunTime:0.001876s ]
+SQL: SELECT * FROM `student` WHERE ( `id` = 23 ) LIMIT 0,100   [ RunTime:0.003854s ]
+SQL: SELECT * FROM `class` ORDER BY `name` ASC  [ RunTime:0.000666s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTrace [ RunTime:0.000227s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000335s ]
+

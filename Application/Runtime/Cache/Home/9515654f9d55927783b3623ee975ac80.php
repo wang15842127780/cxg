@@ -41,43 +41,87 @@
 <br>
 <div id="show_div">
 	<div>
-		<img src="http://192.168.1.120/cxg/Public/images/1.jpg" style="max-width:285px;max-height:380px;float:left;margin-top:2px;margin-left:300px;">
+		<img src="http://192.168.1.200/cxg/Public/iconfont/total_white.png" id="simage" style="max-width:285px;max-height:380px;float:left;margin-top:2px;margin-left:300px;border:1px solid #ccc;">
 	</div>
 
 	<div>
-		<input type="hidden" id="sid" value="3">
-		<p style="font-size:30px;margin-top:30px;">姓名：<input type="text" style="width:80px;height:26px;border:none;vertical-align:middle;font-size:26px;" readonly="true" value="汪汪"></p>
-		<p style="font-size:30px;margin-top:30px;">余额：<input type="text" style="width:80px;height:26px;border:none;vertical-align:middle;font-size:26px;" readonly="true" value="200.00"></p>
+		<input type="hidden" id="sid" value="">
+		<p style="font-size:30px;margin-top:30px;">姓名：<input type="text" style="width:80px;height:26px;border:none;vertical-align:middle;font-size:26px;" readonly="true" id="sname"></p>
+		<p style="font-size:30px;margin-top:30px;">班级：<input type="text" style="width:80px;height:26px;border:none;vertical-align:middle;font-size:26px;" readonly="true" id="sclass"></p>
+		<p style="font-size:30px;margin-top:30px;">余额：<input type="text" style="width:80px;height:26px;border:none;vertical-align:middle;font-size:26px;" readonly="true" id="svalue"></p>
 		<p style="font-size:30px;margin-top:30px;">充值：<input type="text" style="width:80px;height:26px;vertical-align:middle;font-size:26px;" id="recharge"></p>
 		<p style="font-size:30px;margin-top:30px;"><button class="confirm-btn">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class="cancel-btn">取消</button></p>
-		<button id="test">Test</button>
 	</div>
 </div>
 	
 
 
 <script type="text/javascript">
-	window.getInfo = function()
+	using = false;
+	empty_img = "/cxg/Public/iconfont/total_white.png";
+	window.getRedisInfo = function()
 	{
-		var url = "index.php?m=Home&c=Mess&a=getInfo";
+		var url = "index.php?m=Home&c=Mess&a=getRedisInfo";
 		var data = {typ:'json'};
-		var res = ajax(url,data);
-		console.info(res);
+		$.ajax({
+			url:url,
+			data:data,
+			type:'post',
+			timeout:300000,
+			dataType:'json',
+			async:true,
+			success:function(data)
+			{
+				if(data.status == 'success')
+				{
+					var info = data.content;
+					$("#sid").val(info.id);
+					$("#simage").attr("src",info.photo);
+					$("#sname").val(info.name);
+					$("#sclass").val(info.class_text);
+					$("#svalue").val(info.money);
+					using = true;
+				}
+				else if(data.content == 'TimeOut')
+				{
+					getRedisInfo();
+				}
+				else
+				{
+					tips(data.content);
+				}
+			},
+			error:function(error){
+				console.info(error);
+			}
+		})
+	}
+	window.unsetInfo = function()
+	{
+		$("#simage").attr("src",empty_img);
+		$("#sname").val("");
+		$("#sclass").val("");
+		$("#svalue").val("");
+		$("#recharge").val("");
 	}
 	$(".cancel-btn").click(function()
 	{
-		$("#sid").val("");
-		$("#show_div").hide();
-		getInfo();
+		unsetInfo();
+		getRedisInfo();
 	})
 	$(".confirm-btn").click(function()
 	{
 		var stu_id = $("#sid").val();
 		var url = "index.php?m=Home&c=Mess&a=recharge";
 		var num = $("#recharge").val();
+		if($.trim(stu_id) == "")
+		{
+			tips("暂无充值人员信息！",2);
+			return;
+		}
 		if(num=='' || Number(num)!=num || Number(num)<=0)
 		{
-			alert('请输入正确的金额！');
+			tips("请输入正确的金额！",2);
 			return;
 		}
 		var data = {sid:stu_id,num:num,typ:'json'};
@@ -85,14 +129,15 @@
 		if(res.status == 'success')
 		{
 			tips(res.content,1);
-			$("#recharge").val("");
+			unsetInfo();
+			getRedisInfo();
 		}
 		else
 		{
 			tips(res.content,2);
 		}
 	})
-	setTimeout("$('.cancel-btn').click();",2000);
+	setTimeout("getRedisInfo();",500);
 			
 </script>
 

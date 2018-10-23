@@ -31,16 +31,20 @@ if($type == 'json')
 		{
 			$ptype = 's';
 		}
-		
-		$redis = new Redis();
-		$redis->connect("127.0.0.1",6379);
-		$info = array();
-		$info['id'] = $pid;
-		$info['inout'] = $t;
-		$redis->set("hostelInfo",json_encode($info));
+		if(!empty($pid) && $pid>0)
+		{
+			$redis = new Redis();
+			$redis->connect("127.0.0.1",6379);
+			$info = array();
+			$info['id'] = $pid;
+			$info['inout'] = $t;
+			$info['ptype'] = $ptype;
+			$redis->set("hostelInfo",json_encode($info));
 
-		$sql = "INSERT INTO hostel_entrance_record(alarm_id,device_name,alarm_time,type,ptype,record_type) VALUES('".$pid."','".$device_name."','".date("Y-m-d H:i:s",time())."','".$t."','".$ptype."','new')";
-		mysql_query($sql);
+			$sql = "INSERT INTO hostel_entrance_record(alarm_id,device_name,alarm_time,type,ptype,record_type) VALUES('".$pid."','".$device_name."','".date("Y-m-d H:i:s",time())."','".$t."','".$ptype."','new')";
+			mysql_query($sql);
+		}
+			
 	}
 }
 else

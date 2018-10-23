@@ -194,7 +194,7 @@
 						<?php else: ?>
 							<div class='content'>
 								<p style="height:30px;vertical-align:middle;">
-									<?php $__FOR_START_1248769804__=0;$__FOR_END_1248769804__=$listss["contain"];for($i=$__FOR_START_1248769804__;$i < $__FOR_END_1248769804__;$i+=1){ if($listss["num"] > $i): ?><span class="number" style="background:red;"></span>
+									<?php $__FOR_START_252491597__=0;$__FOR_END_252491597__=$listss["contain"];for($i=$__FOR_START_252491597__;$i < $__FOR_END_252491597__;$i+=1){ if($listss["num"] > $i): ?><span class="number" style="background:red;"></span>
 										<?php else: ?>
 											<span class="number" style="background:green;"></span><?php endif; } ?>
 								</p>

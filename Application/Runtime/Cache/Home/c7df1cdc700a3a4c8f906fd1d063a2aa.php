@@ -5,6 +5,7 @@
 	<title>校园管理系统</title>
 	<script type="text/javascript" src="/cxg/Public/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/cxg/Public/js/fun.js"></script>
+	<script type="text/javascript" src="/cxg/Public/js/livequery.js"></script>
 	<link rel="stylesheet" href="/cxg/Public/css/index.css" type="text/css">
 	<style type="text/css">
 		.hide{
@@ -34,139 +35,98 @@
 		<div id="home" style='overflow:auto;'>
 			
 <style type="text/css">
-	/*table{
-		border-collapse:collapse;
+	.tip_box{
+		width:100px;
+		height:40px;
+		float:left;
+	}
+	#box{
+		width:1300px;
+		border:1px solid #000;
+		border-radius:5px;
+		background:#eee;
 		margin-left:30px;
-		margin-top:10px;
-	}*/
-	/*td{
-		min-width:140px;
-		height:45px;
-		font-size:18px;
-		border:1px solid black;
-		line-height:45px;
-	}*/
-	/*.del-btn{
-		width:30px;
-		height:100%;
-		float:right;
-		cursor:pointer;
-		border-left:1px solid #aaa;
-		background:#00ff66;
-	}*/
-	/*#cond{
-		padding-left:50px;
-		background:#ccc;
-		width:100%;
+		margin-top:20px;
+		padding-left:15px;
+	}
+	.line{
+		max-width: 1300px;
+		/*background:#fff;*/
 		text-align:left;
+		margin-top:20px;
+		margin-bottom:10px;
+		padding:10px;
+	}
+	.demo_box{
+		width:80px;
+		height:60px;
+		border:1px solid #aaa;
+		border-radius:3px;
+		display:inline-block;
+		margin-left: 20px;
+		cursor:pointer;
+	}
+	.left{
+		background:#0f0;
+		display:inline-block;
+		color:#fff;
+		width:40px;
 		height:35px;
-		line-height:35px;
-	}*/
+		line-height: 35px;
+		text-align:center;
+		font-size:15px;
+	}
+	.right{
+		color:#fff;
+		/*display:inline-block;*/
+		position: absolute;
+		width:40px;
+		height:35px;
+		text-align:center;
+		background:red;
+		font-size:30px;
+		line-height: 35px;
+	}
+	h3{
+		font-size:18px;
+	}
+	h4{
+		width:79px;
+		height:25px;
+		border-bottom:1px solid black;
+		line-height: 25px;
+		text-align: center
+	}
 </style>
 <br>
-<h1 class="tt_h1">查看宿舍</h1>
+<h1 class="tt_h1">查看回舍信息</h1>
 <div id="cond">
 	<form id="form" method='post'>
-		楼号：<select name="build" id=""  style='width:50px;padding-left:5px;'>
+		楼号：<select name="build" id=""  style='width:70px;padding-left:5px;'>
 			<?php if(is_array($hostel)): foreach($hostel as $k=>$hostel): ?><option value="<?php echo ($k); ?>" <?php if($k == $bb): ?>selected<?php endif; ?> ><?php echo ($k); ?></option><?php endforeach; endif; ?>
 		</select>
-		<input type="hidden" name="hostel_id" id="hid">
 		<input type="submit" value="搜索" style="padding:1px;margin-left:10px;padding-top:0;padding-bottom:0;">
 	</form>
 </div>
 <br>
-<table id="table">
-	<?php echo ($state); ?>
-	<?php if($hlist["l1"] != ''): ?><tr id="l1">
-			<td class="tb_tr_tt">一楼</td>
-			<?php if(is_array($hlist["l1"])): foreach($hlist["l1"] as $key=>$list): ?><td title="<?php echo ($list["id"]); ?>" class='croom'>
-					<?php echo ($list["name"]); ?>
-					<span class='del-btn'>
-						<?php if($list["count"] != ''): echo ($list["count"]); else: ?>0<?php endif; ?>
-					</span>
-				</td><?php endforeach; endif; ?>
-		</tr><?php endif; ?>
-	<?php if($hlist["l2"] != ''): ?><tr id="l2">
-			<td class="tb_tr_tt">二楼</td>
-			<?php if(is_array($hlist["l2"])): foreach($hlist["l2"] as $key=>$list): ?><td title="<?php echo ($list["id"]); ?>" class='croom'>
-					<?php echo ($list["name"]); ?>
-					<span class='del-btn'>
-						<?php if($list["count"] != ''): echo ($list["count"]); else: ?>0<?php endif; ?>
-					</span>
-				</td><?php endforeach; endif; ?>
-		</tr><?php endif; ?>
-	<?php if($hlist["l3"] != ''): ?><tr id="l3">
-			<td class="tb_tr_tt">三楼</td>
-			<?php if(is_array($hlist["l3"])): foreach($hlist["l3"] as $key=>$list): ?><td title="<?php echo ($list["id"]); ?>" class='croom'>
-					<?php echo ($list["name"]); ?>
-					<span class='del-btn'>
-						<?php if($list["count"] != ''): echo ($list["count"]); else: ?>0<?php endif; ?>
-					</span>
-				</td><?php endforeach; endif; ?>
-		</tr><?php endif; ?>
-	<?php if($hlist["l4"] != ''): ?><tr id="l4">
-			<td class="tb_tr_tt">四楼</td>
-			<?php if(is_array($hlist["l4"])): foreach($hlist["l4"] as $key=>$list): ?><td title="<?php echo ($list["id"]); ?>" class='croom'>
-					<?php echo ($list["name"]); ?>
-					<span class='del-btn'>
-						<?php if($list["count"] != ''): echo ($list["count"]); else: ?>0<?php endif; ?>
-					</span>
-				</td><?php endforeach; endif; ?>
-		</tr><?php endif; ?>
-	<?php if($hlist["l5"] != ''): ?><tr id="l5">
-			<td class="tb_tr_tt">五楼</td>
-			<?php if(is_array($hlist["l5"])): foreach($hlist["l5"] as $key=>$list): ?><td title="<?php echo ($list["id"]); ?>" class='croom'>
-					<?php echo ($list["name"]); ?>
-					<span class='del-btn'>
-						<?php if($list["count"] != ''): echo ($list["count"]); else: ?>0<?php endif; ?>
-					</span>
-				</td><?php endforeach; endif; ?>
-		</tr><?php endif; ?>
-	<?php if($hlist["l6"] != ''): ?><tr id="l6">
-			<td class="tb_tr_tt">六楼</td>
-			<?php if(is_array($hlist["l6"])): foreach($hlist["l6"] as $key=>$list): ?><td title="<?php echo ($list["id"]); ?>" class='croom'>
-					<?php echo ($list["name"]); ?>
-					<span class='del-btn'>
-						<?php if($list["count"] != ''): echo ($list["count"]); else: ?>0<?php endif; ?>
-					</span>
-				</td><?php endforeach; endif; ?>
-		</tr><?php endif; ?>
-	<?php if($hlist["l7"] != ''): ?><tr id="l7">
-			<td class="tb_tr_tt">七楼</td>
-			<?php if(is_array($hlist["l7"])): foreach($hlist["l7"] as $key=>$list): ?><td title="<?php echo ($list["id"]); ?>" class='croom'>
-					<?php echo ($list["name"]); ?>
-					<span class='del-btn'>
-						<?php if($list["count"] != ''): echo ($list["count"]); else: ?>0<?php endif; ?>
-					</span>
-				</td><?php endforeach; endif; ?>
-		</tr><?php endif; ?>
-	<?php if($hlist["l8"] != ''): ?><tr id="l8">
-			<td class="tb_tr_tt">八楼</td>
-			<?php if(is_array($hlist["l8"])): foreach($hlist["l8"] as $key=>$list): ?><td title="<?php echo ($list["id"]); ?>" class='croom'>
-					<?php echo ($list["name"]); ?>
-					<span class='del-btn'>
-						<?php if($list["count"] != ''): echo ($list["count"]); else: ?>0<?php endif; ?>
-					</span>
-				</td><?php endforeach; endif; ?>
-		</tr><?php endif; ?>
-	<?php if($hlist["other"] != ''): ?><tr id="l1">
-			<td class="tb_tr_tt">其它</td>
-			<?php if(is_array($hlist["other"])): foreach($hlist["other"] as $key=>$list): ?><td title="<?php echo ($list["id"]); ?>" class='croom'>
-					<?php echo ($list["name"]); ?>
-					<span class='del-btn'>
-						<?php if($list["count"] != ''): echo ($list["count"]); else: ?>0<?php endif; ?>
-					</span>
-				</td><?php endforeach; endif; ?>
-		</tr><?php endif; ?>
-</table>
+	<h1><div style="float:left;color:red;margin-left:20px;">提示：</div><div class='tip_box'><span style="background:#0f0;display:inline-block;width:49px;height:30px;color:#fff;font-size:21px;">已回</span><span style="background:#f00;display:inline-block;width:49px;height:30px;color:#fff;font-size:21px;">未回</span></div><?php echo ($bb); ?></h1>
+<div id="box" <?php if($bb == ''): ?>style="display:none;"<?php endif; ?> >
+	<?php if(is_array($hostel_list)): foreach($hostel_list as $key=>$list): ?><div class="line">
+			<h3>第<?php echo ($key); ?>层</h3>
+			<?php if(is_array($list)): foreach($list as $key=>$lists): ?><div class="demo_box" sign="<?php echo ($lists["id"]); ?>" signs="<?php echo ($bb); ?>">
+					<h4><?php echo ($lists["no"]); ?></h4>
+					<span class='left'><?php echo ($lists["in_num"]); ?></span>
+					<span class='right'><?php echo ($lists["out_num"]); ?></span>
+				</div><?php endforeach; endif; ?>
+		</div><?php endforeach; endif; ?>
+</div>
 
 <script type="text/javascript">
-	$(".del-btn").click(function()
+	$(".demo_box").live("click",function()
 	{
-		var hid = $(this).parent().attr("title");
-		$("#form").attr("action","index.php?m=Home&c=Hostel&a=index&id=2.50");
-		$("#hid").val(hid);
-		$("#form").submit();
+		var id = $(this).attr("sign");
+		var build = $(this).attr("signs");
+		window.location.href = "/cxg/index.php?m=Home&c=Hostel&a=index&id=2.50&shostel="+id+"&sbuild="+build;
 	})
 </script>
 
